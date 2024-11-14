@@ -38,12 +38,10 @@ public class AccomDTO {
         System.out.println("숙소 이미지 출력 : "+ ur);
         return ur;
     }
-    public List<String> getAccomAmenities(){
+    public List<String> getAccomAmenities() {
         List amen = Arrays.asList(getAccom_amenities().split(","));
-        System.out.println("숙소 편의시설 출력 : "+ amen);
+        System.out.println("숙소 편의시설 출력 : " + amen);
         return amen;
     }
-
-
 
 }

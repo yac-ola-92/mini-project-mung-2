@@ -1,8 +1,7 @@
 .nice-select {
   -webkit-tap-highlight-color: transparent;
   background-color: #fff;
-  border-radius: 5px;
-  border: solid 1px #e8e8e8;
+  border: solid 4px #bc915e;
   box-sizing: border-box;
   clear: both;
   cursor: pointer;
@@ -11,7 +10,7 @@
   font-family: inherit;
   font-size: 14px;
   font-weight: normal;
-  height: 42px;
+  height: 50px;
   line-height: 40px;
   outline: none;
   padding-left: 18px;
@@ -25,7 +24,7 @@
       -ms-user-select: none;
           user-select: none;
   white-space: nowrap;
-  width: auto; }
+  width: 250px; }
   .nice-select:hover {
     border-color: #dbdbdb; }
   .nice-select:active, .nice-select.open, .nice-select:focus {
@@ -86,29 +85,57 @@
     .nice-select.small .option {
       line-height: 34px;
       min-height: 34px; }
-  .nice-select .list {
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 0 0 1px rgba(68, 68, 68, 0.11);
-    box-sizing: border-box;
-    margin-top: 4px;
-    opacity: 0;
-    overflow: hidden;
-    padding: 0;
-    pointer-events: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    -webkit-transform-origin: 50% 0;
-        -ms-transform-origin: 50% 0;
-            transform-origin: 50% 0;
-    -webkit-transform: scale(0.75) translateY(-21px);
-        -ms-transform: scale(0.75) translateY(-21px);
-            transform: scale(0.75) translateY(-21px);
-    -webkit-transition: all 0.2s cubic-bezier(0.5, 0, 0, 1.25), opacity 0.15s ease-out;
-    transition: all 0.2s cubic-bezier(0.5, 0, 0, 1.25), opacity 0.15s ease-out;
-    z-index: 9; }
-    .nice-select .list:hover .option:not(:hover) {
+/* 옵션 항목 스타일 */
+.nice-select .option {
+  cursor: pointer;
+  font-weight: 400;
+  line-height: 40px; /* 일관된 높이 */
+  list-style: none;
+  min-height: 40px;
+  outline: none;
+  padding-left: 18px; /* 좌측 여백 */
+  padding-right: 29px; /* 우측 여백 */
+  text-align: left;
+  width: 100%; /* 가로 일관성, 100%는 부모 요소인 .list를 기준으로 설정됩니다 */
+  box-sizing: border-box; /* padding을 width에 포함시키기 위해 설정 */
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+/* 스크롤 추가 */
+.nice-select .list {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 0 1px rgba(68, 68, 68, 0.11);
+  box-sizing: border-box;
+  margin-top: 4px;
+  opacity: 0;
+  padding: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  -webkit-transform-origin: 50% 0;
+  -ms-transform-origin: 50% 0;
+  transform-origin: 50% 0;
+  -webkit-transform: scale(0.75) translateY(-21px);
+  -ms-transform: scale(0.75) translateY(-21px);
+  transform: scale(0.75) translateY(-21px);
+  -webkit-transition: all 0.2s cubic-bezier(0.5, 0, 0, 1.25), opacity 0.15s ease-out;
+  transition: all 0.2s cubic-bezier(0.5, 0, 0, 1.25), opacity 0.15s ease-out;
+  z-index: 9;
+
+  /* 스크롤 추가 */
+  max-height: 200px; /* 옵션 목록 최대 높이 */
+  overflow-y: auto; /* 세로 스크롤 */
+
+  /* 옵션 크기 일정하게 */
+  line-height: 25px; /* 옵션 항목의 높이 일관성 */
+  width: 100%; /* 가로 크기를 부모 .nice-select 기준으로 설정 */
+  box-sizing: border-box; /* padding을 width에 포함 */
+}
+
+.nice-select .list:hover .option:not(:hover) {
       background-color: transparent !important; }
   .nice-select .option {
     cursor: pointer;
