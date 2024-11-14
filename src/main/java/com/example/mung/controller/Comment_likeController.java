@@ -44,6 +44,7 @@ public class Comment_likeController {
 
         // 좋아요/싫어요 처리 후 결과 반환
         Map<String, Integer> response = commentLikeService.likeOrDislike(commentLikeDTO);
+        System.out.println("Updated like and dislike counts: " + response); // 추가 로그
         return ResponseEntity.ok(response);
     }
 

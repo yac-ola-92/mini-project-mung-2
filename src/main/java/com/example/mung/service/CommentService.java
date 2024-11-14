@@ -9,6 +9,6 @@ public interface CommentService {
     List<CommentDTO> readByPostId(int post_id);
     boolean register(CommentDTO comment);
     boolean modify(CommentDTO comment);
-    boolean remove(int comment_id);
+    boolean remove(int comment_id, int user_id);
     CommentDTO findById(int comment_id);
 }
