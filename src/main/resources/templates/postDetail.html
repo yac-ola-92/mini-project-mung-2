@@ -65,31 +65,89 @@
             background-color: #e6d3b8;
             color: #000;
         }
-        .blog-image {
-            width: 100%;
-            max-width: 150px;
+        img {
+            width: 300px;
             height: auto;
+            object-fit: cover;
+        }
+        /* 댓글 영역 스타일 */
+        .comment-area {
+            margin-top: 20px;
         }
 
+        /* 댓글 본문 및 버튼 영역 */
+        .single-comment .desc {
+            position: relative;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        /* 댓글 수정 입력 필드 */
+        .edit-comment-input {
+            width: 100%;
+            display: none; /* 수정 모드에서만 보이도록 설정 */
+            margin-bottom: 10px;
+        }
+
+        /* 좋아요, 싫어요 버튼 정렬 */
+        .like-dislike-buttons {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+        /* 댓글 수정 및 삭제 버튼 기본 스타일 */
+        .single-comment .btn {
+            padding: 5px 10px;
+            margin-right: 5px; /* 버튼 간격 설정 */
+        }
+
+        /* 수정 모드에서 보일 저장, 취소 버튼 스타일 */
+        .single-comment .btn-primary, /* 저장 버튼 */
+        .single-comment .btn-secondary /* 취소 버튼 */ {
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        /* 댓글 수정, 삭제 버튼이 일렬로 나란히 배치되도록 설정 */
+        .single-comment .action-buttons {
+            display: inline-flex;
+            gap: 5px; /* 버튼 사이 간격 */
+            margin-top: 10px;
+        }
+
+        /* 댓글 수정 모드 활성화 시 스타일 */
+        .edit-mode .comment-content {
+            display: none; /* 기존 댓글 내용을 숨김 */
+        }
+
+        .edit-mode .edit-comment-input {
+            display: block; /* 수정 입력 필드를 표시 */
+        }
     </style>
-    <script th:inline="javascript">
+    <script th:inline="javascript" defer>
         function handleLikeDislike(event, action, commentId) {
             event.preventDefault();
-            var userLoginId = /*[[${userInfo != null ? userInfo.user_loginId : ''}]]*/ '';
-            if (!userLoginId) {
-                alert("로그인 후 " + (action === 'like' ? '좋아요' : '싫어요') + "를 할 수 있습니다.");
-                window.location.href = '/login';
+
+            // 로그인 여부 확인
+            const isLoggedIn = document.body.getAttribute("data-user-logged-in") === "true";
+            if (!isLoggedIn) {
+                alert("로그인 후 이용 가능합니다.");
+                window.location.href = '/login'; // 로그인 페이지로 이동
                 return;
             }
+
+            // 좋아요/싫어요 처리
             fetch(`/like/${action}/${commentId}`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
+                headers: { 'Content-Type': 'application/json' }
             })
                 .then(response => response.json())
                 .then(data => {
-                    if (data && data.likeCount !== undefined && data.dislikeCount !== undefined) {
+                    if (data.likeCount !== undefined && data.dislikeCount !== undefined) {
                         document.getElementById(`like-count-${commentId}`).innerText = data.likeCount;
                         document.getElementById(`dislike-count-${commentId}`).innerText = data.dislikeCount;
                     } else {
@@ -98,9 +156,124 @@
                 })
                 .catch(error => console.error('Error:', error));
         }
+
+        function enableEditMode(button) {
+            const commentId = button.getAttribute("data-comment-id");
+            const commentDiv = document.getElementById(`comment-${commentId}`);
+
+            if (!commentId || !commentDiv) {
+                console.error("Invalid commentId or comment element not found:", commentId);
+                alert("잘못된 댓글 ID입니다.");
+                return;
+            }
+
+            // 수정 모드 활성화
+            commentDiv.classList.add("edit-mode");
+            commentDiv.querySelector(".comment-content").style.display = 'none';
+            const inputField = commentDiv.querySelector(".edit-comment-input");
+            inputField.style.display = 'block';
+            inputField.value = commentDiv.querySelector(".comment-content").innerText;
+            inputField.focus();
+
+            // 저장 및 취소 버튼 추가
+            const actionButtons = document.createElement("div");
+            actionButtons.className = "action-buttons";
+
+            const saveButton = document.createElement("button");
+            saveButton.className = "btn btn-primary";
+            saveButton.innerText = "저장";
+            saveButton.onclick = () => saveComment(commentId);
+
+            const cancelButton = document.createElement("button");
+            cancelButton.className = "btn btn-secondary";
+            cancelButton.innerText = "취소";
+            cancelButton.onclick = () => disableEditMode(commentId);
+
+            actionButtons.appendChild(saveButton);
+            actionButtons.appendChild(cancelButton);
+            commentDiv.appendChild(actionButtons);
+        }
+
+        function disableEditMode(commentId) {
+            const commentDiv = document.getElementById(`comment-${commentId}`);
+            if (!commentDiv) return;
+
+            // edit-mode 클래스 제거 및 UI 초기화
+            commentDiv.classList.remove("edit-mode");
+            commentDiv.querySelector(".comment-content").style.display = 'block';
+            commentDiv.querySelector(".edit-comment-input").style.display = 'none';
+
+            // 저장 및 취소 버튼 삭제
+            const actionButtons = commentDiv.querySelector(".action-buttons");
+            if (actionButtons) actionButtons.remove();
+        }
+
+        function saveComment(commentId) {
+            const content = document.querySelector(`#comment-${commentId} .edit-comment-input`).value;
+
+            fetch(`/post/comments/update/${commentId}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ content })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Server response:", data);  // 서버 응답 출력
+
+                    if (data.success) {
+                        // 수정된 내용을 표시
+                        document.querySelector(`#comment-${commentId} .comment-content`).innerText = content;
+
+                        // 수정 모드를 종료하여 UI를 원래 상태로 복구
+                        disableEditMode(commentId);
+                        alert(data.message || "댓글이 성공적으로 수정되었습니다.");
+                    } else {
+                        alert(data.message || "댓글 수정에 실패했습니다.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("댓글 수정 중 예상치 못한 오류가 발생했습니다.");
+                });
+        }
+
+        function deleteComment(button) {
+            const commentId = button.getAttribute("data-comment-id");
+
+            if (!commentId) {
+                console.error("Invalid commentId:", commentId);
+                alert("잘못된 댓글 ID입니다.");
+                return;
+            }
+
+            if (!confirm("댓글을 삭제하시겠습니까?")) return;
+
+            fetch(`/post/comments/delete/${commentId}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // 삭제 성공 시 해당 댓글 요소를 제거
+                        const commentDiv = document.getElementById(`comment-${commentId}`);
+                        if (commentDiv) {
+                            commentDiv.remove();
+                        }
+                        alert(data.message || "댓글이 성공적으로 삭제되었습니다.");
+                    } else {
+                        alert(data.message || "댓글 삭제에 실패했습니다.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("댓글 삭제 중 예상치 못한 오류가 발생했습니다.");
+                });
+        }
+
     </script>
 </head>
-<body>
+<body th:attr="data-user-logged-in=${userInfo != null}">
 <header>
     <div class="header-area" style="background-color: #fff9f0;">
         <div class="main-header">
@@ -175,12 +348,18 @@
                 <div class="blog_left_sidebar">
                     <article class="blog_item">
                         <div class="blog_details">
-                            <h1 class="blog-head" th:text="${post.title}">게시글 제목</h1>
-                            <ul class="blog-info-link">
-                                <li><span th:text="${post.nickname}">작성자</span></li>
-                                <li><span th:text="${#temporals.format(post.created_at, 'yyyy-MM-dd HH:mm')}">작성일</span></li>
-                                <li><span th:text="${post.view_count}">조회수</span></li>
-                            </ul>
+                        <h1 class="blog-head" th:text="${post.title}">게시글 제목</h1>
+
+                        <!-- 수정 완료 메시지 출력 -->
+                        <div th:if="${successMessage}" class="alert alert-success" role="alert">
+                            <p th:text="${successMessage}">수정이 완료되었습니다.</p>
+                        </div>
+
+                        <ul class="blog-info-link">
+                            <li><span th:text="${post.nickname}">작성자</span></li>
+                            <li><span th:text="${#temporals.format(post.created_at, 'yyyy-MM-dd HH:mm')}">작성일</span></li>
+                            <li><span th:text="${post.view_count}">조회수</span></li>
+                        </ul>
                             <div th:if="${base64Image != null}">
                                 <!-- 이미지가 존재하면 본문에 삽입 -->
                                 <img th:src="${base64Image}" alt="Uploaded Image" class="blog-image"/>
@@ -188,11 +367,12 @@
                             <div th:utext="${post.content}"></div> <!-- 게시글 내용 -->
                             <!-- 게시글 수정 및 삭제 버튼 -->
                             <div th:if="${userInfo != null and userInfo.user_id == post.user_id}">
-                                <a th:href="@{/post/update/{post_id}(post_id=${post.post_id})}" class="btn btn-primary">수정</a>
-                                <form th:action="@{/post/delete/{post_id}(post_id=${post.post_id})}" method="post" style="display:inline;">
-                                    <input type="hidden" name="_method" value="delete">
-                                    <button type="submit" class="btn btn-danger">삭제</button>
-                                </form>
+                                <a th:href="@{/update/{post_id}(post_id=${post.post_id})}" class="btn btn-primary">수정</a>
+
+                                <!-- 삭제 버튼을 POST 방식으로 변경 -->
+                                <div th:if="${userInfo != null and userInfo.user_id == post.user_id}">
+                                    <a th:href="@{/post/delete/{post_id}(post_id=${post.post_id})}" class="btn btn-danger">삭제</a>
+                                </div>
                             </div>
                         </div>
                     </article>
@@ -201,48 +381,40 @@
                     <div class="comment-area">
                         <h4>댓글 <span th:text="${post.comments.size()}"></span>개</h4>
                         <div class="comment-list">
-                            <div th:each="comment : ${post.comments}" class="single-comment">
+                            <div th:each="comment : ${post.comments}" th:id="'comment-' + ${comment.comment_id}" class="single-comment">
                                 <div class="user d-flex">
                                     <div class="desc">
                                         <h5 th:text="${comment.nickname}"></h5>
-                                        <p class="comment" th:text="${comment.content}"></p>
                                         <span th:text="${#temporals.format(comment.created_at, 'yyyy-MM-dd HH:mm')}"></span>
+                                        <p class="comment-content" th:text="${comment.content}"></p>
+                                        <textarea class="edit-comment-input" style="display: none;"></textarea>
 
-                                        <!-- 댓글 좋아요/싫어요 버튼 -->
+                                        <!-- 좋아요 및 싫어요 버튼 -->
                                         <div class="like-dislike-buttons">
-                                            <button class="btn-like" onclick="handleLikeDislike(event, 'like', [[${comment.comment_id}]])">
-                                                &#128077;
-                                            </button>
-                                            <span id="like-count-[[${comment.comment_id}]]" th:text="${comment.likeCount}">0</span>
-                                            <button class="btn-dislike" onclick="handleLikeDislike(event, 'dislike', [[${comment.comment_id}]])">
-                                                &#128078;
-                                            </button>
-                                            <span id="dislike-count-[[${comment.comment_id}]]" th:text="${comment.dislikeCount}">0</span>
+                                            <button class="btn-like" th:attr="data-comment-id=${comment.comment_id}" onclick="handleLikeDislike(event, 'like', this.getAttribute('data-comment-id'))">👍</button>
+                                            <span th:id="'like-count-' + ${comment.comment_id}" th:text="${comment.likeCount}">0</span>
+                                            <button class="btn-dislike" th:attr="data-comment-id=${comment.comment_id}" onclick="handleLikeDislike(event, 'dislike', this.getAttribute('data-comment-id'))">👎</button>
+                                            <span th:id="'dislike-count-' + ${comment.comment_id}" th:text="${comment.dislikeCount}">0</span>
                                         </div>
 
                                         <!-- 댓글 수정/삭제 버튼 -->
                                         <div th:if="${userInfo != null and userInfo.user_id == comment.user_id}">
-                                            <form th:action="@{'/post/' + ${post.post_id} + '/comments/update/' + ${comment.comment_id}}" method="post">
-                                                <button type="submit" class="btn btn-primary">댓글 수정</button>
-                                            </form>
-                                            <form th:action="@{'/post/' + ${post.post_id} + '/comments/' + ${comment.comment_id}}" method="post">
-                                                <input type="hidden" name="_method" value="delete">
-                                                <button type="submit" class="btn btn-danger">댓글 삭제</button>
-                                            </form>
+                                            <button class="btn btn-primary" th:attr="data-comment-id=${comment.comment_id}" onclick="enableEditMode(this)">댓글 수정</button>
+                                            <button class="btn btn-danger" th:attr="data-comment-id=${comment.comment_id}" onclick="deleteComment(this)">댓글 삭제</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- 댓글 작성 -->
-                        <div class="comment-form">
-                            <h4>댓글 작성</h4>
-                            <form th:action="@{/post/{post_id}/comments/add(post_id=${post.post_id})}" method="post">
-                                <textarea rows="5" name="content" placeholder="댓글을 입력하세요" required></textarea>
-                                <button type="submit" class="btn btn-primary" style="color: black;">댓글 작성</button>
-                            </form>
-                        </div>
+                    <!-- 댓글 작성 -->
+                    <div class="comment-form">
+                        <h4>댓글 작성</h4>
+                        <form th:action="@{/post/{post_id}/comments/add(post_id=${post.post_id})}" method="post">
+                            <textarea rows="5" name="content" placeholder="댓글을 입력하세요" required></textarea>
+                            <button type="submit" class="btn btn-primary">댓글 작성</button>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -84,13 +84,16 @@
             <div layout:fragment="content">
                 <div>
                     <!-- 게시글 수정 폼 -->
-                    <form name="update-form" th:action="@{'/update/' + ${post.post_id}}" method="post" enctype="multipart/form-data" autocomplete="off">
-                        <input type="hidden" name="post_id" th:value="${post.post_id}">
+                    <!-- 수정 버튼을 눌렀을 때 postDTO가 null인 경우를 처리 -->
+                    <form name="update-form" th:action="@{'/update/' + ${post != null ? post.post_id : ''}}" method="post" enctype="multipart/form-data" autocomplete="off">
+                        <input type="hidden" name="post_id" th:value="${post != null ? post.post_id : ''}">
+
                         <!-- 제목 수정 필드 -->
                         <div class="form-group">
                             <label for="title">제목</label>
-                            <input type="text" id="title" name="title" class="form-control" th:value="${post.title}" required>
+                            <input type="text" id="title" name="title" class="form-control" th:value="${post != null ? post.title : ''}" required>
                         </div>
+
                         <!-- 카테고리 선택 -->
                         <div class="form-group">
                             <label for="category">카테고리</label>
@@ -99,33 +102,41 @@
                                 <option value="자유게시판" th:selected="${post.category == '자유게시판'}">자유 게시판</option>
                                 <option value="여행TIP" th:selected="${post.category == '여행TIP'}">여행 TIP</option>
                             </select>
+
                         </div>
+
                         <!-- 내용 수정 필드 -->
                         <div class="form-group">
                             <label for="content">내용</label>
-                            <textarea id="content" name="content" class="form-control" rows="10" required th:text="${post.content}"></textarea>
+                            <textarea id="content" name="content" class="form-control" rows="10" required th:text="${post != null ? post.content : ''}"></textarea>
                         </div>
+
                         <!-- 파일 첨부 -->
                         <div class="form-group">
                             <label for="file">파일 첨부</label>
                             <input type="file" id="file" name="file" class="form-control">
-                            <div th:if="${post.files}">
+                            <div th:if="${post != null && post.files != null}">
                                 <p>현재 첨부된 파일: <span th:text="${post.files}"></span></p>
                                 <label><input type="checkbox" name="deleteFile"> 첨부 파일 삭제</label>
                             </div>
                         </div>
+
                         <!-- 비밀번호 확인 -->
                         <div class="form-group">
                             <label for="password">비밀번호</label>
-                            <input type="password" id="password" name="password" maxlength="4" class="form-control" required placeholder="4자리 비밀번호 입력">
+                            <input type="password" id="password" name="password" maxlength="4" class="form-control" required placeholder="4자리 비밀번호 입력"
+                                   th:value="${post != null ? post.password : ''}">
                             <small class="form-text text-muted">비밀번호는 4자리 숫자로 입력해주세요.</small>
                         </div>
+
                         <!-- 수정 확인 버튼 -->
                         <div class="form-group">
                             <input type="submit" class="btn btn-outline-primary" style="background-color: #f2e2cc; color: black;" value="수정">
-                            <a th:href="@{'/post/postdetail?post_id=' + ${post.post_id}}" class="btn btn-outline-secondary">취소</a>
+                            <a th:href="@{'/post/postdetail?post_id=' + ${post != null ? post.post_id : ''}}" class="btn btn-outline-secondary">취소</a>
                         </div>
                     </form>
+
+
                     <!-- 오류 메시지 출력 -->
                     <div th:if="${error}" class="alert alert-danger" role="alert">
                         <span th:text="${error}"></span>
