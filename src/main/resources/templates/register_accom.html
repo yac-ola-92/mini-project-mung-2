@@ -2,155 +2,282 @@
 <html class="no-js" lang="zxx" xmlns:th="http://www.thymeleaf.org/">
 
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<title>Travel HTML-5 Template </title>
-	<meta name="description" content="">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Travel HTML-5 Template </title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<!-- <link rel="manifest" href="site.webmanifest"> -->
-	<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
-	<!-- Place favicon.ico in the root directory -->
+    <!-- <link rel="manifest" href="site.webmanifest"> -->
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
+    <!-- Place favicon.ico in the root directory -->
 
-	<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-	<link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
-	<link rel="stylesheet" href="/assets/css/flaticon.css">
-	<link rel="stylesheet" href="/assets/css/slicknav.css">
-	<link rel="stylesheet" href="/assets/css/animate.min.css">
-	<link rel="stylesheet" href="/assets/css/magnific-popup.css">
-	<link rel="stylesheet" href="/assets/css/fontawesome-all.min.css">
-	<link rel="stylesheet" href="/assets/css/themify-icons.css">
-	<link rel="stylesheet" href="/assets/css/slick.css">
-	<link rel="stylesheet" href="/assets/css/nice-select.css">
-	<link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/css/flaticon.css">
+    <link rel="stylesheet" href="/assets/css/slicknav.css">
+    <link rel="stylesheet" href="/assets/css/animate.min.css">
+    <link rel="stylesheet" href="/assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="/assets/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/assets/css/themify-icons.css">
+    <link rel="stylesheet" href="/assets/css/slick.css">
+    <link rel="stylesheet" href="/assets/css/nice-select.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
 
 
-   <style>
-	
-	main {
-		text-align: center;
-            margin: 50px;
-            padding: 50px;
-            background-color: #f8f8f8;
-        
-	}
-
-	ul {
-        list-style-type: none;
-    	margin: 0;
-        padding: 0;
-        overflow: hidden;
+    <style>
+        /*   헤더     */
+        #nav {
+            list-style-type: none;
+            margin: 7px 5px 10px 0;
+            padding: 0;
+            overflow: hidden;
         }
- 	li {
-        float: left;
+        li {
+            float: left;
+            margin-left : 10px;
+        }
+        #login , #logout {
+            background-color: #bc915e;
+            border: none;
+            height: 35px;
+            margin-left: 2px;
+        }
+        #login:hover{
+            background-color: #fff9f0;
+            border: solid 3px  #bc915e;
+            color : #bc915e;
+        }
+        #logout:hover{
+            background-color: #fff9f0;
+            border: solid 3px  #bc915e;
+            color : #bc915e;
+        }
+        nav ul li {
+            height: 30px;
+            margin: 10px;
+        }
+        nav ul li :hover {
+            background-color: #fff9f0;
+            border: solid 3px  #bc915e;
         }
 
-	#preview {
-            margin-top: 20px;
-            max-width: 300px; /* 최대 너비 설정 */
-            max-height: 300px; /* 최대 높이 설정 */
-            display: none; /* 기본적으로 숨김 */
-        }		
-		.input-form {
-			width: auto;
+
+        /*     등록 메인      */
+        main {
+            text-align: center;
+            margin: 100px;
+            padding: 70px;
+            background-color: #FAF0E6;
+
+        }
+        /*  input 태그들     */
+        .mt-10 {
+            display : flex;
+			flex-direction : column;
+            margin : 20px auto;
+			width : 500px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        div label {
+            display : block;
+            width: 150px;
+			text-align: left; /* label의 텍스트를 왼쪽 정렬 */
+			align-self: flex-start;
+		}
+
+		/*이미지 추가 프리뷰*/
+		.upload {
+			width: 150px;
+			padding-top: 3px;
+			height: 30px;
+			color: white;
+			border-radius: 3em;
+            background-color: #bc915e;
+			cursor : pointer;
+        }
+
+		.preview{
+			width: 100%;
+			height: 100%;
+			margin-top: 10px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-wrap: wrap;
+			gap: 20px;
+		}
+
+		.preview li {
+            flex: 1 1 23%; /* 한 줄에 약 4개 (4개가 100%를 차지하도록) */
+            max-width: 23%; /* 한 이미지의 최대 너비 */
+            height: 120px; /* 이미지의 고정 높이 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+		.preview li img {
+			max-width: 100%;
+			max-height: 100%;
+			object-fit: contain; /* 이미지 비율 유지 */
+		}
+
+				/* 체크박스 */
+		.cbx{
+			margin: 0 4px;
+			width: 60px;
+		}
+        .input-form {
+            width: auto;
             margin-top: 10px;
             border: 1px solid #ccc;
             padding: 10px;
         }
-		.submit , .cancel {
-			background-color :#bc915e;
-			border: none;
-			width: 100px;
-			height: 50px;
+        .submit , .cancel {
+            background-color :#bc915e;
+            border: none;
+            width: 100px;
+            height: 50px;
 
-		}	
-		#add-form-btn {
-			background-color: #bc915e;
-			border: none;
-			width: 100px;
-			height: 50px;
-
-		}
-		#delete-form-btn {
-			background-color: #bc915e;
-			border: none;
-			width: 100px;
-			height: 50px;
-		}
-		#row {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
-		#col-lg-8 col-md-8 {
-			text-align: center;
-		}
-		textarea {
-			margin-left: auto;
-			margin-right: auto;
-		}
-		#cbx {
-            display: block; /* 각 체크박스를 블록 요소로 설정 */
-            margin-bottom: 10px; /* 아래쪽 여백 추가 */
         }
-		
-	
 
-   </style>
+        .btn-delete {
+            background-color: #bc915e;
+            border: none;
+            width: 40px;
+            height: 30px;
+            padding: 10px;
+            overflow: visible;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+		#modal {
+			display: none; /* 모달창 숨겨 놓기 */
+			position: fixed;
+			padding-top: 100px;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			cursor: pointer; /* 마우스 손가락모양 */
+			background-color: rgba(0, 0, 0, 0.8);
+		}
+		/* 숙소 이미지 모달창 */
+		#rmContent {
+			margin: auto;
+			display: block;
+			width: 50%;
+			height: auto;
+			max-width: 1000px;
+		}
+
+        /*        객실 등록 폼        */
+        #rmContent {
+            margin: auto;
+            margin-bottom: 100px;
+            padding : 10px;
+
+            display: flex;
+            flex-direction: column;
+
+            overflow-y: auto; /* 내용이 넘칠 경우 세로 스크롤 추가 */
+
+            width: 70%;
+            max-width: 1000px; /* 최대 너비 */
+            min-width: 300px;  /* 최소 너비 */
+            max-height: 80vh;
+            max-width: 1000px;
+            background-color: white;
+        }
+
+        .rm-btn-box{
+            align-items: center;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .rm-btn{
+            margin: 20px;
+            width: 100px;
+            height: 40px;
+            background-color: #bc915e;
+            border: none;
+        }
+
+        .rm-btn:hover {
+            background-color: antiquewhite;
+            color: #bc915e;
+            cursor: pointer;
+        }
+
+        /* 숙소등록폼에 나올 객실 썸네일 */
+        #room-list{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #roomPreBox div{
+            display: flex;
+        }
+
+        #roomPreview button{
+            width: 80px;
+            height: 40px;
+            margin: 30px;
+            background-color: #bc915e;
+        }
+
+	</style>
 </head>
 
 <body>
-    <!-- Preloader Start -->
-    <div id="preloader-active">
-        <div class="preloader d-flex align-items-center justify-content-center">
-            <div class="preloader-inner position-relative">
-                <div class="preloader-circle"></div>
-                <div class="preloader-img pere-text">
-                    <img src="../static/assets/img/logo/munglogo.png" alt="">
-                </div>
+<!-- Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img src="../static/assets/img/logo/munglogo.png" alt="">
             </div>
         </div>
     </div>
-    <!-- Preloader Start -->
-    <header>
-        <!-- Header Start -->
-		<div class="header-bottom  header-sticky" style="background-color:#fff9f0;"> 
-			<div class="row align-items-center" >
-				<!-- Logo -->
-				<div class="col-xl-2 col-lg-2 col-md-1"></div>
-					<div class="logo" style="margin-left: 400px;" >
-					  <a href="/mainPage"><img style="margin :auto; width : 100px;" src="/assets/img/logo/munglogo.png" alt=""></a>
-					</div>
-					<nav>  
-						<ul>
-							<li><a href="/accom_register" style="color: #bc915e;" th:if="${session.userInfo != null and session.userInfo.roles.contains('HOST')}">나의 숙소</a></li>
-							<li><a href="/accomByLocation" style="color:#bc915e;">숙소예약</a></li>
-							<li><a href="/postMain" style="color:#bc915e;">게시판</a></li>
-							<li><a href="/myPage" style="color:#bc915e;">마이페이지</a></li>
-							<li><a href="/login" id="login" th:if="${session.userInfo == null}">로그인</a></li>
-							<li><a href="/logout" id="logout" th:if="${session.userInfo != null}">로그아웃</a></li>
-					</ul>   
-					</nav>
-
-				<div class="col-xl-10 col-lg-10 col-md-10" style="background-color: #fff9f0;">
-					<!-- Main-menu -->
-					<div class="main-menu f-right d-none d-lg-block" >
-					  
-					</div>
-				</div>
-				<!-- Mobile Menu -->
-				<div class="col-12">
-					<div class="mobile_menu d-block d-lg-none"></div>
-				</div>
-			</div>
-		</div>
-   </div>
 </div>
-</div>
-<!-- Header End -->
-        <!-- Header End -->
-    </header>
-	<main>
+<!-- Preloader Start -->
+<header>
+    <!-- Header Start -->
+    <div class="header-bottom header-sticky"
+         style="background-color:#fff9f0; height:150px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <!-- 로고 영역 -->
+        <div class="logo" style="margin-bottom: 20px;">
+            <a href="/mainPage"><img style="margin-top: 20px; width: 100px;" src="/assets/img/logo/munglogo.png"
+                                     alt="Logo"></a>
+        </div>
+        <!-- 네비게이션 메뉴 영역 -->
+        <nav>
+            <ul id="nav" style="display: flex; justify-content: center; list-style-type: none; padding: 0; margin: 0;">
+                <li style="margin: 0 15px;"><a href="/accom_register" style="color: #bc915e;"
+                                               th:if="${session.userInfo != null and session.userInfo.roles.contains('HOST')}">나의
+                    숙소</a></li>
+                <li style="margin: 0 15px;"><a href="/postMain" style="color:#bc915e;">게시판</a></li>
+                <li style="margin: 0 15px;"><a href="/myPage" style="color:#bc915e;">마이페이지</a></li>
+                <li style="margin: 0 15px;"><a href="/login" id="login" th:if="${session.userInfo == null}">로그인</a></li>
+                <li style="margin: 0 15px;"><a href="/logout" id="logout" th:if="${session.userInfo != null}">로그아웃</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <!-- Header End -->
+</header>
+<main>
     <!-- slider Area Start-->
     <div class="slider-area ">
         <!-- Mobile Menu -->
@@ -166,200 +293,450 @@
             </div>
         </div>
     </div>
-	<!-- slider Area End-->
-	
-			<div class="section-top-border">
-				<div class="row">
-					<div class="col-lg-8 col-md-8">
-						<h3 class="mb-30">숙소</h3>
-						<hr>
-						<form id= "registerForm" action="/accom_register" method="post">
-							<input type="hidden" name="user_id" value="{{user_id}}">
-							<div class="mt-10" style="display: flex; align-items: center;">
-								<label>숙소명 : </label><input type="text" name="accom_name" placeholder="숙소명"
-									onfocus="this.placeholder = ''" onblur="this.placeholder = '숙소명'" required
-									class="single-input-secondary">
-							</div>
-							<div class="mt-10" style="display: flex; align-items: center;">
-								<label>숙소 위치 : </label><input type="text" name="accom_location" placeholder="위치"
-									onfocus="this.placeholder = ''" onblur="this.placeholder = '위치'" required
-									class="single-input-secondary">
-							</div>
-							<div class="mt-10" style="display: flex; align-items: center;">
-								<label>숙소 전화번호 : </label><input type="number" name="accom_phone" placeholder="숙소 전화번호"
-									onfocus="this.placeholder = ''" onblur="this.placeholder = '숙소 전화번호'" required
-									class="single-input-secondary">
-							</div>
-							<div class="mt-10" style="display: flex; align-items: center;">
-								<label>숙소 소개 : </label><textarea class="single-textarea" placeholder="숙소소개" name="accom_description" onfocus="this.placeholder = ''"
-									onblur="this.placeholder = '숙소 소개'" required></textarea>
-							</div> 
-							<div>
-								<label for="image">숙소 이미지 : </label><input type="url" id="image" name="accom_images_url" placeholder="이미지주소를 입력해주세요" required>
-							</div>
-							<div class="mt-10" style="display: flex; align-items: center;">
-								<label>예약 시 주의사항 : </label><textarea class="single-textarea" placeholder="예약 시 주의사항" onfocus="this.placeholder = ''"
-									onblur="this.placeholder = '예약 시 주의사항'" name="accom_caution" required></textarea>
-							</div> 
-							<div class="mt-10" style="display: flex; align-items: center;">
-								<label>편의시설 : </label>
-								<label id="cbx1"><input type="checkbox" name="accom_amenities" value="주차장">주차장</label>
-								<label id="cbx2"><input type="checkbox" name="accom_amenities" value="WI-FI">WI-FI</label>
-								<label id="cbx3"><input type="checkbox" name="accom_amenities" value="멍수영장">멍수영장</label>
-								<label id="cbx4"><input type="checkbox" name="accom_amenities" value="마당">마당</label>
-								<label id="cbx5"><input type="checkbox" name="accom_amenities" value="놀이터">놀이터</label>
-								<label id="cbx6"><input type="checkbox" name="accom_amenities" value="스파">스파</label>
-							</div>
+    <!-- slider Area End-->
+
+    <div class="section-top-border">
+        <div class="row">
+            <form id="registerForm" action="/accom_register" method="post">
+                <div>
+				<input type="hidden" name="user_id" value="{{user_id}}">
+                <div class="mt-10">
+                    <label>숙소명  </label>
+					<input type="text" name="accom_name" placeholder="숙소명" onfocus="this.placeholder = ''" onblur="this.placeholder = '숙소명'"
+                                                required class="single-input-secondary">
+                </div>
+                <div class="mt-10">
+                    <label>숙소 위치  </label><input type="text" name="accom_location" placeholder="위치"
+                                                  onfocus="this.placeholder = ''" onblur="this.placeholder = '위치'"
+                                                  required
+                                                  class="single-input-secondary">
+                </div>
+                <div class="mt-10">
+                    <label>숙소 전화번호  </label><input type="tel" name="accom_phone" placeholder="숙소 전화번호"
+                                                    onfocus="this.placeholder = ''"
+                                                    onblur="this.placeholder = '숙소 전화번호'" required
+                                                    class="single-input-secondary">
+                </div>
+                <div class="mt-10">
+                    <label>숙소 소개  </label><textarea class="single-textarea" placeholder="숙소소개"
+                                                     name="accom_description" onfocus="this.placeholder = ''"
+                                                     onblur="this.placeholder = '숙소 소개'" required></textarea>
+                </div>
+                <div class="mt-10">
+                    <label>숙소 이미지  </label>
+					<input type="file" class="acc-img" name="accom_images_url" accept="image/*" required multiple style="display:none">
+					<div class="upload" onclick="openFile()">이미지 추가</div>
+					<ul class="preview"></ul>
+                </div>
+                <div class="mt-10">
+                    <label>예약 시 주의사항 : </label><textarea class="single-textarea" placeholder="예약 시 주의사항"
+                                                         onfocus="this.placeholder = ''"
+                                                         onblur="this.placeholder = '예약 시 주의사항'"
+                                                         name="accom_caution" required></textarea>
+                </div>
+                <div class="mt-10" style="flex-direction:row;">
+					<label style="width:80px;">편의시설  </label>
+					<label class="cbx"><input type="checkbox" name="accom_amenities" onclick="getCheckbox()" value="주차장">주차장</label>
+					<label class="cbx"><input type="checkbox" name="accom_amenities" onclick="getCheckbox()" value="WI-FI">WI-FI</label>
+					<label class="cbx" style="width:47px;"><input type="checkbox" name="accom_amenities" onclick="getCheckbox()" value="마당">마당</label>
+					<label class="cbx"><input type="checkbox" name="accom_amenities" onclick="getCheckbox()" value="놀이터">놀이터</label>
+					<label class="cbx" style="width:47px;"><input type="checkbox" name="accom_amenities" onclick="getCheckbox()" value="스파">스파</label>
+					<label class="cbx" style="width:100px;"><input type="checkbox" name="accom_amenities" onclick="getCheckbox()" value="애견수영장">애견수영장</label>
+					<br>
+                </div>
+					<div id="cb-result" class="mt-10" style="background-color:white; height:50px;"></div>
 
 
-							<div>
-							<h3 class="mb-30">객실</h3>
-							<button id="add-form-btn">입력폼 추가</button>
+                <div>
+                    <h3 class="mb-30">객실</h3>
+                    <button onclick="roomAdd()">객실 추가</button>
 
-							<div id="form-container">
-								<!-- 입력폼이 여기에 추가됩니다. -->
+                    <div id="modal">
+                        <div id="rmContent"></div>
+                    </div>
+                    <hr>
+                    <div id="room-list">
+                        <div id="roomPreBox">
+                            <div id="roomPreview"></div>
+                        </div>
+                    </div>
+
+						<form id="inputRoom" method="post" action="/room_register">
+                           <div class="modal-body" style="display:none;">
+                            <input type="hidden" name="accom_id" value="{{accom_id}}">
+                            <div class="mt-10">
+                                <label>객실 명  </label>
+								<input type="text" name="room_name" placeholder="객실명" onfocus="this.placeholder = ''" onblur="this.placeholder = '객실명'"
+									   required class="single-input-secondary">
+                            </div>
+                            <div class="mt-10" style="flex-direction:row; align-items: flex-start; justify-content: flex-start;">
+                                <label style="width:80px;">객실 타입 </label>
+                                <label  for="room_type" style="width:40px; margin:0 20px">캠핑</label>
+                                <input type="radio" name="room_type" id="room_type" value="캠핑" style="margin-top: 5px;">
+                                <label for="room_type" style="width:40px; margin:0 20px;">독채</label>
+                                <input type="radio" name="room_type" id="room_type2" value="독채" style="margin-top: 5px;">
+                            </div>
+                            <div class="mt-10">
+                                <label>객실 금액  </label>
+								<input type="number" name="room_price" placeholder="객실 금액" onfocus="this.placeholder = ''" onblur="this.placeholder = '1박의 금액을 입력해주세요'"
+									   required class="single-input-secondary">
+                            </div>
+                            <div class="mt-10">
+                                <label>객실 이미지  </label>
+								<input type="file" class="acc-img" name="room_images_url" accept="image/*" required multiple style="display:none">
+								<div class="upload">이미지 추가</div>
+								<ul class="preview"></ul>
 							</div>
-							<hr>
-								<button type="submit" class="submit">제출</button>
-								<button type="reset" class="cancel" onclick="window.location.href='/myPage'" style="margin-left: 10px;" >취소</button>
-							</div>
-						</form>
-
-						</div>
-					</div>
-
-			</div>
+                            <div class="mt-10">
+                                <label>객실 소개  </label>
+								<textarea name="room_info"  class="single-textarea" placeholder="객실에 대한 주의사항을 적어주세요"></textarea>
+                            </div>
+                            <div class="mt-10">
+                                <label>객실 수 </label>
+								<input type="number" name="room_amount" placeholder="해당 객실의 수를 입력해 주세요." onfocus="this.placeholder = ''"
+									   onblur="this.placeholder = '해당 객실의 수를 입력해 주세요.'"
+									   required class="single-input-secondary">
+                            </div>
+                            <div class="mt-10" style=" flex-direction: row; gap:10px;">
+                                <label>수용 인원 </label><br>
+								<input type="number" name="capacity_standard" placeholder="객실 기준 인원 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '객실 기준 인원'"
+									   required class="single-input-secondary" style="width:100%">
+								<label>최대 인원 </label><br>
+								<input type="number" name="capacity_max" placeholder="객실 최대 수용 인원 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '객실 최대 수용 인원'"
+									   required class="single-input-secondary" style="width:100%">
+                            </div>
+							   <button type="button" class="delete-form-btn" style="background-color: #bc915e; border: none;
+       							 width: 80px; height: 30px;">등록</button>
+							   <button type="button" class="delete-form-btn" style="background-color: #bc915e; border: none;
+       							 width: 80px; height: 30px;">취소</button>
+						   </div>
+                        </form>
+                    </div>
+				</div>
+                    <hr>
+                    <button type="submit" class="submit">제출</button>
+                    <button type="reset" class="cancel" onclick="window.location.href='/myPage'"
+                            style="margin-left: 10px;">취소
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </main>
-	<!-- End Align Area -->
-    
-	<footer>
-        <!-- Footer Start-->
-        <div class="footer-area footer-padding footer-bg" style="background-color: #fff9f0; padding: 30px">
-            <div class="container">
-                
-                    <div class="col-xl-3 col-lg-3 col-md-5 col-sm-6">
-                       <div class="single-footer-caption mb-50">
-                         <div class="single-footer-caption mb-30">
-                              <!-- logo -->
-                             <div class="footer-logo">
-                                 <a href="/mainPage"><img src="/assets/img/logo/munglogo.png" style="width: 150px;" alt=""></a>
-                                </div>
-                                <div class="footer-tittle">
-                                    <ul>
-                                        <li><a href="#" style="color:#bc915e; font-weight: bolder; margin :50px;" >고객문의</a></li>
-                                        <li><a href="#"  style="color:#bc915e; font-weight: bolder;">제휴문의</a></li>
-                                    </ul>
-                                </div>
-                       </div>
+<!-- End Align Area -->
+
+<footer>
+    <!-- Footer Start-->
+    <div class="footer-area footer-padding footer-bg" style="background-color: #fff9f0; padding: 30px">
+        <div class="container">
+
+            <div class="col-xl-3 col-lg-3 col-md-5 col-sm-6">
+                <div class="single-footer-caption mb-50">
+                    <div class="single-footer-caption mb-30">
+                        <!-- logo -->
+                        <div class="footer-logo">
+                            <a href="/mainPage"><img src="/assets/img/logo/munglogo.png" style="width: 150px;"
+                                                     alt=""></a>
+                        </div>
+                        <div class="footer-tittle">
+                            <ul>
+                                <li><a href="#" style="color:#bc915e; font-weight: bolder; margin :50px;">고객문의</a></li>
+                                <li><a href="#" style="color:#bc915e; font-weight: bolder;">제휴문의</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <!-- Footer bottom -->
-                <div class="row pt-padding" style="padding: 0px;">
-                 <div class="col-xl-7 col-lg-7 col-md-7">
+            </div>
+            <!-- Footer bottom -->
+            <div class="row pt-padding" style="padding: 0px;">
+                <div class="col-xl-7 col-lg-7 col-md-7">
                     <div class="footer-copy-right">
-                         <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                        <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            Copyright &copy;<script>document.write(new Date().getFullYear());</script>
+                            All rights reserved | This template is made with <i class="ti-heart" aria-hidden="true"></i>
+                            by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
                     </div>
-                 </div>
-             </div>
+                </div>
             </div>
         </div>
-        <!-- Footer End-->
-    </footer>
+    </div>
+    <!-- Footer End-->
+</footer>
+
 
 
 <!-- JS here -->
 <script>
 
-	function check() {
-		var log = SessionScope.user_id;
-		if( log == null){
-			document.getElementById('login').style.display = 'block';
-        	document.getElementById('logout').style.display = 'none';
-		}else{
-			 document.getElementById('login').style.display = 'none';
-      		 document.getElementById('logout').style.display = 'block';
-    	}
-</script>
-	<script th:inline="javascript">
-const addFormBtn = document.getElementById('add-form-btn');
-const formContainer = document.getElementById('form-container');
-
-addFormBtn.addEventListener('click', () => {
-    // 새로운 입력폼 생성
-	var userId = /*[[${session.userInfo.user_loginId}]]*/ '';  // 뒤에 '' 문자열을 추가
-	console.log(userId,1);
-    const newForm = document.createElement('div');
-    newForm.className = 'input-form';
-
-    newForm.innerHTML = `
-    <form id="inputRoom" method="post" action="/room_register" >
-        <input type="hidden" name="accom_id" value="{{accom_id}}">
-        <label for="room_name">객실 명:</label>
-        <input type="text" name="room_name" id= "room_name"required><br><br>
-        <form>
-            <label>객실 타입 :</label>
-            <label for="room_type">캠핑</label>
-            <input type="radio" name="room_type" id="room_type" value="캠핑">
-            <label for="room_type">독채</label>
-            <input type="radio" name="room_type" id="room_type" value="독채"><br><br>
-        </form>
-        <label>객실 금액: </label><input type="number" name="room_price" id= "room_price" placeholder="1박의 금액을 입력해주세요" required>원 <br><br>
-        <label>객실 이미지: </label><input type="url" id="image" name="room_images_url" placeholder="이미지 주소를 입력해주세요" required><br>
-        <label>객실 소개 : </label><textarea name="room_info" rows="3" cols="30" placeholder="객실에 대한 주의사항을 적어주세요"></textarea><br><br>
-        <label>객실 수: </label><input type="number" name="room_amount" id= "room_amount" placeholder="등록할 동일한 타입의 객실 수를 입력해 주세요." required>원 <br><br>
-        <label>수용 인원: </label><input type="number" name="capacity_standard" id= "capa_st" placeholder="객실의 기준 인원을 입력해주새요." required>명 <br><br>
-        <label>최대 인원: </label><input type="number" name="capacity_max" id= "capa_max" placeholder="객실의 최대 수용인원을 입력해주세요." required>명 <br><br>
-
-        </form>
-        <button type="button" class="delete-form-btn" style="background-color: #bc915e; border: none;
-        width: 80px; height: 30px;">삭제</button>
-    `;
-
-    // 삭제 버튼 클릭 이벤트 리스너 추가
-    const deleteBtn = newForm.querySelector('.delete-form-btn');
-    deleteBtn.addEventListener('click', () => {
-        formContainer.removeChild(newForm); // 해당 입력폼 삭제
-    });
-
-    // 생성된 입력폼을 컨테이너에 추가
-    formContainer.appendChild(newForm);
-});
+    function check() {
+        var log = SessionScope.user_id;
+        if( log == null){
+            document.getElementById('login').style.display = 'block';
+            document.getElementById('logout').style.display = 'none';
+        }else{
+            document.getElementById('login').style.display = 'none';
+            document.getElementById('logout').style.display = 'block';
+        }
+    }
 </script>
 
-	<script src="/assets/js/vendor/modernizr-3.5.0.min.js"></script>
 
-	&lt;!&ndash; Jquery, Popper, Bootstrap &ndash;&gt;
-	<script src="/assets/js/vendor/jquery-1.12.4.min.js"></script>
-	<script src="/assets/js/popper.min.js"></script>
-	<script src="/assets/js/bootstrap.min.js"></script>
-	&lt;!&ndash; Jquery Mobile Menu &ndash;&gt;
-	<script src="/assets/js/jquery.slicknav.min.js"></script>
+<script>
+      /*        이미지 프리뷰(숙소, 객실 같이)       */
 
-	&lt;!&ndash; Jquery Slick , Owl-Carousel Plugins &ndash;&gt;
-	<script src="/assets/js/owl.carousel.min.js"></script>
-	<script src="/assets/js/slick.min.js"></script>
-	&lt;!&ndash; One Page, Animated-HeadLin &ndash;&gt;
-	<script src="/assets/js/wow.min.js"></script>
-	<script src="/assets/js/animated.headline.js"></script>
-	<script src="/assets/js/jquery.magnific-popup.js"></script>
+	const uploadFiles = [];
 
-	&lt;!&ndash; Scrollup, nice-select, sticky &ndash;&gt;
-	<script src="/assets/js/jquery.scrollUp.min.js"></script>
-	<script src="/assets/js/jquery.nice-select.min.js"></script>
-	<script src="/assets/js/jquery.sticky.js"></script>
+     function openFile(){
+          const img = document.querySelectorAll(".acc-img");
+          const upload = document.querySelectorAll(".upload");
+              //upload와 img가 하나만 존재하는 것이 아니기 때문에 forEach로 각각의 객체로 만들어줌
+          upload.forEach((uploadElement, index) => {
+              const inputFile = img[index];  // 각 업로드 버튼에 해당하는 input 태그
+              const imagePreview = uploadElement.nextElementSibling; // upload 다음 태그인 preview
+             if (!uploadElement.hasAttribute('data-listener')) {
+                 uploadElement.setAttribute('data-listener', 'true');
 
-	&lt;!&ndash; contact js &ndash;&gt;
-	<script src="/assets/js/contact.js"></script>
-	<script src="/assets/js/jquery.form.js"></script>
-	<script src="/assets/js/jquery.validate.min.js"></script>
-	<script src="/assets/js/mail-script.js"></script>
-	<script src="/assets/js/jquery.ajaxchimp.min.js"></script>
+                 uploadElement.addEventListener('click', () => inputFile.click());
+                 inputFile.addEventListener('change', (e) => getImageFiles(e, index, imagePreview));
+             }
+        }); // 이미지 추가  클릭 시 파일창 열리고 그 후 파일 처리 함수로 넘어가는  과정
+    }
 
-	&lt;!&ndash; Jquery Plugins, main Jquery &ndash;&gt;
-	<script src="/assets/js/plugins.js"></script>
-	<script src="/assets/js/main.js"></script>
+	// 파일 처리 함수
+	function getImageFiles(e, index, imagePreview) {
+		const files = e.currentTarget.files;
+
+		console.log('Files:', files);
+
+		// 새롭게 올리는 파일이랑 이전의 올린 파일들의 수를 더한 값을 비교
+		if (files.length + uploadFiles.length > 4) {
+			alert('이미지는 최대 4개까지 업로드가 가능합니다.');
+			return;
+		}
+
+		// 파일 타입 검사: 이미지 파일만 허용
+		for (let i = 0; i < files.length; i++) {
+			const file = files[i];
+			if (!file.type.match("image/.*")) {
+				//match( ) 문자열이 주어진 정규 표현식과 일치하면 true
+				alert('이미지 파일만 업로드가 가능합니다.');
+				return;
+			}
+		}
+
+		// 선택한 파일들 처리
+		for (let i = 0; i < files.length; i++) {
+			const file = files[i];
+
+			// 업로드한 파일을 uploadFiles 배열에 추가
+			uploadFiles.push(file);
+
+			// FileReader로 이미지 미리보기
+			const reader = new FileReader();
+			reader.onload = (e) => {
+				const preview = createElement(e, file,imagePreview);
+				imagePreview.appendChild(preview);
+			};
+			reader.readAsDataURL(file);
+			//파일을 Data URL 형식으로 읽어오는 메서드
+		}
+
+	}
+
+	// 이미지 미리보기용 요소 생성
+	function createElement(e, file, imagePreview) {
+		const li = document.createElement('li');
+		const img = document.createElement('img');
+        const btn = document.createElement('button');
+
+		img.setAttribute('src', e.target.result);
+		img.setAttribute('data-file', file.name);
+		img.style.width = '200px';
+
+        btn.classList.add('btn', 'btn-delete'); //클래스명 주기
+        btn.textContent = '삭제'
+
+		li.appendChild(img);
+        imagePreview.appendChild(btn);
+
+        btn.addEventListener('click', ()=> {
+           imagePreview.removeChild(li);
+        });
+
+		return li;
+	}
+
+    /*  객실 등록 모달   */
+
+    const modalEl = document.querySelector('#modal')
+
+    function roomAdd() {
+        const content = document.querySelector('#rmContent');
+        const form = document.querySelector('.modal-body');
+
+        modalEl.style.display='block';
+        uploadFiles.length = 0;
+
+
+        if(content.innerHTML.trim() !== ''){
+            content.innerHTML = '';
+        }
+
+        content.innerHTML +=
+        `
+          <h3>객실 등록</h3> <hr>
+          <input type="hidden" name="accom_id" value="{{accom_id}}">
+          <div class="mt-10">
+                  <label>객실 명  </label>
+                  <input type="text" name="room_name" placeholder="객실명" onfocus="this.placeholder = ''" onblur="this.placeholder = '객실명'"
+                               required class="single-input-secondary">
+          </div>
+          <div class="mt-10" style="flex-direction:row; align-items: flex-start; justify-content: flex-start;">
+                  <label style="width:80px;">객실 타입 </label>
+                <label  for="room_type" style="width:40px; margin:0 20px">캠핑</label>
+                <input type="radio" name="room_type" id="room_type" value="캠핑" style="margin-top: 5px;">
+                <label for="room_type" style="width:40px; margin:0 20px;">독채</label>
+                <input type="radio" name="room_type" id="room_type2" value="독채" style="margin-top: 5px;">
+          </div>
+          <div class="mt-10">
+                <label>객실 금액  </label>
+                <input type="number" name="room_price" placeholder="객실 금액" onfocus="this.placeholder = ''" onblur="this.placeholder = '1박의 금액을 입력해주세요'"
+                          required class="single-input-secondary">
+          </div>
+          <div class="mt-10">
+                <label>객실 이미지  </label>
+                <input type="file" class="acc-img" name="room_images_url" accept="image/*" required multiple style="display:none">
+                <div class="upload">이미지 추가</div>
+                <ul class="preview"></ul>
+          </div>
+          <div class="mt-10">
+                <label>객실 소개  </label>
+                <textarea name="room_info"  class="single-textarea" placeholder="객실에 대한 주의사항을 적어주세요"></textarea>
+          </div>
+          <div class="mt-10">
+                <label>객실 수 </label>
+                <input type="number" name="room_amount" placeholder="해당 객실의 수를 입력해 주세요." onfocus="this.placeholder = ''"
+                                    onblur="this.placeholder = '해당 객실의 수를 입력해 주세요.'"
+                                    required class="single-input-secondary">
+          </div>
+          <div class="mt-10" style=" flex-direction: row; gap:10px;">
+                <label>수용 인원 </label><br>
+                <input type="number" name="capacity_standard" placeholder="객실 기준 인원 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '객실 기준 인원'"
+                             required class="single-input-secondary" style="width:100%">
+                <label>최대 인원 </label><br>
+                <input type="number" name="capacity_max" placeholder="객실 최대 수용 인원 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '객실 최대 수용 인원'"
+                            required class="single-input-secondary" style="width:100%">
+          </div>
+          <div class="rm-btn-box">
+          <button class="rm-btn" onclick="addForm()">등록</button>
+          <button class="rm-btn" onclick="closeModal()">취소</button>
+          </div>
+        `
+       openFile();
+    }
+
+    function closeModal() {
+        const result = confirm("객실 등록을 취소하시겠습니까?");
+        if(result){
+            modalEl.style.display = 'none';
+        }
+    }
+
+    function addForm() {
+        const result = confirm("객실을 등록하시겠습니까?");
+        if(result)
+        modalEl.style.display = 'none';
+
+        const rmPreview = document.querySelector('#roomPreview');
+        const roomName = document.querySelector('input[name="room_name"]').value;
+        const imgFile = uploadFiles[0]; //객실 등록할 때 넣었던 사진들 중 첫번째 사진을 대표사진으로
+        const reader = new FileReader();
+
+        console.log(roomName);
+
+        /* fileReader.readAsDataURL(file)은 비동기적으로 파일을 읽는 메서드이기 때문에, 파일 읽기가 완료된 후에 onload 이벤트가 실행됩니다.
+         즉, readAsDataURL()을 호출하고 난 후, 이벤트가 발생하면 reader.onload에서 e.target.result를 사용할 수 있게 됩니다.*/
+
+        reader.readAsDataURL(imgFile);
+
+        reader.onload = (e) => {
+            const img = document.createElement('img');
+            const title = document.createElement('h4');
+            const button = document.createElement('button');
+            const box = document.createElement('div');
+
+            img.src = e.target.result;   //이미지파일
+            title.innerHTML=roomName;   //숙소명
+            button.innerHTML='삭제';     // 버튼명
+            img.style.width = '100px';  // 썸네일 크기 설정
+
+            box.appendChild(img);  // 우선 div에 전체 담고 그 div를 preview div 에 다시 담아서 한번에 삭제하기위함..
+            box.appendChild(title);
+            box.appendChild(button);
+            rmPreview.appendChild(box);
+
+            button.addEventListener('click', () =>{
+                rmPreview.removeChild(box);
+                uploadFiles.length = 0;
+            });
+        };
+        uploadFiles.length = 0; //이미지 객체 초기화해야 다시 객실 등록할 때 값을 안가지고 옴
+    }
+
+</script>
+
+
+
+<!-- 체크박스 값 찾아 출력하기 -->
+<script>
+	function getCheckbox(){
+		const getChecked = 'input[name="accom_amenities"]:checked';
+		console.log(getChecked);
+		const amenities = document.querySelectorAll(getChecked);
+
+		let result=''
+		amenities.forEach((amenity,index) =>{
+			if(index == amenities.length-1){
+				result += amenity.value;
+			}
+			else{
+				result += (amenity.value +',');
+			}
+		});
+		console.log('체크박스 목록 : '+ result);
+		document.getElementById('cb-result').textContent=result;
+	}
+
+
+</script>
+
+
+<script src="/assets/js/vendor/modernizr-3.5.0.min.js"></script>
+
+<script src="/assets/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="/assets/js/popper.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+<script src="/assets/js/jquery.slicknav.min.js"></script>
+
+<script src="/assets/js/owl.carousel.min.js"></script>
+<script src="/assets/js/slick.min.js"></script>
+<script src="/assets/js/wow.min.js"></script>
+<script src="/assets/js/animated.headline.js"></script>
+<script src="/assets/js/jquery.magnific-popup.js"></script>
+
+<script src="/assets/js/jquery.scrollUp.min.js"></script>
+<script src="/assets/js/jquery.nice-select.min.js"></script>
+<script src="/assets/js/jquery.sticky.js"></script>
+
+<script src="/assets/js/contact.js"></script>
+<script src="/assets/js/jquery.form.js"></script>
+<script src="/assets/js/jquery.validate.min.js"></script>
+<script src="/assets/js/mail-script.js"></script>
+<script src="/assets/js/jquery.ajaxchimp.min.js"></script>
+
+<script src="/assets/js/plugins.js"></script>
+<script src="/assets/js/main.js"></script>
 
 
 </body>
