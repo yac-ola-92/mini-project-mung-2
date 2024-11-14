@@ -4,6 +4,7 @@ import com.example.mung.domain.Comment_likeDTO;
 import org.apache.ibatis.annotations.*;
 
 @Mapper
+
 public interface Comment_likeMapper {
 
     // 좋아요/싫어요 추가
