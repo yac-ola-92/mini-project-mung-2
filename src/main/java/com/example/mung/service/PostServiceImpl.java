@@ -49,8 +49,16 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public boolean modify(PostDTO post) {
-        return postMapper.update(post) > 0;
+    public boolean modify(PostDTO postDTO) {
+        // 파일 처리: 이미 컨트롤러에서 byte[]로 처리된 파일을 사용
+        // 파일의 변경 여부는 controller에서 처리하고, fileType도 처리됨.
+        try {
+            int result = postMapper.update(postDTO);
+            return result > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override

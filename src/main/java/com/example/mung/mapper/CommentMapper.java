@@ -45,12 +45,12 @@ public interface CommentMapper {
     int insertComment(CommentDTO comment);
 
     // 댓글 수정
-    @Update("UPDATE comment SET content = #{content}, updated_at = NOW() WHERE comment_id = #{comment_id} AND post_id = #{post_id}")
+    @Update("UPDATE comment SET content = #{content} WHERE comment_id = #{comment_id} AND user_id = #{user_id}")
     int updateComment(CommentDTO comment);
 
     // 댓글 삭제
-    @Delete("DELETE FROM comment WHERE comment_id = #{comment_id}")
-    int deleteComment(@Param("comment_id") int comment_id);
+    @Delete("DELETE FROM comment WHERE comment_id = #{comment_id} AND user_id = #{user_id}")
+    int deleteComment(@Param("comment_id") int comment_id, @Param("user_id") int user_id);
 
     // 댓글 ID로 댓글 조회
     @Select("SELECT c.comment_id, c.post_id, c.user_id, c.content, c.created_at, u.nickname, " +
