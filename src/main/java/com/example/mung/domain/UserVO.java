@@ -24,9 +24,7 @@ public class UserVO {
     private LocalDateTime user_birth;
     private int user_gender; // 1,3: 남자 / 2,4: Female,
     private String nickname;
-
     private String role; //USER, HOST, ADMIN
-
     private String profile_image_url;
     private String pet_info; //JSON
     private LocalDateTime created_at;

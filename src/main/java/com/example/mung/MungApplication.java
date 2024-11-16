@@ -7,8 +7,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EnableJpaRepositories(basePackages = {"com.example.mung.repository"})
-@EntityScan(basePackages = {"com.example.mung.entity"})
+
 public class MungApplication {
 
 	public static void main(String[] args) {
