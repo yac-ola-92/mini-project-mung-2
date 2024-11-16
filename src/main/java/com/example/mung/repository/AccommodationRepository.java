@@ -1,5 +1,6 @@
 package com.example.mung.repository;
 
+
 import com.example.mung.domain.AccomDTO;
 import com.example.mung.domain.AccomVO;
 import com.example.mung.entity.Accommodation;
@@ -50,4 +51,5 @@ public interface AccommodationRepository extends JpaRepository<Accommodation, In
                 //등록한 숙소 리스트(호스트용)
 
 }
+
 

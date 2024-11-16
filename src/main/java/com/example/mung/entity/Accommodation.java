@@ -3,6 +3,7 @@ package com.example.mung.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
 import lombok.ToString;
 import org.hibernate.annotations.Type;
 
@@ -56,4 +57,5 @@ public class Accommodation {
 
     @OneToMany(mappedBy = "accommodation" ,fetch = FetchType.LAZY)
     private List<Room> room;
+
 }

@@ -7,9 +7,6 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-/*
-@MapperScan("com.example.mung.mapper")
-*/
 
 public class MungApplication {
 
