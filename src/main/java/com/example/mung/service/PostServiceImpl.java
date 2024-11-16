@@ -1,112 +1,100 @@
 package com.example.mung.service;
 
-import com.example.mung.domain.CommentDTO;
-import com.example.mung.domain.PostDTO;
+import com.example.mung.entity.Post;
 import com.example.mung.exception.PostNotFoundException;
-import com.example.mung.mapper.CommentMapper;
-import com.example.mung.mapper.PostMapper;
-import com.example.mung.service.PostService;
+import com.example.mung.repository.PostRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class PostServiceImpl implements PostService {
 
-    private final PostMapper postMapper;
-    private final CommentMapper commentMapper;
-    private final String uploadDir = "/uploads/";
+    private final PostRepository postRepository;
 
-    public PostServiceImpl(PostMapper postMapper, CommentMapper commentMapper) {
-        this.postMapper = postMapper;
-        this.commentMapper = commentMapper;
+    public PostServiceImpl(PostRepository postRepository) {
+        this.postRepository = postRepository;
     }
 
     @Override
-    public List<PostDTO> findAll() {
-        return postMapper.getList();
+    public List<Post> findAll() {
+        return postRepository.findAll();
     }
 
     @Override
-    public List<PostDTO> findAll(int page, int size) {
-        int offset = (page - 1) * size;
-        return postMapper.getPagedPost(size, offset);
+    public List<Post> findAll(int page, int size) {
+        return postRepository.findAll().stream()
+                .skip((page - 1) * size)
+                .limit(size)
+                .toList(); // Stream API로 페이징 처리
     }
 
     @Override
-    public List<PostDTO> getPostsByCategory(String category) {
-        return postMapper.getPostByCategory(category);
+    public boolean modify(Post post) {
+        Post existingPost = postRepository.findById(post.getPost_id())
+                .orElseThrow(() -> new PostNotFoundException("게시글을 찾을 수 없습니다."));
+        existingPost.setTitle(post.getTitle());
+        existingPost.setContent(post.getContent());
+        existingPost.setUpdated_at(post.getUpdated_at());
+        postRepository.save(existingPost);
+        return true;
     }
 
     @Override
-    @Transactional
-    public boolean modify(PostDTO postDTO) {
-        // 파일 처리: 이미 컨트롤러에서 byte[]로 처리된 파일을 사용
-        // 파일의 변경 여부는 controller에서 처리하고, fileType도 처리됨.
-        try {
-            int result = postMapper.update(postDTO);
-            return result > 0;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+    public boolean createPost(Post post) {
+        postRepository.save(post);
+        return true;
     }
 
     @Override
-    @Transactional
-    public boolean createPost(PostDTO postDTO) {
-        return postMapper.insertPost(postDTO) > 0;
-    }
-
-    @Override
-    @Transactional
     public boolean remove(int post_id) {
-        return postMapper.delete(post_id) > 0;
+        if (postRepository.existsById(post_id)) {
+            postRepository.deleteById(post_id);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public boolean increaseViewCount(int post_id) {
-        return postMapper.increaseViewCount(post_id) > 0;
+        Post post = postRepository.findById(post_id)
+                .orElseThrow(() -> new PostNotFoundException("게시글을 찾을 수 없습니다."));
+        post.setView_count(post.getView_count() + 1);
+        postRepository.save(post);
+        return true;
     }
 
     @Override
-    public List<PostDTO> searchByTitle(String keyword) {
-        return postMapper.findByTitle(keyword);
+    public List<Post> searchByTitle(String keyword) {
+        return postRepository.findByTitle(keyword);
     }
 
     @Override
-    public List<PostDTO> searchByContent(String keyword) {
-        return postMapper.findByContent(keyword);
+    public List<Post> searchByContent(String keyword) {
+        return postRepository.findByContent(keyword);
     }
 
     @Override
-    public List<PostDTO> searchByNickname(String nickname) {
-        return postMapper.findByNickname(nickname);
+    public List<Post> searchByNickname(String nickname) {
+        return postRepository.findByNickname(nickname);
     }
 
     @Override
     public boolean checkPassword(int post_id, String password) {
-        String storedPassword = postMapper.findPasswordById(post_id);
+        String storedPassword = postRepository.findByPostId(post_id);
         return storedPassword != null && storedPassword.equals(password);
     }
 
     @Override
-    public PostDTO readById(int post_id) {
-        PostDTO post = postMapper.getOneById(post_id);
-        if (post == null) {
-            throw new PostNotFoundException("게시글을 찾을 수 없습니다: " + post_id);
-        }
-        List<CommentDTO> comments = commentMapper.getCommentsByPostId(post_id);
-        post.setComments(comments);
-        return post;
+    public Post readById(int post_id) {
+        return postRepository.findById(post_id)
+                .orElseThrow(() -> new PostNotFoundException("게시글을 찾을 수 없습니다."));
+    }
+
+    @Override
+    public List<Post> getPostsByCategory(String category) {
+        return postRepository.getPostByCategory(category);
     }
 }

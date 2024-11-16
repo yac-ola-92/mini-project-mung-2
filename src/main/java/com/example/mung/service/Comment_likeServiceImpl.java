@@ -1,7 +1,7 @@
 package com.example.mung.service;
 
-import com.example.mung.domain.Comment_likeDTO;
-import com.example.mung.mapper.Comment_likeMapper;
+import com.example.mung.entity.Comment_like;
+import com.example.mung.repository.Comment_likeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,31 +11,35 @@ import java.util.Map;
 @Service
 public class Comment_likeServiceImpl implements Comment_likeService {
 
-    private final Comment_likeMapper commentLikeMapper;
+    private final Comment_likeRepository commentLikeRepository;
 
     @Autowired
-    public Comment_likeServiceImpl(Comment_likeMapper commentLikeMapper) {
-        this.commentLikeMapper = commentLikeMapper;
+    public Comment_likeServiceImpl(Comment_likeRepository commentLikeRepository) {
+        this.commentLikeRepository = commentLikeRepository;
     }
 
     @Override
     @Transactional
-    public Map<String, Integer> likeOrDislike(Comment_likeDTO commentLikeDTO) {
-        Comment_likeDTO existing = commentLikeMapper.findByCommentIdAndUserId(commentLikeDTO.getComment_id(), commentLikeDTO.getUser_id());
+    public Map<String, Integer> likeOrDislike(Comment_like commentLike) {
+        // 기존에 좋아요/싫어요가 있는지 확인
+        Comment_like existing = commentLikeRepository.findByCommentIdAndUserId(commentLike.getComment().getCommentId(), commentLike.getUser().getUserId()).stream().findFirst().orElse(null);
 
         if (existing != null) {
-            commentLikeMapper.updateLikeDislike(commentLikeDTO);
+            // 존재하면 업데이트
+            commentLikeRepository.updateLikeDislike(commentLike.getType().name(), commentLike.getComment().getCommentId(), commentLike.getUser().getUserId());
         } else {
-            commentLikeMapper.insertLikeDislike(commentLikeDTO);
+            // 없으면 새로 추가
+            commentLikeRepository.insertLikeDislike(commentLike.getComment().getCommentId(), commentLike.getUser().getUserId(), commentLike.getType().name());
         }
 
-        return getLikeAndDislikeCounts(commentLikeDTO.getComment_id());
+        // 최신 좋아요/싫어요 카운트 반환
+        return getLikeAndDislikeCounts(commentLike.getComment().getCommentId());
     }
 
     @Override
     public Map<String, Integer> getLikeAndDislikeCounts(int comment_id) {
-        int likeCount = commentLikeMapper.getLikeCount(comment_id);
-        int dislikeCount = commentLikeMapper.getDislikeCount(comment_id);
+        int likeCount = commentLikeRepository.getLikeCount(comment_id);
+        int dislikeCount = commentLikeRepository.getDislikeCount(comment_id);
 
         Map<String, Integer> response = new HashMap<>();
         response.put("likeCount", likeCount);
