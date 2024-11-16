@@ -19,6 +19,9 @@ public interface ReviewMapper {
             "JOIN ACCOMMODATION a ON res.accom_id = a.accom_id")
     List<ReviewVO> getAllReviews();
 
+    @Insert("INSERT INTO REVIEW (user_id, rv_id, rating, comment, created_at) " +
+            "VALUES (#{user_id}, #{rv_id}, #{rating}, #{comment}, #{created_at})")
+    void insertReview(ReviewDTO reviewDTO);
 }
 
 
