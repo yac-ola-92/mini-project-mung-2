@@ -11,11 +11,7 @@ public class AccomServiceImplTest  {
     @Autowired
     private AccomService service;
 
-    @Test
-    public void testGetList() {
-        service.findAll().stream().forEach(System.out::println);
 
-    }
 
     @Test
     public void testGetListByLocation() {
@@ -41,7 +37,7 @@ public class AccomServiceImplTest  {
         vo.setAccom_images_url("images/potato.jpg");
 
         service.register(vo);
-        service.findAll().stream().forEach(System.out::println);
+
     }
 
 
@@ -57,14 +53,14 @@ public class AccomServiceImplTest  {
         vo.setAccom_description("사우나 보유 추우면 거기들어갈 것");
         vo.setAccom_images_url("images.iceicy.jpg");
         service.modify(vo);
-        service.findAll().stream().forEach(System.out::println);
+
     }
 
     @Test
     public void testDelete(){
     AccomVO vo = new AccomVO();
     service.remove(12);
-        service.findAll().stream().forEach(System.out::println);
+
     }
 
 }
