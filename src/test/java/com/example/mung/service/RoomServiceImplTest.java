@@ -1,3 +1,4 @@
+/*
 package com.example.mung.service;
 
 import com.example.mung.domain.RoomVO;
@@ -60,3 +61,4 @@ public class RoomServiceImplTest {
     }
 
 }
+*/

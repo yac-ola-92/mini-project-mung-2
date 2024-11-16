@@ -1,5 +1,6 @@
 package com.example.mung.entity;
 
+
 import jakarta.persistence.*;
 import lombok.*;
 import org.json.JSONObject;
@@ -75,4 +76,5 @@ public class User {
 
         return String.format("이름: %s, 종: %s, 나이: %s, 무게: %s", name, type, age, weight);
     }
+
 }

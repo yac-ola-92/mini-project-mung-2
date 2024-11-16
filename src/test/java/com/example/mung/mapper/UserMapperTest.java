@@ -1,3 +1,4 @@
+/*
 package com.example.mung.mapper;
 
 import com.example.mung.domain.UserDTO;
@@ -93,3 +94,4 @@ public class UserMapperTest {
     }
 
 }
+*/

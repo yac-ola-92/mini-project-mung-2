@@ -284,7 +284,7 @@
         <!-- 네비게이션 메뉴 영역 -->
         <nav>
             <ul class="header">
-                <li class="header-li"><a href="/accom_register" style="color: #bc915e;"
+                <li class="header-li"><a href="/registerForm" style="color: #bc915e;"
                                          th:if="${session.userInfo != null and session.userInfo.roles.contains('HOST')}">나의 숙소</a>
                 </li>
                 <li class="header-li"><a href="/postMain" style="color:#bc915e;">게시판</a></li>
@@ -404,7 +404,7 @@
                     <div class="place-cap">
                         <div class="place-cap-top">
                             <span><i class="fas fa-star"></i><span th:text="${vo.rating}"></span> </span>
-                            <a th:href="@{/accom/{accom_id}/byAccomId(accom_id=${vo.accom_id})}"><h3
+                            <a th:href="@{/accom/{accom_id}(accom_id=${vo.accom_id})}"><h3
                                     th:text="${vo.accom_name}"></h3></a>
 
                             <p class="dolor" th:text="${vo.room_price}"><span>/ 1박</span></p>
@@ -512,13 +512,13 @@
     console.log(acc);
 
 </script>-->
-
+<!--
    /* const amenity = acc.accom_amenities;
     const petKind = acc.pet_kind;
     const price = acc.room_price
     console.log(amenity);
     console.log(petKind);
-    console.log(price);*/
+    console.log(price);*/-->
 
 <script src="/assets/js/vendor/modernizr-3.5.0.min.js"></script>
 <script src="/assets/js/vendor/jquery-1.12.4.min.js"></script>
