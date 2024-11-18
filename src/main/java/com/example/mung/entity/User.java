@@ -1,80 +1,81 @@
 package com.example.mung.entity;
 
-
+import com.example.mung.domain.UserVO;
 import jakarta.persistence.*;
-import lombok.*;
-import org.json.JSONObject;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 @Entity
-@Builder
-@Table(name = "user")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private int userId;
-
-    @Column(nullable = false, length = 50)
-    private String userName;
-
-    @Column(nullable = false, unique = true, length = 100)
-    private String userEmail;
-
+    private int user_id;
+    @Column(name = "user_login_id", nullable = false)
+    private String user_login_id;
+    @Column(name = "user_name", nullable = false)
+    private String user_name;
     @Column(nullable = false)
     private String password;
-
-    @Column(nullable = false, length = 15)
-    private String userPhone;
-
-    private LocalDateTime userBirth;
-
-    @Column(nullable = false)
-    private int userGender; // 1,3: 남자 / 2,4: 여성
-
-    @Column(nullable = false, unique = true, length = 50)
     private String nickname;
+    @Column(name = "user_email", nullable = false)
+    private String user_email;
+    @Column(name = "user_phone")
+    private String user_phone;
+    @Column(name = "user_birth")
+    private LocalDateTime user_birth;
+    @Column(name = "user_gender")
+    private int user_gender;
+    @Column(name = "profile_image_url")
+    private String profile_image_url;
+    private String role;
+    @Column(name = "pet_info", nullable = false)
+    private String pet_info;
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime created_at;
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updated_at;
+    @Column(name = "business_number")
+    private String business_number;
+    @Column(name = "business_sns_url")
+    private String business_sns_url;
 
-    @Column(nullable = false)
-    private String role; // USER, HOST, ADMIN
+    public User() {
 
-    private String profileImageUrl;
+    }
 
-    @Lob
-    @Column(columnDefinition = "TEXT")
-    private String petInfo; // JSON 형태로 저장
+    @PrePersist
+    public void prePersist() {
+        this.created_at = LocalDateTime.now();
+    }
 
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @PreUpdate
+    public void preUpdate() {
+        this.updated_at = LocalDateTime.now();
+    }
 
-    private LocalDateTime updatedAt;
 
-    private String businessNumber;
-
-    private String businessSnsUrl;
-
-    @Column(name = "user_login_id", nullable = false, unique = true, length = 50)
-    private String userLoginId;
-
-    // JSON 형태로 저장된 반려동물 정보 변환 메서드
-    public String getPetInfoToString() {
-        if (this.petInfo == null) {
-            return "반려동물 정보가 없습니다.";
-        }
-
-        JSONObject jo = new JSONObject(petInfo);
-        String name = jo.optString("이름", "정보 없음");
-        String type = jo.optString("종", "정보 없음");
-        String age = jo.optString("나이", "정보 없음");
-        String weight = jo.optString("무게", "정보 없음");
-
-        return String.format("이름: %s, 종: %s, 나이: %s, 무게: %s", name, type, age, weight);
+    //엔티티 때문에 만든 변환 생성자
+    public User(UserVO user) {
+        this.user_id = user.getUser_id();
+        this.user_name = user.getUser_name();
+        this.user_email = user.getUser_email();
+        this.password = user.getPassword();
+        this.user_phone = user.getUser_phone();
+        this.user_birth = user.getUser_birth();
+        this.user_gender = user.getUser_gender();
+        this.nickname = user.getNickname();
+        this.role = user.getRole();
+        this.business_number = user.getBusiness_number();
+        this.business_sns_url = user.getBusiness_sns_url();
+        this.profile_image_url = user.getProfile_image_url();
+        this.pet_info = user.getPet_info();
+        this.user_login_id = user.getUser_loginId();
     }
 
 }
+
+
+
+

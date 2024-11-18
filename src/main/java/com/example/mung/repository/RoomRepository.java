@@ -23,7 +23,7 @@ public interface RoomRepository extends JpaRepository<Room, Integer> {
 
                 // 객실 상세 이미지 제외
     @Query("SELECT new com.example.mung.domain.RoomDTO( r.room_id, r.accommodation.accom_id, r.room_name, r.room_type, r.room_price, " +
-            " r.room_info, r.room_amount, r.pet_kind, r.capacity_standard, r.capacity_max) " +
+            " r.room_info, r.room_amount, r.pet_kind, r.capacity_standard, r.capacity_max,r.room_images_url) " +
             "FROM Room r WHERE r.room_id = :room_id")
     public RoomDTO findOne(@Param("room_id") int room_id);
 
