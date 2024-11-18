@@ -29,7 +29,7 @@ public interface AccomMapper {
             "INNER JOIN ROOM r ON a.accom_id = r.accom_id " +
             "LEFT JOIN REVIEW re ON a.user_id = re.user_id" +
             " WHERE a.accom_location LIKE CONCAT('%', #{location}, '%') " +
-            "AND #{capacity} BETWEEN r.capacity_standard AND r.capacity_max;")
+            "AND #{capacity} BETWEEN r.capacity_standard AND r.capacity_max")
     List<AccomDTO> getListByLocation(@Param("location") String location, @Param("capacity") int capacity);
 
     //지역 기반으로 숙소 불러오기 (강원 지역, 경기지역) room tb 와 join 해서 인원수도 비교하여 숙소출력
@@ -49,6 +49,7 @@ public interface AccomMapper {
             "FROM ACCOMMODATION a JOIN REVIEW r ON a.user_id = r.user_id " +
             "WHERE a.accom_id = #{accom_id}")
     List<AccomDTO> getOneByReview(int accom_id);
+
 
     @Select("SELECT a.user_id, a.accom_id, a.accom_name ,a.accom_location, a.accom_phone, a.accom_caution, a.accom_description ," +
             "a.accom_images_url, a.accom_amenities, u.business_number, u.business_sns_url, u.nickname " +

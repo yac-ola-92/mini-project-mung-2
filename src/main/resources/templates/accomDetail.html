@@ -19,9 +19,10 @@
     <link rel="stylesheet" href="/assets/css/nice-select.css">
     <link rel="stylesheet" href="/assets/css/style.css">
 
+    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=1a0da1ad2c34eab93949411401ba1e66&libraries=services"></script>
 
     <style>
-                    /* 헤더 */
+        /* 헤더 */
         .header {
             list-style-type: none;
             margin: 7px 5px 10px 0;
@@ -84,7 +85,7 @@
             width: 50%;
             height: auto;
             max-width: 1000px;
-         }
+        }
         .close {
             position: absolute;
             top: 15px;
@@ -123,6 +124,7 @@
             height : 700px;
             background-color : white;
         }
+
     </style>
 
 </head>
@@ -152,7 +154,7 @@
         <!-- 네비게이션 메뉴 영역 -->
         <nav>
             <ul class="header">
-                <li class="header-li"><a href="/accom_register" style="color: #bc915e;"
+                <li class="header-li"><a href="/registerForm" style="color: #bc915e;"
                                          th:if="${session.userInfo != null and session.userInfo.roles.contains('HOST')}">나의 숙소</a>
                 </li>
                 <li class="header-li"><a href="/postMain" style="color:#bc915e;">게시판</a></li>
@@ -168,7 +170,7 @@
     <section class="blog_area single-post-area section-padding">
         <div class="container">
             <div class="row">
-                <div th:if="${accU != null}" class="col-lg-8 posts-list" style="margin:0 auto;">
+                <div th:if="${accU != null}" class="col-lg-10 posts-list" style="margin:0 auto;">
                     <div class="single-post">
                         <div class="feature-img">
                             <div style="display: grid; grid-template-columns: repeat(2,1fr);grid-template-rows: auto auto; gap : 10px;">
@@ -201,13 +203,13 @@
                             <div class="media post_item" th:if="${roomUrl != null}">
                                 <img id="rm" th:src="${roomUrl[0]}" alt="post" style="height:300px; width:80%; object-fit:cover; margin:20px;">
                                 <div th:if="${roomInfo != null}">
-                                    <div class="room-body" th:each="rm:${roomInfo}">
+                                    <div class="room-body" th:each="rm , status :${roomInfo}">
                                         <div>
+                                            <input type="hidden" id="room_id" th:value="${rm.room_id}">
                                             <h3 id="rm_name" th:text="${rm.room_name}"
-                                                th:data-room-id="${rm.room_id}"
                                                 class="rm-name" style="cursor: pointer;">
                                             </h3><br>
-                                                <!-- 객실 이름 안에 객실 아이디까지 숨겨놓고 같이 서버에 보냄 -->
+                                            <!-- 객실 이름 안에 객실 아이디까지 숨겨놓고 같이 서버에 보냄 -->
                                             <p th:text="${rm.room_info}" style="color:grey;">객실정보</p>
                                         </div>
                                         <div id="rm-price_box" style="position: absolute;">
@@ -221,59 +223,50 @@
                             <h3>숙소 소개</h3>
                             <p th:text="${accU.accom_description}" class="excert"></p>
                         </div>
-                         <hr>
-                       <div>
+                        <hr>
+                        <div>
                             <h3>예약 시 주의사항</h3>
-                            <p th:text="${accU.accom_caution}"></p>
-                        </div><hr>
+                            <pre th:text="${accU.accom_caution}"></pre>
+                        </div>
                     </div>
-                </div>
-
-
-                <div class="comments-area">
-                    <h4>Review</h4>
-                    <div class="comment-list">
-                        <div class="single-comment justify-content-between d-flex">
-                            <div class="user justify-content-between d-flex">
-                                <div class="thumb">
-                                    <img src="" alt="">
-                                </div>
-                                <div class="desc">
-                                    <!--<div th:if="${accR != null}">
-                                        <div th:if=" room : ${accR}">
-                                          <p class="comment" th:text="${room.comment}">
-                                              주절주절
-                                          </p>
+                    <div class="comments-area">
+                        <h4>Review</h4>
+                        <div class="comment-list">
+                            <div class="single-comment justify-content-between d-flex">
+                                <div class="user justify-content-between d-flex">
+                                    <div class="desc">
+                                        <div th:if="${#lists.isEmpty(accR)}">
+                                            <p>리뷰가 없습니다.</p>
                                         </div>
-                                    </div>-->
-                                   <!-- <div class="d-flex justify-content-between">
-                                        <div class="d-flex align-items-center">
-                                            <h5 th:text="${accU.nickname}"></h5>
+                                        <div th:unless="${#lists.isEmpty(accR)}">
+                                        <!--<div th:if="${accR != null}">
+                                            <div th:if=" room : ${accR}">
+                                              <p class="comment" th:text="${room.comment}">
+                                                  주절주절
+                                              </p>
+                                            </div>
+                                        </div>-->
+                                        <!-- <div class="d-flex justify-content-between">
+                                             <div class="d-flex align-items-center">
+                                                 <h5 th:text="${accU.nickname}"></h5>
+                                             </div>
+                                         </div>-->
                                         </div>
-                                    </div>-->
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-
-
-                <div class="col-lg-4">
-                    <div class="blog_right_sidebar">
-
-                        <!-- <div class="single_sidebar_widget search_widget">
-                             <form action="#">
-                                 <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
-                                         type="submit">예약하기 버튼이 될지어다</button>
-                             </form>
-                         </div>   그냥 객실 상세에 추가할 예정 -->
-                        <div class="single_sidebar_widget popular_post_widget">
-                            <h3 class="widget_title">숙소정보</h3>
-                            <span>숙소 전화번호 : </span><p th:text="${accU.accom_phone}"></p>
-                            <span>SNS : </span><p th:text="${accU.business_sns_url}"></p>
-                            <span>숙소 위치 : </span><p id ="acc-add" th:text="${accU.accom_location}"></p>
-                            <div id="map" style="width: 300px; height: 200px;  margin: 0 0 30px 0 ;"></div>
-
+                    <hr>
+                    <div class="col-lg-10" style="margin:auto;">
+                        <div class="blog_right_sidebar" style="width:100%">
+                            <div class="single_sidebar_widget popular_post_widget">
+                                <h3 class="widget_title">숙소정보</h3>
+                                <span>숙소 전화번호 : </span><p th:text="${accU.accom_phone}"></p>
+                                <span>SNS : </span><p th:text="${accU.business_sns_url}"></p>
+                                <span>숙소 위치 : </span><p id ="acc-add" th:text="${accU.accom_location}"></p>
+                                <div id="map" style="width: 430px; height: 200px;  margin: 0 0 30px 0 ;"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -331,9 +324,9 @@
 
 <!--객실 정보 모달창-->
 <div class="modal" id="room-md">
-   <div class="rm-modal">
-       <span class="close" onclick="removeModal()">&times;</span>
-   </div>
+    <div class="rm-modal">
+        <span class="close" onclick="removeModal()">&times;</span>
+    </div>
     <div class="rm-content">
 
     </div>
@@ -353,7 +346,7 @@
     }
 </script>
 
-                <!--   숙소 이미지 모달  -->
+<!--   숙소 이미지 모달  -->
 <script>
     let modal = document.querySelector(".modal");
     const imgs = document.querySelectorAll(".img-fluid");
@@ -382,19 +375,19 @@
         modal.style.display = text;
     }
 </script>
-
-                <!-- 객실 모달창   -->
 <script>
+    // 객실 모달창 ------------
+
     document.querySelector('.rm-name').addEventListener('click', async function(){
-        const room_id = this.parentElement.getAttribute('data-room-id');
-        console.log("클릭 시 받아온 객실의 아이디 :" + room_id);
-        await getRoom(room_id); //클릭 이벤트 구현해서 클릭시 서버에서 정보받는 함수 호출
+        const roomId = document.querySelector('#room_id').value;
+        console.log("클릭 시 받아온 객실의 아이디 :" + roomId);
+        await getRoom(roomId); //클릭 이벤트 구현해서 클릭시 서버에서 정보받는 함수 호출
     });
 
     // 객실 정보 서버에서 받아오기~
-    async function getRoom(room_id){
+    async function getRoom(roomId){
         try{
-            const response = await fetch(`/room/${room_id}`);
+            const response = await fetch(`/room/${roomId}`);
             // 서버에서 응답 받아오기
             if (!response.ok){
                 throw new Error("서버 응답 실패");
@@ -403,14 +396,14 @@
             const data = await response.json();
             //받아온 데이터는 json형식으로 바꾸고 데이터라는 방에 넣어주기
             console.log(data);
-            displayModal(data);
+            displayRoom(data);
         }
         catch (error){
             console.log("오류 발생 : "+ error);
         }
     }
 
-    function displayModal(data){
+    function displayRoom(data){
         const modalEl = document.querySelector('.modal');
         const rmContent = document.querySelector('.rm-content');
 
@@ -419,69 +412,74 @@
 
         imgAry.forEach(url => {
             // 이미지 태그를 생성
+            console.log("이미지 태그 생성중 ")
             const imgEl = document.createElement('img');
             imgEl.src = url.trim();  // URL을 src에 할당 (trim()은 공백을 제거)
             imgEl.style.width = "100%";
+            console.log("이미지 태그 생성완료 ")
 
             // rmContent에 이미지를 추가
             rmContent.appendChild(imgEl);
+            //
         });
 
         rmContent.innerHTML+=
-                            `
-                           <h3>${data.room_name}</h3>
-                           <p>${data.room_info}</p>
-                           <label><p>${data.room_price}</p>/1박 요금</label>
-                           <button>예약하기</button>
-                            `;
+        `
+       <h3>${data.room_name}</h3>
+       <p>${data.room_info}</p>
+       <label><p>${data.room_price}</p>/1박 요금</label>
+       <button>예약하기</button>
+        `;
         modalEl.style.display ='block';
     }
 </script>
 
 <!--지도 api 불러오기-->
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1a0da1ad2c34eab93949411401ba1e66"></script>
 <script>
-    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-    mapOption = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-        level: 3 // 지도의 확대 레벨
-    };
+    // DOM이 완전히 로드된 후 카카오맵 API 로드 및 실행
+    window.addEventListener('DOMContentLoaded', function() {
+        kakao.maps.load(function() {
+            // 지도 생성
+            var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+            mapOption = {
+                center: new kakao.maps.LatLng(33.450701, 126.570667), // 기본 지도 중심좌표 (예시: 제주도)
+                level: 3 // 지도의 확대 레벨
+            };
 
-    // 지도를 생성합니다
-    var map = new kakao.maps.Map(mapContainer, mapOption);
-    console.log(map);
+            var map = new kakao.maps.Map(mapContainer, mapOption);
+            console.log(map);
 
-    // 주소-좌표 변환 객체를 생성합니다
-    var geocoder = new kakao.maps.services.Geocoder();
-    console.log(geocoder);
+            // 주소-좌표 변환 객체 생성
+            var geocoder = new kakao.maps.services.Geocoder();
+            console.log(geocoder);
 
-    var add = document.getElementById('acc-add').value;
-    console.log(add);
+            // 주소 가져오기 (사용자가 입력한 주소)
+            var add = document.getElementById('acc-add').textContent;
+            console.log(add);
 
-    // 주소로 좌표를 검색합니다
-    geocoder.addressSearch(add, function(result, status) {
+            // 주소로 좌표를 검색합니다
+            geocoder.addressSearch(add, function(result, status) {
+                if (status === kakao.maps.services.Status.OK) {
+                    // 검색된 결과의 좌표
+                    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
-        // 정상적으로 검색이 완료됐으면
-        if (status === kakao.maps.services.Status.OK) {
+                    // 마커 생성
+                    var marker = new kakao.maps.Marker({
+                        map: map,
+                        position: coords
+                    });
 
-            var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                    // 인포윈도우 생성
+                    var infowindow = new kakao.maps.InfoWindow({
+                        content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+                    });
+                    infowindow.open(map, marker);
 
-
-            // 결과값으로 받은 위치를 마커로 표시합니다
-            var marker = new kakao.maps.Marker({
-                map: map,
-                position: coords
+                    // 지도 중심 이동
+                    map.setCenter(coords);
+                }
             });
-
-            // 인포윈도우로 장소에 대한 설명을 표시합니다
-            var infowindow = new kakao.maps.InfoWindow({
-                content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
-            });
-            infowindow.open(map, marker);
-
-            // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-            map.setCenter(coords);
-        }
+        });
     });
 </script>
 

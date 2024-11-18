@@ -1,4 +1,5 @@
 package com.example.mung.repository;
+
 import com.example.mung.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,5 +18,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     // User 수정 save() 사용
 
     // User 강아지 정보 수정
+
 
 }

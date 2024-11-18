@@ -258,7 +258,7 @@
                                 <h2 class="blog-head" th:text="${post.title}" style="color: #2d2d2d;">게시글 제목</h2>
                             </a>
                             <ul class="blog-info-link">
-                                <li><span th:text="${post.nickname}">작성자</span></li>
+                                <li><span th:text="${post.user.nickname}">작성자</span></li>
                                 <li><span th:text="${#temporals.format(post.created_at, 'yyyy-MM-dd HH:mm')}">작성일</span></li>
                                 <li><span th:text="${post.view_count}">조회수</span></li>
                             </ul>
