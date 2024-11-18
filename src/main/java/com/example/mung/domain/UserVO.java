@@ -2,6 +2,7 @@ package com.example.mung.domain;
 
 import com.example.mung.domain.transfer.PetInfo;
 import com.example.mung.domain.transfer.Role;
+import com.example.mung.entity.UserEntity;
 import lombok.*;
 import org.json.JSONObject;
 
@@ -64,6 +65,24 @@ public class UserVO {
         this.user_loginId = user_loginId;
         this.password = password;
     }
+    //엔티티 때문에 만든 변환 생성자
+    public UserVO(UserEntity user) {
+        this.user_id = user.getUser_id();
+        this.user_name = user.getUser_name();
+        this.user_email = user.getUser_email();
+        this.password = user.getPassword();
+        this.user_phone = user.getUser_phone();
+        this.user_birth = user.getUser_birth();
+        this.user_gender = user.getUser_gender();
+        this.nickname = user.getNickname();
+        this.role = user.getRole(); // 초기화
+        this.business_number = user.getBusiness_number();
+        this.business_sns_url = user.getBusiness_sns_url();
+        this.profile_image_url = user.getProfile_image_url();
+        this.pet_info = user.getPet_info();
+        this.user_loginId = user.getUser_login_id();
+    }
+
 
     // 추가적인 역할 배열 설정
     public void setRole(String role) {

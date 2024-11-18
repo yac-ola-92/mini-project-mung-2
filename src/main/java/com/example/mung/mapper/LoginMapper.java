@@ -17,7 +17,7 @@ import java.util.Optional;
 public interface LoginMapper {
 
     //USER 테이블 안에 있는 컬럼 전체
-    //user_name //user_loginId //user_email //password //user_phone //user_birth //user_gender //nickname //role //user_address
+    //user_name //user_login_id //user_email //password //user_phone //user_birth //user_gender //nickname //role //user_address
     //profile_image_url //pet_info //business_number //business_sns_url
 
 
@@ -63,7 +63,7 @@ public interface LoginMapper {
 
 
     //일반 회원 로그인
-    //@Select("select * from user where user_loginId =#{user_loginId} and password=#{password}")
+    //@Select("select * from user where user_login_id =#{user_login_id} and password=#{password}")
    // public Optional<UserVO> generalLogin(LoginDTO dto);
 
     //일반 회원 아이디 찾기
@@ -71,10 +71,10 @@ public interface LoginMapper {
 //    public String generalFindId();
 
     //사업자 회원 회원가입
-//    @Insert("insert into user (user_name,user_loginId,user_email,password,user_phone,user_birth,user_gender,nickname,role,user_address" +
+//    @Insert("insert into user (user_name,user_login_id,user_email,password,user_phone,user_birth,user_gender,nickname,role,user_address" +
 //            ",business_number,business_sns_url) " +
 //            "values " +
-//            "(#{user_name},#{user_loginId},#{user_email},#{password},#{user_phone},#{user_birth},#{user_gender},#{nickname},#{role},#{user_address}" +
+//            "(#{user_name},#{user_login_id},#{user_email},#{password},#{user_phone},#{user_birth},#{user_gender},#{nickname},#{role},#{user_address}" +
 //            ",#{business_number},#{business_sns_url})")
 //    public boolean businessJoin(UserDTO dto);
 
@@ -91,8 +91,8 @@ public interface LoginMapper {
 //    public boolean passwordChange();
 
 //    //아이디로 모든 아이디 정보 조회
-//    @Select("select * from user where user_loginId = #{user_loginId}")
-//    Optional<UserVO> findIdAll(String user_loginId);
+//    @Select("select * from user where user_login_id = #{user_login_id}")
+//    Optional<UserVO> findIdAll(String user_login_id);
 
 }
 
