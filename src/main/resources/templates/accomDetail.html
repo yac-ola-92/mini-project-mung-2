@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="/assets/css/nice-select.css">
     <link rel="stylesheet" href="/assets/css/style.css">
 
+
     <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=1a0da1ad2c34eab93949411401ba1e66&libraries=services"></script>
 
     <style>
@@ -33,6 +34,8 @@
             float: left;
             margin-left : 10px;
         }
+
+
         #login , #logout {
             background-color: #bc915e;
             border: none;
@@ -102,10 +105,24 @@
         }
         /*       숙소 편의시설         */
         .list{
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
+            display : flex;
+            flex-direction: row;
+            flex-wrap:wrap;
+        }
+
+        .amenList{
+            border-radius: 5px;
+            display: inline;
+            margin-right: 10px;
+            background-color: #bc915e;
+            padding: 7px;
+            color: white;
+        }
+
+                /* 숙소,객실 caution style*/
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
 
         /* 객실 정보 모달창  */
@@ -117,13 +134,29 @@
 
             display : flex;
             flex-direction : column;
-            justify-content : center;
             align-items : center;
 
-            width : 600px;
+            width : 800px;
             height : 700px;
             background-color : white;
+            overflow-y: auto
         }
+
+        .rooms-box{
+            display: flex;
+            flex-direction: column;
+        }
+
+        .room-body {
+            display : flex;
+        }
+        #rm-price-box{
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+        }
+
+
 
     </style>
 
@@ -144,7 +177,7 @@
 <!-- Preloader Start -->
 <header>
     <!-- Header Start -->
-    <div class="header-bottom header-sticky"
+    <div class="header-bottom header-sticky" id="header"
          style="background-color:#fff9f0; height:150px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
         <!-- 로고 영역 -->
         <div class="logo" style="margin-bottom: 20px;">
@@ -155,7 +188,7 @@
         <nav>
             <ul class="header">
                 <li class="header-li"><a href="/registerForm" style="color: #bc915e;"
-                                         th:if="${session.userInfo != null and session.userInfo.roles.contains('HOST')}">나의 숙소</a>
+                             th:if="${session.userInfo != null and session.userInfo.roles.contains('HOST')}">나의 숙소</a>
                 </li>
                 <li class="header-li"><a href="/postMain" style="color:#bc915e;">게시판</a></li>
                 <li class="header-li"><a href="/myPage" style="color:#bc915e;">마이페이지</a></li>
@@ -176,35 +209,47 @@
                             <div style="display: grid; grid-template-columns: repeat(2,1fr);grid-template-rows: auto auto; gap : 10px;">
                                 <div id="img-item" th:each="image : ${imgUrl}">
                                     <img class="img-fluid" th:src="${image}" alt="accomImg"
-                                         style="width:100%; height:220px; object-fit:cover;">
+                                         style="width:450px; height:220px; object-fit:cover;">
                                 </div>
                             </div>
                         </div>
                         <div class="blog_details">
                             <div>
-                                <h1 th:text="${accU.accom_name}">숙소이름</h1>
+                                <h1 th:text="${accU.accom_name}" id="acc-name">숙소이름</h1>
                                 <ul class="blog-info-link mt-3 mb-4">
-                                    <li th:each="rmi : ${roomInfo}" th:text="${rmi.pet_kind}">
-                                        <i class="fi fi-tr-cat-dog"></i>펫 종</li>
-                                    <li th:each="ar : ${accR}" th:text="${ar.rating}"><i class="fas fa-star"></i>별점</li>
+                                    <li style="display: flex; align-items: center; margin-bottom: 8px;">
+                                        <img src="/assets/img/logo/kind_dog.png" style="margin-right:5px;" width="24" height="24">
+                                        <span th:text="${roomInfo[0].pet_kind}" style="font-size:large">견종</span>
+                                    </li>
+                                    <li style="display: flex; align-items: center;">
+                                        <i class="fas fa-star" style="margin-right: 5px; color:gold; width:24px;"></i>
+                                        <span th:if="${accR != null and #lists.size(accR) > 0}"
+                                              th:text="${accR[0].rating != null ? accR[0].rating : '별점없음'}"
+                                              style="font-size:large">별점</span><!--rating이 비어있을 경우-->
+                                        <span th:if="${accR == null or #lists.size(accR) == 0}"
+                                              style="font-size:large">별점없음</span> <!--리스트가 비어있을 경우-->
+
+                                    </li>
                                 </ul>
+
                             </div>
                         </div>
                         <hr>
                         <div class="blog_details">
                             <h4 class="widget_title">편의시설</h4>
-                            <ul class="list" th:each="amen : ${amenity}">
-                                <li class="amenList" th:text="${amen}">
+                            <ul class="list">
+                                <li class="amenList" th:each="amen : ${amenity}"  th:text="${amen}">
                                 </li>
                             </ul>
                         </div><hr>
                         <div class="blog_details" style="padding-top:10px;">
                             <h3 class="room_title" style="margin-bottom:20px;">객실</h3>
-                            <div class="media post_item" th:if="${roomUrl != null}">
-                                <img id="rm" th:src="${roomUrl[0]}" alt="post" style="height:300px; width:80%; object-fit:cover; margin:20px;">
-                                <div th:if="${roomInfo != null}">
-                                    <div class="room-body" th:each="rm , status :${roomInfo}">
-                                        <div>
+                            <div class="rooms-box" th:if="${roomInfo != null}">
+                                <div th:each="rm , status :${roomInfo}">
+                                    <div class="room-body">
+                                        <img id="rm" th:src="${rm.room_images_url.split(',')[0]}"
+                                             style="height:150px; width:150px; object-fit:cover; margin:20px;">
+                                        <div style="margin-top:20px;">
                                             <input type="hidden" id="room_id" th:value="${rm.room_id}">
                                             <h3 id="rm_name" th:text="${rm.room_name}"
                                                 class="rm-name" style="cursor: pointer;">
@@ -212,13 +257,14 @@
                                             <!-- 객실 이름 안에 객실 아이디까지 숨겨놓고 같이 서버에 보냄 -->
                                             <p th:text="${rm.room_info}" style="color:grey;">객실정보</p>
                                         </div>
-                                        <div id="rm-price_box" style="position: absolute;">
+                                        <div id="rm-price-box">
                                             <h4 th:text="${rm.room_price}"></h4><span style="color:grey;">/1박 요금</span>
                                         </div>
                                     </div>
+                                    <hr>
                                 </div>
                             </div>
-                        </div><hr>
+                        </div>
                         <div>
                             <h3>숙소 소개</h3>
                             <p th:text="${accU.accom_description}" class="excert"></p>
@@ -226,7 +272,7 @@
                         <hr>
                         <div>
                             <h3>예약 시 주의사항</h3>
-                            <pre th:text="${accU.accom_caution}"></pre>
+                            <pre id="accom-caution" th:text="${accU.accom_caution}"></pre>
                         </div>
                     </div>
                     <div class="comments-area">
@@ -325,10 +371,10 @@
 <!--객실 정보 모달창-->
 <div class="modal" id="room-md">
     <div class="rm-modal">
-        <span class="close" onclick="removeModal()">&times;</span>
-    </div>
-    <div class="rm-content">
-
+        <span class="close">&times;</span>
+        <div class="rm-content">
+            <div id="rm-img" style="width : 800px;"></div>
+        </div>
     </div>
 </div>
 
@@ -348,49 +394,46 @@
 
 <!--   숙소 이미지 모달  -->
 <script>
-    let modal = document.querySelector(".modal");
-    const imgs = document.querySelectorAll(".img-fluid");
-    const modalImg = document.querySelector(".modal-content");
-    const span = document.querySelector(".close");
+
+    const header = document.querySelector('#header');
+    const accModal = document.querySelector('#accom-md');
+    const imgs = document.querySelectorAll('.img-fluid');
+    const modalImg = document.querySelector('.modal-content');
 
     imgs.forEach((img) => {
         img.addEventListener('click', ()=>{
-            modalDisplay("block");
+            accModal.style.display ='block';
             modalImg.src = img.src; //모달에 이미지 삽입
+            header.style.zIndex ='-1';
+            document.body.style.overflow = 'hidden';
         });
     });
 
-    // 모달창 닫기
-    span.addEventListener('click', ()=>{
-        modalDisplay("none");
-        modalImg.src = '';//닫을 때 데이터 초기화
-    });
-    modal.addEventListener('click', ()=>{
-        modalDisplay("none");
-        modalImg.src='';
-    });
 
-    //모달 열기 닫기 설정 함수
-    function modalDisplay(text){
-        modal.style.display = text;
-    }
-</script>
-<script>
     // 객실 모달창 ------------
 
-    document.querySelector('.rm-name').addEventListener('click', async function(){
-        const roomId = document.querySelector('#room_id').value;
-        console.log("클릭 시 받아온 객실의 아이디 :" + roomId);
-        await getRoom(roomId); //클릭 이벤트 구현해서 클릭시 서버에서 정보받는 함수 호출
+    document.querySelectorAll('.rm-name').forEach(function(rmName){
+        rmName.addEventListener('click', async function(){
+            const roomId = rmName.closest('div').querySelector('#room_id').value;
+            //각 객실명의 부모 div 안에 있는 룸아이디를 찾기위
+            console.log("클릭 시 받아온 객실의 아이디 :" + roomId);
+            await getRoom(roomId); //클릭 이벤트 구현해서 클릭시 서버에서 정보받는 함수 호출
+        });
     });
+
 
     // 객실 정보 서버에서 받아오기~
     async function getRoom(roomId){
+        console.log('객실 정보 서버에서 받아오는 함수 시작');
         try{
             const response = await fetch(`/room/${roomId}`);
+
+            console.log('Response status:', response.status);
+            console.log('Response OK:', response.ok);
+
             // 서버에서 응답 받아오기
             if (!response.ok){
-                throw new Error("서버 응답 실패");
+                throw new Error('서버 응답 실패');
             }
 
             const data = await response.json();
@@ -399,38 +442,90 @@
             displayRoom(data);
         }
         catch (error){
-            console.log("오류 발생 : "+ error);
+            console.log('오류 발생 : '+ error);
         }
     }
 
+    const rmContent = document.querySelector('.rm-content');
+    const rmImg = document.querySelector('#rm-img');
+
     function displayRoom(data){
-        const modalEl = document.querySelector('.modal');
-        const rmContent = document.querySelector('.rm-content');
+        const rmModal = document.querySelector('#room-md');
+        const header = document.querySelector('#header');
+        header.style.zIndex ='-1';
+        document.body.style.overflow = 'hidden';
+
+        const caution = document.getElementById('accom-caution').textContent;
+        console.log(caution);
 
         let imgAry = data.room_images_url.split(',');
         console.log(imgAry);
+        let imgHTML = '';
 
         imgAry.forEach(url => {
             // 이미지 태그를 생성
-            console.log("이미지 태그 생성중 ")
-            const imgEl = document.createElement('img');
-            imgEl.src = url.trim();  // URL을 src에 할당 (trim()은 공백을 제거)
-            imgEl.style.width = "100%";
-            console.log("이미지 태그 생성완료 ")
-
-            // rmContent에 이미지를 추가
-            rmContent.appendChild(imgEl);
-            //
+            console.log('이미지 태그 생성중')
+            imgHTML += `
+        <img src="${url.trim()}" style="width: 300px; height: 300px; margin: 30px;" />
+    `;
+            console.log('이미지 태그 생성완료')
         });
 
         rmContent.innerHTML+=
         `
-       <h3>${data.room_name}</h3>
-       <p>${data.room_info}</p>
-       <label><p>${data.room_price}</p>/1박 요금</label>
-       <button>예약하기</button>
+       <div style="background:#bc915e; height:60px; text-align:center; padding-top:10px;">
+           <h2 style="color:white;">객실 정보</h2>
+       </div>
+       <div style="display:flex; align-items:center; justify-content:center;">
+           ${imgHTML}
+       </div>
+       <div style="padding:80px;">
+       <h3>${data.room_name}</h3><br>
+           <label><p>${data.room_price}</p>/1박 요금</label>
+           <button style="background:#bc915e; border:none; padding:15px; border-radius:5px; float:right;"
+                onclick="">예약하기</button>
+           <hr>
+           <p>${data.room_info}</p>
+           <hr>
+           <h5>숙소 예약 시 주의사항</h5>
+           <pre>${caution}</pre>
+       </div>
         `;
-        modalEl.style.display ='block';
+        rmModal.style.display ='block';
+    }
+
+    function closeModal(){
+        const modals = document.querySelectorAll('.modal');
+        modals.forEach(modal => {
+            modal.style.display='none';
+        });
+
+        header.style.zIndex='1';
+        document.body.style.overflow = 'auto';
+
+        if(modalImg){
+            modalImg.src = '';//닫을 때 데이터 초기화
+        }
+        if(rmContent){
+            rmContent.innerHTML = '';
+        }
+    }
+
+    function addEvent(){ //이벤트 리스너 넣어주는 함수
+        const closeBtn = document.querySelectorAll('.close');
+        closeBtn.forEach(close => {
+            close.addEventListener('click',closeModal);
+        }); //위 클로즈 버튼 클릭시 닫힐 수 있게
+
+        const modalBacks = document.querySelectorAll('.modal');
+
+        modalBacks.forEach(modalBack => {
+            modalBack.addEventListener('click', (event) =>{
+                if(event.target === modalBack){
+                    closeModal();
+                }  //모달 검은부분 클릭 시 모달창 닫힘
+            });
+        });
     }
 </script>
 
@@ -438,6 +533,8 @@
 <script>
     // DOM이 완전히 로드된 후 카카오맵 API 로드 및 실행
     window.addEventListener('DOMContentLoaded', function() {
+        addEvent();
+
         kakao.maps.load(function() {
             // 지도 생성
             var mapContainer = document.getElementById('map'), // 지도를 표시할 div
@@ -469,9 +566,11 @@
                         position: coords
                     });
 
+                    var naming = document.getElementById('acc-name').textContent;
+
                     // 인포윈도우 생성
                     var infowindow = new kakao.maps.InfoWindow({
-                        content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+                        content: '<div style="width:150px;text-align:center;padding:6px 0;">'+ naming +'</div>'
                     });
                     infowindow.open(map, marker);
 

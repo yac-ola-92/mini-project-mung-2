@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.Optional;
 
+
 public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     // User 전체 조회
     List<UserEntity> findAll();
@@ -18,6 +19,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     // User 수정 save() 사용
 
     // User 강아지 정보 수정
+
 
 
 }

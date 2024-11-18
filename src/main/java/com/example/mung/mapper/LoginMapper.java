@@ -22,30 +22,30 @@ public interface LoginMapper {
 
 
     //아이디 전체 출력하여 담기
-    @Select("select user_loginId from user")
+    @Select("select user_login_id from user")
     List<String> idList();
 
     //아이디 비밀번호로 정보 조회
-    @Select("select * from user where user_loginId =#{user_loginId} and password = #{password}")
+    @Select("select * from user where user_login_id =#{user_loginId} and password = #{password}")
     UserVO loginActive(LoginDTO dto);
 
     // User 아이디 중복 조회할 때 사용할 메서드
-    @Select("select count(*) from user where user_loginId = #{user_loginId}")
+    @Select("select count(*) from user where user_login_id = #{user_loginId}")
     boolean loginByIdCheck(String user_loginId);
 
     //아이디로 존재 여부 확인 -> 이름 출력
-    @Select("select user_name from user where user_loginId = #{user_loginId}")
+    @Select("select user_name from user where user_login_id = #{user_loginId}")
     String nameCheck(String user_loginId);
 
     //일반 회원 회원가입
-    @Insert("insert into user (user_name,user_loginId,user_email,password,user_phone,user_birth,user_gender,nickname,role) " +
+    @Insert("insert into user (user_name,user_login_id,user_email,password,user_phone,user_birth,user_gender,nickname,role) " +
             "values " +
             "(#{user_name},#{user_loginId},#{user_email},#{password},#{user_phone},#{user_birth},#{user_gender},#{nickname},#{role})")
     boolean generalJoin(UserDTO dto);
 
 
     //아이디 찾기
-    @Select("select user_loginId from user where user_name = #{name} and user_email = #{email} and user_birth = #{birth}")
+    @Select("select user_login_id from user where user_name = #{name} and user_email = #{email} and user_birth = #{birth}")
     String findId(String name, String email, LocalDateTime birth);
 
     //비번 수정 전 아이디 확인

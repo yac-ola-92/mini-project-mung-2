@@ -22,14 +22,14 @@ public class Comment_likeServiceImpl implements Comment_likeService {
     @Transactional
     public Map<String, Integer> likeOrDislike(Comment_like commentLike) {
         // 기존에 좋아요/싫어요가 있는지 확인
-        Comment_like existing = commentLikeRepository.findByCommentIdAndUserId(commentLike.getComment().getCommentId(), commentLike.getUser().getUserId()).stream().findFirst().orElse(null);
+        Comment_like existing = commentLikeRepository.findByCommentIdAndUserId(commentLike.getComment().getCommentId(), commentLike.getUser().getUser_id()).stream().findFirst().orElse(null);
 
         if (existing != null) {
             // 존재하면 업데이트
-            commentLikeRepository.updateLikeDislike(commentLike.getType().name(), commentLike.getComment().getCommentId(), commentLike.getUser().getUserId());
+            commentLikeRepository.updateLikeDislike(commentLike.getType().name(), commentLike.getComment().getCommentId(), commentLike.getUser().getUser_id());
         } else {
             // 없으면 새로 추가
-            commentLikeRepository.insertLikeDislike(commentLike.getComment().getCommentId(), commentLike.getUser().getUserId(), commentLike.getType().name());
+            commentLikeRepository.insertLikeDislike(commentLike.getComment().getCommentId(), commentLike.getUser().getUser_id(), commentLike.getType().name());
         }
 
         // 최신 좋아요/싫어요 카운트 반환

@@ -47,7 +47,7 @@ public class CommentController {
 
         // 댓글 작성자 정보 추가
         User user = new User(); // User 객체 생성
-        user.setUserId(userInfo.getUser_id()); // user_id 설정
+        user.setUser_id(userInfo.getUser_id()); // user_id 설정
         comment.setUser(user); // Comment 객체에 User 설정
 
         // 댓글이 속한 게시물 정보 설정

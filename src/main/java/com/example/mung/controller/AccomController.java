@@ -84,29 +84,6 @@ public String accom_registration(Accommodation accom ) {
 }
     //등록했으면 다시 숙소 리스트로 돌아감
 
-
-/*@GetMapping("/myAccom/edit/{accom_id}") //수정할 숙소 불러오기
-//url 요청 접수
-public String accom_edit(@PathVariable int accom_id, Model model){ //id값을 매개변수로 받음
-    AccomDTO acc = service.readByAccomId(accom_id);
-    //수정할 데이터들을 받아옴
-    if(acc!=null){
-        // 모델에 데이터 등록
-        model.addAttribute("accInfo",acc);
-    }else {
-        return "redirect:/error/404";
-
-    }
-    return "update_accom";
-}
-
-
-@PostMapping("/accom_update") //숙소 수정
-public String accom_update(Accommodation accom){
-    service.modify(accom);
-    return "redirect:/myPage "; // 마이페이지의 숙소리스트로 돌아갈거임
-}*/
-
 @GetMapping("/accomByLocation") //검색 시 출력될 숙소리스트
 public String accom_list(Model model, HttpServletRequest req) {
     // 클라이언트로부터 위치 정보,날짜,인원수를 받아온다
@@ -182,6 +159,7 @@ public String accom_list(Model model, HttpServletRequest req) {
     System.out.println(rv_start.format(dtf));
     System.out.println(rv_end.format(dtf));
     System.out.println(capacity);
+    System.out.println(listAccom);
     return "accomList";
 }
 
@@ -193,6 +171,13 @@ public String accom_list(Model model, HttpServletRequest req) {
         List<AccomDTO> dtoR = service.readByReview(accom_id);
         List<Room> rmDto = rService.readByAccom_id(accom_id);
         RoomDTO rmDtoUrl = rService.readUrl(accom_id);
+
+        for(AccomDTO dto : dtoR){
+            if(dto.getRating()==0){
+                dto.setRating(0);
+            }
+        }
+
         System.out.println("User와 쪼인 C:"+ dtoU);
         System.out.println("Review와 쪼인 C :"+ dtoR);
         System.out.println("room 정보 C: "+rmDto);
@@ -210,17 +195,4 @@ public String accom_list(Model model, HttpServletRequest req) {
             }
         return "accomDetail"; // 상세 페이지 반환
     }
-
-
-
-@PostMapping("/accom_delete") //숙소 삭제
-public String  accom_delete(@RequestParam int accom_id){
-    service.remove(accom_id);
-    return "redirect:다시리스트페이지로";
-}
-
-
-
-
-
 }

@@ -15,16 +15,16 @@ public interface AccomMapper {
 
 
 
-    @Select("SELECT a.accom_id, a.accom_name, a.accom_location, a.accom_images_url, r.room_price, r.pet_kind, re.rating " +
+    @Select("SELECT a.accom_id, a.accom_name, a.accom_location, a.accom_images_url, r.room_price, r.pet_kind, re.rating, a.accom_amenities " +
             "FROM ACCOMMODATION a JOIN ROOM r ON a.accom_id = r.accom_id " +
             "LEFT JOIN REVIEW re ON a.user_id = re.user_id " +
             "ORDER BY re.rating DESC")
     List<AccomDTO> getListByRating();
 
     // 메인페이지에 별점 높은 숙소들을 표시하기 위함
-    //public Page<AccomDTO> getListByRating();
 
-    @Select("SELECT a.accom_id, a.accom_name, a.accom_location, a.accom_images_url, re.rating, r.room_price, r.pet_kind " +
+
+    @Select("SELECT a.accom_id, a.accom_name, a.accom_location, a.accom_images_url, re.rating, r.room_price, r.pet_kind, a.accom_amenities " +
             "FROM ACCOMMODATION a " +
             "INNER JOIN ROOM r ON a.accom_id = r.accom_id " +
             "LEFT JOIN REVIEW re ON a.user_id = re.user_id" +

@@ -36,7 +36,7 @@ public class Comment_likeController {
         commentLike.getComment().setCommentId(comment_id);  // 댓글 ID 설정
 
         commentLike.setUser(new User());  // 사용자 객체 생성
-        commentLike.getUser().setUserId(userInfo.getUserId());  // 사용자 ID 설정
+        commentLike.getUser().setUser_id(userInfo.getUser_id());  // 사용자 ID 설정
 
         if ("like".equalsIgnoreCase(type)) {
             commentLike.setType(Comment_like.Type.LIKE);
