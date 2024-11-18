@@ -2,14 +2,13 @@ package com.example.mung.repository;
 
 import com.example.mung.entity.Comment;
 import com.example.mung.entity.Post;
-import com.example.mung.entity.User;
+import com.example.mung.entity.UserEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.Rollback;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -38,7 +37,7 @@ public class CommentRepositoryTest {
     @DisplayName("댓글 등록 테스트")
     void testInsertComment() {
         Post existingPost = postRepository.findById(1).orElseThrow(() -> new IllegalStateException("Post not found"));
-        User existingUser = userRepository.findById(1).orElseThrow(() -> new IllegalStateException("User not found"));
+        UserEntity existingUser = userRepository.findById(1);
 
         Comment comment = Comment.builder()
                 .content("This is a test comment.")

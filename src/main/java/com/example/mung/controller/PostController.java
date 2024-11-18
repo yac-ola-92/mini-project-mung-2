@@ -1,7 +1,7 @@
 package com.example.mung.controller;
 
 import com.example.mung.entity.Post;
-import com.example.mung.entity.User;
+import com.example.mung.entity.UserEntity;
 import com.example.mung.service.PostService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -28,14 +28,14 @@ public class PostController {
         this.postService = postService;
     }
 
-    private User getLoginUser(HttpSession session) {
-        return (User) session.getAttribute("userInfo");
+    private UserEntity getLoginUser(HttpSession session) {
+        return (UserEntity) session.getAttribute("userInfo");
     }
 
     // 게시판 메인
     @GetMapping("/postMain")
     public String postMain(HttpSession session, Model model) {
-        User userInfo = getLoginUser(session);
+        UserEntity userInfo = getLoginUser(session);
         List<Post> posts = postService.findAll();
         model.addAttribute("posts", posts);
         if (userInfo != null) {
@@ -73,7 +73,7 @@ public class PostController {
     // 게시글 작성 페이지로 이동 (GET 요청 처리)
     @GetMapping("/new")
     public String postWritePage(HttpSession session, Model model) {
-        User userInfo = getLoginUser(session);
+        UserEntity userInfo = getLoginUser(session);
         if (userInfo == null) {
             return "redirect:/login";
         }
@@ -90,7 +90,7 @@ public class PostController {
         if (bindingResult.hasErrors()) {
             return "postWrite";
         }
-        User userInfo = getLoginUser(session);
+        UserEntity userInfo = getLoginUser(session);
         if (userInfo == null) {
             return "redirect:/login";
         }
@@ -144,7 +144,7 @@ public class PostController {
     // 게시글 수정 페이지
     @GetMapping("/update/{post_id}")
     public String updatePostPage(@PathVariable int post_id, HttpSession session, Model model) {
-        User userInfo = getLoginUser(session);
+        UserEntity userInfo = getLoginUser(session);
         if (userInfo == null) {
             return "redirect:/login";
         }
@@ -160,7 +160,7 @@ public class PostController {
     // 게시글 삭제 처리
     @PostMapping("/delete/{post_id}")
     public String deletePost(@PathVariable int post_id, HttpSession session) {
-        User userInfo = getLoginUser(session);
+        UserEntity userInfo = getLoginUser(session);
         if (userInfo == null) {
             return "redirect:/login";
         }

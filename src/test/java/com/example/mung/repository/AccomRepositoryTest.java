@@ -2,7 +2,7 @@ package com.example.mung.repository;
 
 import com.example.mung.domain.AccomDTO;
 import com.example.mung.entity.Accommodation;
-import com.example.mung.entity.User;
+import com.example.mung.entity.UserEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +60,7 @@ public class AccomRepositoryTest {
     @Test
     void register(){
         Accommodation accom = new Accommodation();
-        User user = new User();
+        UserEntity user = new UserEntity();
         user.setUser_id(3); //user_id 가 외래키라서 set할 때 user 객체를 따로 만들어서 설정
         accom.setUser(user);
         accom.setAccom_name("뭉개뭉개인강릉");
@@ -84,7 +84,7 @@ public class AccomRepositoryTest {
    @Test
     void update(){
        Accommodation accom = new Accommodation();
-       User user = new User();
+       UserEntity user = new UserEntity();
        accom.setAccom_id(1);
        user.setUser_id(1); //user_id 가 외래키라서 set할 때 user 객체를 따로 만들어서 설정
        accom.setUser(user);

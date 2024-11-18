@@ -29,7 +29,7 @@ public interface AccommodationRepository extends JpaRepository<Accommodation, In
 
             // 똑같은 숙소를 등록했는지 확인하는용
     @Query("SELECT new com.example.mung.domain.AccomDTO( a.accom_name, a.accom_location) FROM Accommodation a " +
-            "WHERE a.user.user_id = :user_id AND accom_name = :accom_name")
+            "WHERE a.user.user_id = :user_id AND a.accom_name = :accom_name")
     public List<AccomDTO> findByUserIdAndAccomName(@Param("user_id") int user_id , @Param("accom_name") String accom_name);
 
 
@@ -42,7 +42,7 @@ public interface AccommodationRepository extends JpaRepository<Accommodation, In
             //숙소 수정 시 불러올 데이터*/
     @Query("SELECT new com.example.mung.domain.AccomDTO(a.accom_id, a.accom_name ,a.accom_location, a.accom_phone, a.accom_caution," +
             " a.accom_description, a.accom_images_url, a.accom_amenities) "+
-           "FROM Accommodation a WHERE accom_id = :accom_id")
+           "FROM Accommodation a WHERE a.accom_id = :accom_id")
     public AccomDTO findByAccomId(@Param("accom_id") int accom_id);
 
    @Query("SELECT new com.example.mung.domain.AccomDTO(a.user.user_id,a.accom_id, a.accom_name, a.accom_images_url)" +

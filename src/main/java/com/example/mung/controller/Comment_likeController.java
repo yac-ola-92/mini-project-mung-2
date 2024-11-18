@@ -2,7 +2,7 @@ package com.example.mung.controller;
 
 import com.example.mung.entity.Comment;
 import com.example.mung.entity.Comment_like;
-import com.example.mung.entity.User;
+import com.example.mung.entity.UserEntity;
 import com.example.mung.service.Comment_likeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +26,7 @@ public class Comment_likeController {
     // 좋아요/싫어요 처리
     @PostMapping("/{type}/{comment_id}")
     public ResponseEntity<?> likeOrDislike(@PathVariable String type, @PathVariable int comment_id, HttpSession session) {
-        User userInfo = (User) session.getAttribute("userInfo");
+        UserEntity userInfo = (UserEntity) session.getAttribute("userInfo");
         if (userInfo == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 후 사용할 수 있습니다.");
         }
@@ -35,7 +35,7 @@ public class Comment_likeController {
         commentLike.setComment(new Comment());  // 댓글 객체 생성
         commentLike.getComment().setCommentId(comment_id);  // 댓글 ID 설정
 
-        commentLike.setUser(new User());  // 사용자 객체 생성
+        commentLike.setUser(new UserEntity());  // 사용자 객체 생성
         commentLike.getUser().setUser_id(userInfo.getUser_id());  // 사용자 ID 설정
 
         if ("like".equalsIgnoreCase(type)) {

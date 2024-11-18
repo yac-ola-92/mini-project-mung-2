@@ -26,7 +26,7 @@ public class Comment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private User user; // 댓글 작성자
+    private UserEntity user; // 댓글 작성자
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;

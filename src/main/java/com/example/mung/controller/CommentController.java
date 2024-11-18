@@ -1,10 +1,9 @@
 package com.example.mung.controller;
 
-import com.example.mung.domain.CommentDTO;
 import com.example.mung.domain.UserVO;
 import com.example.mung.entity.Comment;
 import com.example.mung.entity.Post;
-import com.example.mung.entity.User;
+import com.example.mung.entity.UserEntity;
 import com.example.mung.service.CommentService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +45,7 @@ public class CommentController {
         }
 
         // 댓글 작성자 정보 추가
-        User user = new User(); // User 객체 생성
+        UserEntity user = new UserEntity(); // User 객체 생성
         user.setUser_id(userInfo.getUser_id()); // user_id 설정
         comment.setUser(user); // Comment 객체에 User 설정
 
