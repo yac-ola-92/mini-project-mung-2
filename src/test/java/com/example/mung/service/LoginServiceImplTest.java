@@ -20,7 +20,6 @@ public class LoginServiceImplTest {
         System.out.println("loginSuccess 성공!!");
     }
 
-
     @Test
     public void idCheck(){
         System.out.println("ServiceImpl 실행");

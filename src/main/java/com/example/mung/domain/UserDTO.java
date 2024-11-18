@@ -1,5 +1,6 @@
 package com.example.mung.domain;
 
+import com.example.mung.entity.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,6 +36,26 @@ public class UserDTO {
         this.user_loginId = user_loginId;
         this.password=password;
     }
+
+    public UserDTO(UserVO vo) {
+        this.user_id = vo.getUser_id();
+        this.user_name = vo.getUser_name();
+        this.user_email = vo.getUser_email();
+        this.password = vo.getPassword();
+        this.user_phone = vo.getUser_phone();
+        this.user_birth = vo.getUser_birth();
+        this.user_gender = vo.getUser_gender();
+        this.nickname = vo.getNickname();
+        this.role = vo.getRole();
+        this.profile_image_url = vo.getProfile_image_url();
+        this.pet_info = vo.getPet_info();
+        this.created_at = vo.getCreated_at();
+        this.updated_at = vo.getUpdated_at();
+        this.business_number = vo.getBusiness_number();
+        this.business_sns_url = vo.getBusiness_sns_url();
+        this.user_loginId = vo.getUser_loginId();
+    }
+
     //날짜 값으로 전달된 것을 String으로 전환하는 메서드
     public String dateChanegeToString(LocalDateTime time){
         return new SimpleDateFormat("yyyy-MM-dd").format(time);

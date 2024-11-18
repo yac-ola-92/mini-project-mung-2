@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMS 인증</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<div class="container mt-5" style="font-family: 'Arial', sans-serif; color: #5d534a;">
+    <h2 style="color: #5d534a; font-size: 24px; font-weight: bold;">SMS 인증</h2>
+
+    <!-- 모달 열기 버튼 -->
+    <button id="openModalButton" class="btn"
+            style="background-color: #b89f8b; color: #fff; border: 1px solid #b89f8b; border-radius: 5px; padding: 10px 20px;">
+        SMS 인증 시작
+    </button>
+
+    <!-- 모달 -->
+    <div class="modal fade" id="smsModal" tabindex="-1" aria-labelledby="smsModalLabel" aria-hidden="true">
+        <div class="modal-dialog"
+             style="border-radius: 10px; background-color: #fefefe; box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);">
+            <div class="modal-content"
+                 style="border-radius: 10px; background: linear-gradient(135deg, #f5f5f5, #e8e8e8);">
+                <div class="modal-header"
+                     style="border-bottom: 2px solid #d1c4b3; background-color: #fff; border-radius: 10px 10px 0 0;">
+                    <h5 class="modal-title" id="smsModalLabel"
+                        style="font-size: 18px; color: #5d534a; font-weight: bold;">SMS 인증</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                            style="color: #8c8579;"></button>
+                </div>
+                <div class="modal-body" style="padding: 20px; background-color: #fcfcfa; color: #5d534a;">
+                    <!-- 전화번호 입력 -->
+                    <div class="mb-3">
+                        <label for="phone" class="form-label" style="font-size: 14px; color: #6e6258;">전화번호:</label>
+                        <input type="text" id="phone" class="form-control" placeholder="전화번호 입력 (예: 01012345678)"
+                               style="border: 1px solid #d1c4b3; border-radius: 5px; padding: 10px; color: #5d534a;">
+                    </div>
+                    <button id="sendSmsButton" class="btn mb-3"
+                            style="background-color: #b89f8b; color: #fff; border: 1px solid #b89f8b; border-radius: 5px; padding: 5px 15px;">
+                        인증번호 발송
+                    </button>
+
+                    <!-- 인증번호 입력 -->
+                    <div class="mb-3">
+                        <label for="certificationNumber" class="form-label" style="font-size: 14px; color: #6e6258;">인증번호:</label>
+                        <input type="text" id="certificationNumber" class="form-control" placeholder="인증번호 입력"
+                               style="border: 1px solid #d1c4b3; border-radius: 5px; padding: 10px; color: #5d534a;">
+                    </div>
+                    <button id="verifyButton" class="btn"
+                            style="background-color: #b89f8b; color: #fff; border: 1px solid #b89f8b; border-radius: 5px; padding: 5px 15px;">
+                        인증번호 확인
+                    </button>
+
+                    <!-- 메시지 및 타이머 -->
+                    <p id="message" class="mt-3" style="color: #d9534f; font-size: 14px;"></p>
+                    <p id="timer" class="mt-2" style="color: #5bc0de; font-size: 14px; display: none;">03:00</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    const smsModal = new bootstrap.Modal(document.getElementById('smsModal'));
+
+    // 모달 열기 버튼
+    document.getElementById('openModalButton').addEventListener('click', () => {
+        smsModal.show();
+    });
+
+    // SMS 발송 버튼
+    document.getElementById('sendSmsButton').addEventListener('click', () => {
+        const phone = document.getElementById('phone').value.trim();
+        if (!phone || !/^\d{10,11}$/.test(phone)) {
+            alert('유효한 전화번호를 입력해주세요.');
+            return;
+        }
+
+        fetch('/sms/send', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({phone}),
+        })
+            .then((response) => {
+                if (!response.ok) throw new Error('문자 전송 실패');
+                return response.json();
+            })
+            .then((data) => {
+                document.getElementById('message').innerText = data.message || '문자 전송 완료!';
+                startTimer(180);
+            })
+            .catch((error) => {
+                document.getElementById('message').innerText = '문자 전송에 실패했습니다.';
+                console.error(error);
+            });
+    });
+
+    // 타이머
+    let timerInterval;
+
+    function startTimer(seconds) {
+        clearInterval(timerInterval);
+        const timerElement = document.getElementById('timer');
+        timerElement.style.display = 'block';
+        let timeLeft = seconds;
+
+        timerInterval = setInterval(() => {
+            const minutes = String(Math.floor(timeLeft / 60)).padStart(2, '0');
+            const secs = String(timeLeft % 60).padStart(2, '0');
+            timerElement.innerText = `${minutes}:${secs}`;
+            timeLeft--;
+
+            if (timeLeft < 0) {
+                clearInterval(timerInterval);
+                timerElement.innerText = '시간 초과';
+            }
+        }, 1000);
+    }
+
+    // 인증번호 확인 버튼
+    document.getElementById('verifyButton').addEventListener('click', () => {
+        const phone = document.getElementById('phone').value.trim();
+        const certificationNumber = document.getElementById('certificationNumber').value.trim();
+
+        if (!phone || !certificationNumber) {
+            alert('전화번호와 인증번호를 입력해주세요.');
+            return;
+        }
+
+        fetch('/sms/verify', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({phone, certificationNumber}),
+        })
+            .then((response) => response.text())
+            .then((data) => {
+                document.getElementById('message').innerText = data;
+                clearInterval(timerInterval);
+                document.getElementById('timer').style.display = 'none';
+            })
+            .catch((error) => {
+                document.getElementById('message').innerText = '인증 확인에 실패했습니다.';
+                console.error(error);
+            });
+    });
+</script>
+</body>
+</html>
