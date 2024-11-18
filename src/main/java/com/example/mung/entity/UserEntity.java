@@ -1,14 +1,20 @@
 package com.example.mung.entity;
 
+import com.example.mung.domain.UserDTO;
 import com.example.mung.domain.UserVO;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
 @Entity
-public class User {
+@Table(name = "user")
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int user_id;
@@ -30,7 +36,7 @@ public class User {
     @Column(name = "profile_image_url")
     private String profile_image_url;
     private String role;
-    @Column(name = "pet_info", nullable = false)
+    @Column(name = "pet_info")
     private String pet_info;
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime created_at;
@@ -41,9 +47,7 @@ public class User {
     @Column(name = "business_sns_url")
     private String business_sns_url;
 
-    public User() {
 
-    }
 
     @PrePersist
     public void prePersist() {
@@ -56,8 +60,8 @@ public class User {
     }
 
 
-    //엔티티 때문에 만든 변환 생성자
-    public User(UserVO user) {
+//엔티티 때문에 만든 변환 생성자
+    public UserEntity(UserVO user) {
         this.user_id = user.getUser_id();
         this.user_name = user.getUser_name();
         this.user_email = user.getUser_email();
@@ -72,6 +76,24 @@ public class User {
         this.profile_image_url = user.getProfile_image_url();
         this.pet_info = user.getPet_info();
         this.user_login_id = user.getUser_loginId();
+    }
+
+    //엔티티 때문에 만든 변환 생성자
+    public UserEntity(UserDTO dto) {
+        this.user_id = dto.getUser_id();
+        this.user_name = dto.getUser_name();
+        this.user_email = dto.getUser_email();
+        this.password = dto.getPassword();
+        this.user_phone = dto.getUser_phone();
+        this.user_birth = dto.getUser_birth();
+        this.user_gender = dto.getUser_gender();
+        this.nickname = dto.getNickname();
+        this.role = dto.getRole();
+        this.business_number = dto.getBusiness_number();
+        this.business_sns_url = dto.getBusiness_sns_url();
+        this.profile_image_url = dto.getProfile_image_url();
+        this.pet_info = dto.getPet_info();
+        this.user_login_id = dto.getUser_loginId();
     }
 
 }

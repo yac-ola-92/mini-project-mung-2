@@ -22,7 +22,7 @@ public class Accommodation {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    private User user;
+    private UserEntity user;
 
  /*User 는 클래스명 -> 테이블에 매핑
     user 는 인스턴스 변수(필드) Review 테이블의 레코드 하나를 나타내는 객체로,

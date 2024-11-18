@@ -1,6 +1,6 @@
 package com.example.mung.repository;
 import com.example.mung.entity.Post;
-import com.example.mung.entity.User;
+import com.example.mung.entity.UserEntity;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -53,7 +53,7 @@ public class PostRepositoryTest {
     @DisplayName("게시글 등록 테스트")
     public void insertPostTest() throws IOException {
 
-        User user = userRepository.findById(1).orElse(null);
+        UserEntity user = userRepository.findById(1);
 
         if (user == null) {
             fail("User with id 1 not found");
@@ -77,7 +77,7 @@ public class PostRepositoryTest {
 
         // 게시글 삽입
         int rowsAffected = postRepository.insert(
-                (long) post.getUser().getUserId(),
+                (long) post.getUser().getUser_id(),
                 post.getTitle(),
                 post.getContent(),
                 post.getCategory().name(),
