@@ -358,6 +358,11 @@ public class LoginController {
         return "redirect:/login";
     }
 
+    // .html, .css, .js 파일을 제외한 모든 요청을 index.html로 포워딩
+    @GetMapping("/{path:[^\\.]*}") // 정규식으로 확장자가 포함되지 않은 경로를 선택
+    public String redirect() {
+        return "forward:/index.html"; // index.html로 리디렉션
+    }
 
 }
 

@@ -35,10 +35,11 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable) // CSRF 비활성화
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/host/**").hasRole("HOST") // HOST 권한 필요
-                        .requestMatchers("/**").permitAll() // 기타 URL은 모두 허용
+                        .requestMatchers("/favicon.ico", "/index.html", "/static/**", "/dist/**","/**").permitAll() // 정적 리소스 및 index.html 허용
                 )
-                .formLogin(formLogin -> formLogin.disable())
-                .addFilter(corsConfig.corsFilter())
+                .formLogin(AbstractHttpConfigurer::disable) // 로그인 페이지 비활성화
+                .logout(logout -> logout.disable()) // 로그아웃 비활성화
+                .addFilter(corsConfig.corsFilter()) // CORS 필터 추가
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 상태 없는 세션 관리
                 )
@@ -51,6 +52,10 @@ public class SecurityConfig {
 
         return http.build();
     }
+
+
+
+
 
 
     @Bean
