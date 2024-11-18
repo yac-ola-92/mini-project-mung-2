@@ -144,7 +144,7 @@
     </style>
     <script th:inline="javascript">
         function checkLogin() {
-            var userLoginId = /*[[${userInfo != null ? userInfo.user_loginId : ''}]]*/ '';
+            var userLoginId = /*[[${userInfo != null ? userInfo.user_login_id : ''}]]*/ '';
             if (userLoginId !== '') {
                 window.location.href = '/new';  // 글 작성 페이지로 이동
             } else {

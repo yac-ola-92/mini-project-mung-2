@@ -148,7 +148,7 @@
             -webkit-appearance: none;
             width: 40px;
             height: 40px;
-            background: url('assets/img/icon/강쥐발바닥.png');
+            background: url('/images/dogfoot.png');
             background-repeat: no-repeat;
             background-size: cover;
             filter:drop-shadow(0 0 5px rgb(181, 108, 19));
@@ -243,7 +243,8 @@
 
         .btn-value {
             border : 2px solid #bc915e;
-            padding : 1em 2.2em;
+            padding : 7px;
+            margin:3px;
             border-radius : 3em;
             background-color : transparent;
             color : #bc915e;
@@ -284,7 +285,7 @@
         <!-- 네비게이션 메뉴 영역 -->
         <nav>
             <ul class="header">
-                <li class="header-li"><a href="/accom_register" style="color: #bc915e;"
+                <li class="header-li"><a href="/registerForm" style="color: #bc915e;"
                                          th:if="${session.userInfo != null and session.userInfo.roles.contains('HOST')}">나의 숙소</a>
                 </li>
                 <li class="header-li"><a href="/postMain" style="color:#bc915e;">게시판</a></li>
@@ -348,9 +349,10 @@
                 <hr>
                 <h4 class="mb-30">편의시설</h4>
                     <div class="amenities-btns">
-                        <button class="btn-value">애견수영장</button>
-                        <button class="btn-value">WI-FI</button>
-                        <button class="btn-value">바베큐</button>
+                        <button class="btn-value" data-value="애견수영장">애견수영장</button>
+                        <button class="btn-value" data-value="애견운동장">애견운동장</button>
+                        <button class="btn-value" data-value="바베큐">바베큐</button>
+                        <button class="btn-value" data-value="수영장">수영장</button>
                     </div>
                 <hr>
                 <div id="control">
@@ -369,59 +371,73 @@
                 <div class="switch-wrap d-flex justify-content-between">
                     <p>소형견</p>
                     <div class="primary-radio">
-                        <input type="checkbox" id="default-radio1">
-                        <label for="default-radio"></label>
+                        <input type="radio" name="pet-radio" id="small" class="pet-kind" value="소형견">
+                        <label for="small"></label>
                     </div>
                 </div>
                 <div class="switch-wrap d-flex justify-content-between">
                     <p>중형견</p>
                     <div class="primary-radio">
-                        <input type="checkbox" id="default-radio2">
-                        <label for="default-radio"></label>
+                        <input type="radio" name="pet-radio" id="medium" class="pet-kind" value="중형견">
+                        <label for="medium"></label>
                     </div>
                 </div>
                 <div class="switch-wrap d-flex justify-content-between">
                     <p>대형견</p>
                     <div class="primary-radio">
-                        <input type="checkbox" id="default-radio">
-                        <label for="default-radio"></label>
+                        <input type="radio" name="pet-radio" id="large" class="pet-kind" value="대형견" >
+                        <label for="large"></label>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!--숙소 리스트 출력-->
-    <div class="content" th:if="${accomList != null}">
-        <div class="row" style="display:flex; flex-wrap:wrap;">
-            <div th:each=" vo, status : ${accomList}" class="col-xl-4 col-lg-4 col-md-6"
-                 th:if="${status.index < 6}">
-                <div class="single-place mb-30" style="height:500px; width:330px;">
-                    <div class="single-place mb-10">
-                        <img th:src="${vo.accom_images_url.split(',')[0]}" alt="accom_img"
-                             style="width: 100%; height: 200px; object-fit: cover;">
-                    </div>
-                    <div class="place-cap">
-                        <div class="place-cap-top">
-                            <span><i class="fas fa-star"></i><span th:text="${vo.rating}"></span> </span>
-                            <a th:href="@{/accom/{accom_id}/byAccomId(accom_id=${vo.accom_id})}"><h3
-                                    th:text="${vo.accom_name}"></h3></a>
-
-                            <p class="dolor" th:text="${vo.room_price}"><span>/ 1박</span></p>
-                        </div>
-                        <div class="place-cap-bottom">
-                            <ul>
-                                <li th:text="${vo.pet_kind}"><i class="far fa-clock"></i></li>
-                                <li th:text="${vo.accom_location.split(' ')[0]}+' '+${vo.accom_location.split(' ')[1]}">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                </li>
+            <!--          숙소 리스트        -->
+    <div class="blog_details"  style="width:800px;">
+        <div style="display:flex; flex-direction:row; align-items:center; justify-content:center;">
+        <img src="/images/mung_close_up.png" style="width:70px; margin-right:15px;">
+        <h2 class="accoms_title" style="margin-bottom:0; font-size:xx-large;">숙소</h2>
+        </div>
+        <hr>
+        <div th:if="${accomList != null}">
+            <div class="accoms-box"  th:each="acc , status :${accomList}">
+                <div class="accom-body" style="display:flex;">
+                    <img id="rm" th:src="${acc.accom_images_url.split(',')[0]}"
+                         style="height:150px; width:150px; object-fit:cover; margin:20px;">
+                    <div class="accom-content" style="display:flex; flex-direction:column;">
+                        <div style="margin-top:20px;">
+                            <a th:href="@{/accom/{accom_id}(accom_id=${acc.accom_id})}"><h3
+                                    th:text="${acc.accom_name}"></h3></a>
+                            <ul class="accom-amen-list" style="display:none;">
+                                <li class="accom-amen" th:each="amen : ${acc.accom_amenities.split(',')}" th:text="${amen}"></li>
                             </ul>
                         </div>
+                        <ul class="blog-info-link mt-3 mb-4" >
+                            <li style="display: flex; align-items: center; margin-bottom: 8px;">
+                                <img src="/assets/img/logo/kind_dog.png" style="margin-right:5px;" width="24" height="24">
+                                <span th:text="${acc.pet_kind}" class="my-pet" style="font-size:large">견종</span>
+                            </li>
+                            <li style="display: flex; align-items: center;">
+                                <i class="fas fa-star" style="margin-right: 5px; color:gold; width:24px;"></i>
+                                <span th:text="${acc.rating}" style="font-size:large">별점</span>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li>
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span th:text="${acc.accom_location.split(' ')[0]}+' '+${acc.accom_location.split(' ')[1]}"></span>
+                            </li>
+                        </ul>
+                        <div id="rm-price-box">
+                            <h4 th:text="${acc.room_price}"></h4><span style="color:grey;">/1박 요금</span>
+                        </div>
                     </div>
                 </div>
+                <hr>
             </div>
         </div>
     </div>
+
 </div>
 <!-- Pagination-area Start -->
 <div class="pagination-area pb-100 text-center">
@@ -489,13 +505,6 @@
 
 <!-- JS here -->
 
-
-<script>
-    document.querySelector('.toggle-btn').addEventListener('click', function() {
-        const checkboxContainer = document.querySelector('.checkbox-facility');
-        checkboxContainer.style.display = checkboxContainer.style.display === 'block' ? 'none' : 'block';
-    });
-</script>
 <script>
     function login() {
         document.getElementById('login').style.display = 'none';
@@ -507,18 +516,108 @@
     }
 </script>
 
-<!--<script th:inline="javascript">
-    const acc = /*[[${accomList != null ? accomList : '[]'}]]*/ '[]';
-    console.log(acc);
+<script>
 
-</script>-->
+    // 편의시설 필터링
+    const filterItems = document.querySelectorAll('.btn-value');
+    const filterAccoms = document.querySelectorAll('.accoms-box');
+    let activeFilter = [];
 
-   /* const amenity = acc.accom_amenities;
-    const petKind = acc.pet_kind;
-    const price = acc.room_price
-    console.log(amenity);
-    console.log(petKind);
-    console.log(price);*/
+    // 편의시설 버튼 클릭 시 필터링
+    filterItems.forEach((filterItem) => {
+        filterItem.addEventListener('click', accomTargeting);
+    });
+
+    function accomTargeting(event) {
+        const button = event.target;
+        const value = event.target.dataset.value;
+
+        // 이미 클릭한 필터를 해제하거나 새로운 필터 추가
+        if (activeFilter.includes(value)) {
+            activeFilter = activeFilter.filter(filter => filter !== value);
+            button.style.backgroundColor = ''; // 배경 색상 초기화
+            button.style.color = ''; // 텍스트 색상 초기화
+        } else {
+            activeFilter.push(value);
+            button.style.backgroundColor = '#bc915e';
+            button.style.color = 'white';
+        }
+
+        console.log('선택된 필터: '+ activeFilter);
+        showAccom(); // 필터링된 숙소 표시
+    }
+
+    // 반려동물 종 필터링
+    const petKinds = document.querySelectorAll('.pet-kind');
+    let selectedPet = null; // 선택된 반려동물 종류
+    let allowedPets = []; // 허용된 반려동물 종류 배열
+
+    // 반려동물 범위 정의
+    const petSizeMap = {
+        '소형견': ['소형견'],
+        '중형견': ['소형견', '중형견'],
+        '대형견': ['소형견', '중형견', '대형견']
+    };
+
+    // 라디오 버튼 클릭 시 반려동물 종류 선택
+    petKinds.forEach((petKind) => {
+        petKind.addEventListener('change', () => {
+            const selectPet = document.querySelector('input[name="pet-radio"]:checked');
+            if (selectPet) {
+                selectedPet = selectPet.value;
+                allowedPets = petSizeMap[selectedPet] || []; // 선택된 반려동물 종류에 맞는 범위 설정
+                console.log('가능한 반려동물 : '+ allowedPets);
+            }
+            showAccom();
+        });
+    });
+
+    // 숙소 필터링
+    function showAccom() {
+        console.log('필터링 진행중');
+        filterAccoms.forEach((accom) => {
+            const amens = accom.querySelectorAll('.accom-amen');
+            let match = true; // 기본적으로 모든 숙소는 표시
+
+            // 1. 편의시설 필터링
+            if (activeFilter.length > 0) {
+                match = activeFilter.every(filter => {
+                    return [...amens].some(amen => amen.textContent.includes(filter));
+                });
+                console.log('편의시설 필터링 진행중');
+            }
+
+            // 2. 반려동물 필터링
+            if (allowedPets.length > 0) {
+                // 숙소의 반려동물 종류 가져오기
+                const petKindElement = accom.querySelector('.my-pet'); // 각 숙소의 반려동물 종류 텍스트 가져오기
+                const petKind = petKindElement ? petKindElement.textContent.trim() : ''; // 반려동물 종류
+
+                console.log('숙소의 반려동물 종류:', petKind);
+
+                // 허용된 반려동물 배열에 해당 반려동물이 포함되는지 확인
+                if (!allowedPets.includes(petKind)) {
+                    match = false;
+                }
+                console.log('반려동물 종 필터링 진행중');
+            }
+
+
+            display(accom, match);
+        });
+    }
+
+    // 숙소 표시/숨기기
+    function display(accom, match) {
+        if (match) {
+            accom.style.display = 'block';
+        } else {
+            accom.style.display = 'none';
+        }
+    }
+
+</script>
+
 
 <script src="/assets/js/vendor/modernizr-3.5.0.min.js"></script>
 <script src="/assets/js/vendor/jquery-1.12.4.min.js"></script>

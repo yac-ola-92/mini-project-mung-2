@@ -2,686 +2,988 @@
 <html lang="zxx" class="no-js" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>로그인 회원가입</title>
+    <title>로그인 회원가입</title>
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
-  <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+    <link rel="stylesheet" href="/css/main.css">
 
-  <link rel="stylesheet" href="css/mungStyle.css">
+    <link rel="stylesheet" href="css/mungStyle.css">
 
-  <!-- 여기서부터 filled pills 구역 -->
-  <!-- font -->
-  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet"/>
-  <!-- Icons. Uncomment required icon fonts -->
-  <link rel="stylesheet" href="css/boxicons.css" />
+    <!-- 여기서부터 filled pills 구역 -->
+    <!-- font -->
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+          rel="stylesheet"/>
+    <!-- Icons. Uncomment required icon fonts -->
+    <link rel="stylesheet" href="css/boxicons.css"/>
 
-  <!-- Core CSS -->
-  <link rel="stylesheet" href="css/core.css" class="template-customizer-core-css" />
-  <link rel="stylesheet" href="css/theme-default.css" class="template-customizer-theme-css" />
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="css/core.css" class="template-customizer-core-css"/>
+    <link rel="stylesheet" href="css/theme-default.css" class="template-customizer-theme-css"/>
 </head>
 
-<body >
+<body>
 
 
 <!-- Start Banner Area -->
 <section class="" style=" background-color:#fff9f0;">
 
-  <div class="container" style=" height: 100px; ">
-    <div class="col-first">
-      <!-- 메인 이동 버튼 -->
-      <nav class="d-flex align-items-center">
-        <a href="/main"><img src="/images/top_clean.png" alt=""></a>
-        <span> 가족과 함께 하는 반려견 동반 숙소 예약 </span>
-      </nav>
+    <div class="container" style=" height: 100px; ">
+        <div class="col-first">
+            <!-- 메인 이동 버튼 -->
+            <nav class="d-flex align-items-center">
+                <a href="/mainPage"><img src="/images/top_clean.png" alt=""></a>
+                <span><h4> 가족과 함께 하는 반려견 동반 숙소 예약 </h4></span>
+            </nav>
+
+        </div>
 
     </div>
-
-  </div>
 </section>
 <!-- End Banner Area -->
 
 <!--================Login Box Area =================-->
 <section class="login_box_area section_gap" style=" background-color:antiquewhite; ">
-  <div class="container">
-    <div class="row">
-      <!-- 영상 화면 -->
-      <div class="col-lg-6">
-        <div class="login_box_img">
-          <img class="img-fluid" src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExejFqaTl4MTQzamo3ajZ3ODhobTBzajFxMjc3ZjkzbG1ld2NtYjF6cCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xITOFYCXsbQM8/giphy.webp" alt="">
-          <div class="hover">
-            <div>
-              <h1 id="h1_text" style=" color: white;">반갑습니다</h1>
-              <p id="p_text">회원가입을 원하시면 '새 계정 생성' 을 누르세요</p>
-              <a class="primary-btn" id="newCreate" href="#">새 계정 생성</a>
-              <a class="primary-btn" id="generalMember" href="#" style=" display: none; margin-right: 16px;">일반 회원</a>
-              <a class="primary-btn" id="businessMember" href="#" style=" display: none;">사업자 회원</a>
-              <p style=" margin: -10px; padding: -10px;">&nbsp;</p>
+    <div class="container">
+        <div class="row">
+            <!-- 영상 화면 -->
+            <div class="col-lg-6">
+                <div class="login_box_img">
+                    <img class="img-fluid"
+                         src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExejFqaTl4MTQzamo3ajZ3ODhobTBzajFxMjc3ZjkzbG1ld2NtYjF6cCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xITOFYCXsbQM8/giphy.webp"
+                         alt="">
+                    <div class="hover">
+                        <div>
+                            <h1 id="h1_text" style=" color: white;">반갑습니다</h1>
+                            <p id="p_text">회원가입을 원하시면 '새 계정 생성' 을 누르세요</p>
+                            <a class="primary-btn" id="newCreate" href="#">새 계정 생성</a>
+                            <a class="primary-btn" id="generalMember" href="#"
+                               style=" display: none; margin-right: 16px;">일반 회원</a>
+                            <a class="primary-btn" id="businessMember" href="#" style=" display: none;">사업자 회원</a>
+                            <p style=" margin: -10px; padding: -10px;">&nbsp;</p>
 
-            </div>
-            <a id="go_login" href="/login" style=" display: none; font-weight: bold; color: black;">&gt; 로그인 &lt;</a>
-          </div>
+                        </div>
+                        <a id="go_login" href="/login" style=" display: none; font-weight: bold; color: black;">&gt; 로그인
+                            &lt;</a>
+                    </div>
 
-        </div>
-      </div>
-      <!-- 로그인 폼 -->
-      <div class="col-lg-6" id="login_form" style=" background-color: #fdd9a2;">
-        <div class="login_form_inner" >
-          <img src="/images/mung_clean_small.png" style=' margin-bottom:20px; margin-top:-40px;' alt=" ">
-          <h3>Log in to enter</h3>
-          <form class="row login_form" action="/login" method="post" id="contactForm" novalidate="novalidate">
-            <!-- <div class="col-md-12 form-group">
-                <input type="text" class="form-control" id="name" name="user_loginId" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'">
-            </div> -->
-
-            <div class="form-floating mb-3" >
-              <input type="text" class="form-control" id="floatingInput" name="user_loginId" placeholder="ID를 입력하세요." autocomplete="off">
-              <label for="floatingInput">아이디를 입력하세요.</label>
-            </div>
-            <div class="form-floating">
-              <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password" autocomplete="off">
-              <label for="floatingPassword">비밀번호를 입력하세요.</label>
-            </div>
-            <div class="col-md-12 form-group">
-              <div class="create_account" style="display: inline-flex; align-items: center;">
-                <input type="checkbox" id="f-option1" name="selector" style="margin-right: 10px;">
-                <label for="f-option1">아이디 기억</label>
-              </div>
-            </div>
-
-            <div class="col-md-12 form-group">
-              <button type="submit" value="submit" class="primary-btn">로그인</button>
-              <nav class="d-flex align-items-center">
-                <!-- modal -->
-                <button type="button" class="btn bg-text_mungYellow hover_mung mb-1" data-bs-toggle="modal" data-bs-target="#myModal" style=" background-color: #bc915e ; color: white; margin-left:70px; margin-top:10px;">
-                  아이디 찾기 & 비밀번호 찾기
-                </button>
-              </nav>
-
-            </div>
-          </form>
-        </div>
-      </div>
-      <!-- 일반 회원가입 폼 -->
-      <div class="col-lg-6" id="generalMember_form" style=" display: none;background-color: #fdd9a2;">
-        <div class="login_form_inner"  >
-
-          <form class="row login_form" action="/generalJoin" method="post" id="user_contactForm" novalidate="novalidate" style=" margin-top: -80px;">
-            <h1>&nbsp;</h1>
-            <div class="col-md-11 form-group form-floating mb-3" style=" display: flex; align-items: center;">
-              <label for="g_user_loginId"></label><input type="text" class="form-control" min="6" max="15" id="g_user_loginId" name="user_loginId" placeholder style=" padding-right: 150px;" autocomplete="off">
-              <label for="floatingInput">아이디를 입력하세요.</label>
-              <button type="button" id="btn_g_user_loginId"  style=" border: none; border-radius: 10px; background-color: #FFC107; margin-left: 10px; width: 170px;">중복 확인</button>
-            </div>
-            <div class="col-md-6 form-group form-floating mb-3">
-              <label for="name3"></label><input type="password" class="form-control" min="6" max="12" id="name3" name="password" placeholder autocomplete="off">
-              <label for="floatingInput" id="73">비밀번호</label>
-            </div>
-            <div class="col-md-6 form-group form-floating mb-3">
-              <label for="name2"></label><input type="password" class="form-control" min="6" max="12" id="name2" name="1211" placeholder autocomplete="off">
-              <label for="floatingInput" id="72">비밀번호 확인</label>
-            </div>
-            <div class="col-md-12 form-group form-floating mb-3" style="display: flex; align-items: center;">
-              <label for="g_email"></label><input type="text" class="form-control" id="g_email" name="user_email" placeholder>
-              <label for="floatingInput" id="71">이메일</label>
-              <div class="btn-group">
-                <button type="button" id="g_dropdownButton_email" class="btn btn-warning dropdown-toggle"  data-bs-toggle="dropdown" style=" margin-left: 10px;" aria-expanded="false" >
-                  이메일 선택
-                </button>
-                <ul class="dropdown-menu g_email">
-                  <li><a class="dropdown-item g_email_item"  data-value="이메일 선택">이메일 선택</a></li>
-                  <li><a class="dropdown-item g_email_item"  data-value="@gmail.com">@gmail.com</a></li>
-                  <li><a class="dropdown-item g_email_item"  data-value="@naver.com">@naver.com</a></li>
-                  <li><a class="dropdown-item g_email_item"  data-value="@daum.net">@daum.net</a></li>
-                  <li><a class="dropdown-item g_email_item"  data-value="@yahoo.com">@yahoo.com</a></li>
-                </ul>
-              </div>
-              <input type="hidden" name="user_email" id="g_user_email_full">
-            </div>
-
-            <script>
-              const emailInput = document.getElementById('g_email');
-              const emailDropdownItems = document.querySelectorAll('.g_email_item');
-              const userEmailFull = document.getElementById('g_user_email_full');
-
-              emailDropdownItems.forEach(item => {
-                item.addEventListener('click', function() {
-                  const domain = item.getAttribute('data-value');
-                  userEmailFull.value = emailInput.value + domain; // 숨겨진 필드에 도메인 추가
-                });
-              });
-            </script>
-
-            <div class="col-md-3 form-group form-floating mb-3">
-              <label for="name6"></label><input type="text" class="form-control" min="2" max="5" id="name6" name="user_name" placeholder>
-              <label for="floatingInput">이름</label>
-            </div>
-            <div class="col-md-6 form-group form-floating mb-3">
-              <label for="name7"></label><input type="text" class="form-control" min="6" max="6" id="name7" name="user_birth" placeholder>
-              <label for="floatingInput">생년월일</label>
-            </div>
-              <div class="col-md-3 form-group form-floating mb-3" style="display: flex; align-items: center;">
-                <div class="btn-group">
-                  <button type="button" id="g_dropdownButton_gender" name="user_gender" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    성별
-                  </button>
-                  <ul class="dropdown-menu g_gender">
-                    <li><a class="dropdown-item g_gender_item" data-value="성별">성별</a></li>
-                    <li><a class="dropdown-item g_gender_item" data-value="남자">남자</a></li>
-                    <li><a class="dropdown-item g_gender_item" data-value="여자">여자</a></li>
-                  </ul>
                 </div>
-                <input type="hidden" name="user_gender" id="g_user_gender"> <!-- 숨겨진 입력 필드 -->
-              </div>
-
-            <script>
-              const genderDropdownItems = document.querySelectorAll('.g_gender_item');
-              const genderInput = document.getElementById('g_user_gender'); // 숨겨진 입력 필드 가져오기
-
-              genderDropdownItems.forEach(item => {
-                item.addEventListener('click', function() {
-                  const gender = item.getAttribute('data-value');
-                  document.getElementById('g_dropdownButton_gender').textContent = gender; // 버튼 텍스트 업데이트
-                  genderInput.value = gender; // Hidden input에 성별 추가
-                });
-              });
-            </script>
-            <div class="col-md-5 form-group form-floating mb-3">
-              <label for="42"></label><input type="text" class="form-control" id="42" name="nickname" placeholder>
-              <label for="floatingInput">닉네임</label>
             </div>
-            <div class="col-md-7 form-group form-floating mb-3">
-              <label for="41"></label><input type="text" class="form-control" id="41" name="user_phone" placeholder>
-              <label for="floatingInput">전화번호</label>
+            <!-- 로그인 폼 -->
+            <div class="col-lg-6" id="login_form" style=" background-color: #fdd9a2;">
+                <div class="login_form_inner">
+                    <img src="/images/mung_clean_small.png" style=' margin-bottom:20px; margin-top:-40px;' alt=" ">
+                    <h3>Log in to enter</h3>
+                    <form class="row login_form" action="/login" method="post" id="contactForm" novalidate="novalidate">
+                        <!-- <div class="col-md-12 form-group">
+                            <input type="text" class="form-control" id="name" name="user_login_id" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'">
+                        </div> -->
+
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingInput" name="user_login_id"
+                                   placeholder="ID를 입력하세요." autocomplete="off">
+                            <label for="floatingInput">아이디를 입력하세요.</label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="password" class="form-control" id="floatingPassword" name="password"
+                                   placeholder="Password" autocomplete="off">
+                            <label for="floatingPassword">비밀번호를 입력하세요.</label>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <div class="create_account" style="display: inline-flex; align-items: center;">
+                                <input type="checkbox" id="f-option1" name="selector" style="margin-right: 10px;">
+                                <label for="f-option1">아이디 기억</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 form-group">
+                            <button type="submit" value="submit" class="primary-btn">로그인</button>
+                            <nav class="d-flex align-items-center">
+                                <!-- modal -->
+                                <button type="button" class="btn bg-text_mungYellow hover_mung mb-1"
+                                        data-bs-toggle="modal" data-bs-target="#myModal"
+                                        style=" background-color: #bc915e ; color: white; margin-left:70px; margin-top:10px;">
+                                    아이디 찾기 & 비밀번호 찾기
+                                </button>
+                            </nav>
+
+                        </div>
+                    </form>
+                </div>
             </div>
+            <!-- 일반 회원가입 폼 -->
+            <div class="col-lg-6" id="generalMember_form" style=" display: none;background-color: #fdd9a2;">
+                <div class="login_form_inner">
+
+                    <form class="row login_form" action="/generalJoin" method="post" id="user_contactForm"
+                          novalidate="novalidate" style=" margin-top: -80px;">
+                        <h1>&nbsp;</h1>
+                        <div class="col-md-11 form-group form-floating mb-3"
+                             style=" display: flex; align-items: center;">
+                            <label for="g_user_loginId"></label><input type="text" class="form-control" min="6" max="15"
+                                                                       id="g_user_loginId" name="user_loginId"
+                                                                       placeholder style=" padding-right: 150px;"
+                                                                       autocomplete="off">
+                            <label for="floatingInput">아이디를 입력하세요.</label>
+                            <button type="button" id="btn_g_user_loginId"
+                                    style=" border: none; border-radius: 10px; background-color: #FFC107; margin-left: 10px; width: 170px;">
+                                중복 확인
+                            </button>
+                        </div>
+                        <div class="col-md-6 form-group form-floating mb-3">
+                            <label for="name3"></label><input type="password" class="form-control" min="6" max="12"
+                                                              id="name3" name="password" placeholder autocomplete="off">
+                            <label for="floatingInput" id="73">비밀번호</label>
+                        </div>
+                        <div class="col-md-6 form-group form-floating mb-3">
+                            <label for="name2"></label><input type="password" class="form-control" min="6" max="12"
+                                                              id="name2" name="1211" placeholder autocomplete="off">
+                            <label for="floatingInput" id="72">비밀번호 확인</label>
+                        </div>
+                        <div class="col-md-12 form-group form-floating mb-3"
+                             style="display: flex; align-items: center;">
+                            <label for="g_email"></label><input type="text" class="form-control" id="g_email"
+                                                                name="user_email" placeholder>
+                            <label for="floatingInput" id="71">이메일</label>
+                            <div class="btn-group">
+                                <button type="button" id="g_dropdownButton_email"
+                                        class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown"
+                                        style=" margin-left: 10px;" aria-expanded="false">
+                                    이메일 선택
+                                </button>
+                                <ul class="dropdown-menu g_email">
+                                    <li><a class="dropdown-item g_email_item" data-value="이메일 선택">이메일 선택</a></li>
+                                    <li><a class="dropdown-item g_email_item" data-value="@gmail.com">@gmail.com</a>
+                                    </li>
+                                    <li><a class="dropdown-item g_email_item" data-value="@naver.com">@naver.com</a>
+                                    </li>
+                                    <li><a class="dropdown-item g_email_item" data-value="@daum.net">@daum.net</a></li>
+                                    <li><a class="dropdown-item g_email_item" data-value="@yahoo.com">@yahoo.com</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <input type="hidden" name="user_email" id="g_user_email_full">
+                        </div>
+
+                        <script>
+                            const emailInput = document.getElementById('g_email');
+                            const emailDropdownItems = document.querySelectorAll('.g_email_item');
+                            const userEmailFull = document.getElementById('g_user_email_full');
+
+                            emailDropdownItems.forEach(item => {
+                                item.addEventListener('click', function () {
+                                    const domain = item.getAttribute('data-value');
+                                    userEmailFull.value = emailInput.value + domain; // 숨겨진 필드에 도메인 추가
+                                });
+                            });
+                        </script>
+
+                        <div class="col-md-3 form-group form-floating mb-3">
+                            <label for="name6"></label><input type="text" class="form-control" min="2" max="5"
+                                                              id="name6" name="user_name" placeholder>
+                            <label for="floatingInput">이름</label>
+                        </div>
+                        <div class="col-md-6 form-group form-floating mb-3">
+                            <label for="name7"></label><input type="text" class="form-control" min="6" max="6"
+                                                              id="name7" name="user_birth" placeholder>
+                            <label for="floatingInput">생년월일</label>
+                        </div>
+                        <div class="col-md-3 form-group form-floating mb-3" style="display: flex; align-items: center;">
+                            <div class="btn-group">
+                                <button type="button" id="g_dropdownButton_gender" name="user_gender"
+                                        class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                    성별
+                                </button>
+                                <ul class="dropdown-menu g_gender">
+                                    <li><a class="dropdown-item g_gender_item" data-value="성별">성별</a></li>
+                                    <li><a class="dropdown-item g_gender_item" data-value="남자">남자</a></li>
+                                    <li><a class="dropdown-item g_gender_item" data-value="여자">여자</a></li>
+                                </ul>
+                            </div>
+                            <input type="hidden" name="user_gender" id="g_user_gender"> <!-- 숨겨진 입력 필드 -->
+                        </div>
+
+                        <script>
+                            const genderDropdownItems = document.querySelectorAll('.g_gender_item');
+                            const genderInput = document.getElementById('g_user_gender'); // 숨겨진 입력 필드 가져오기
+
+                            genderDropdownItems.forEach(item => {
+                                item.addEventListener('click', function () {
+                                    const gender = item.getAttribute('data-value');
+                                    document.getElementById('g_dropdownButton_gender').textContent = gender; // 버튼 텍스트 업데이트
+                                    genderInput.value = gender; // Hidden input에 성별 추가
+                                });
+                            });
+                        </script>
+                        <div class="col-md-5 form-group form-floating mb-3">
+                            <label for="42"></label><input type="text" class="form-control" id="42" name="nickname"
+                                                           placeholder>
+                            <label for="floatingInput">닉네임</label>
+                        </div>
+                        <div class="col-md-7 form-group form-floating mb-3">
+                            <label for="41"></label><input type="text" class="form-control" id="41" name="user_phone"
+                                                           placeholder>
+                            <label for="floatingInput">전화번호</label>
+                        </div>
 
 
+                        <div class="col-md-12 form-group">
+                            <div class="create_account" style="display: inline-flex; align-items: center;">
+                                <input type="checkbox" id="f-option3" name="selector" style="margin-right: 10px;">
+                                <label for="f-option3">정보 동의 (개인 정보)</label>
+                            </div>
+                        </div>
 
-            <div class="col-md-12 form-group">
-              <div class="create_account" style="display: inline-flex; align-items: center;">
-                <input type="checkbox" id="f-option3" name="selector" style="margin-right: 10px;">
-                <label for="f-option3">정보 동의 (개인 정보)</label>
-              </div>
+                        <div class="col-md-12 form-group">
+                            <button type="submit" value="submit" class="primary-btn">회원가입</button>
+                        </div>
+                    </form>
+                </div>
             </div>
+            <!-- 사업자 회원가입 폼 -->
+            <div class="col-lg-6" id="businessMember_form" style=" display: none;background-color: #fdd9a2;">
+                <div class="login_form_inner">
 
-            <div class="col-md-12 form-group">
-              <button type="submit" value="submit" class="primary-btn">회원가입</button>
+                    <form class="row login_form" action="/businessJoin" method="post" id="business_contactForm"
+                          novalidate="novalidate" style=" margin-top: -80px;">
+                        <h1>&nbsp;</h1>
+                        <div class="col-md-11 form-group form-floating mb-3"
+                             style=" display: flex; align-items: center;">
+                            <label for="b_user_loginId"></label><input type="text" class="form-control" min="6" max="15"
+                                                                       id="b_user_loginId" name="user_loginId"
+                                                                       placeholder style=" padding-right: 150px;"
+                                                                       autocomplete="off">
+                            <label for="floatingInput">아이디를 입력하세요.</label>
+                            <button type="button" id="btn_b_user_loginId"
+                                    style=" border: none; border-radius: 10px; background-color: #FFC107; margin-left: 10px; width: 170px;">
+                                중복 확인
+                            </button>
+                        </div>
+                        <div class="col-md-6 form-group form-floating mb-3">
+                            <label for="35"></label><input type="password" class="form-control" min="6" max="12" id="35"
+                                                           name="password" placeholder autocomplete="off">
+                            <label for="floatingInput" id="">비밀번호</label>
+                        </div>
+                        <div class="col-md-6 form-group form-floating mb-3">
+                            <label for="34"></label><input type="password" class="form-control" min="6" max="12" id="34"
+                                                           name="host_" placeholder autocomplete="off">
+                            <label for="floatingInput" id="1234">비밀번호 확인</label>
+                        </div>
+                        <div class="col-md-12 form-group form-floating mb-3"
+                             style="display: flex; align-items: center;">
+                            <label for="b_email"></label><input type="text" class="form-control" id="b_email"
+                                                                name="user_email" placeholder>
+                            <label for="floatingInput" id="731">이메일</label>
+                            <div class="btn-group">
+                                <button type="button" id="b_dropdownButton_email"
+                                        class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown"
+                                        style=" margin-left: 10px;" aria-expanded="false">
+                                    이메일 선택
+                                </button>
+                                <ul class="dropdown-menu b_email">
+                                    <li><a class="dropdown-item b_email_item" data-value="이메일 선택">이메일 선택</a></li>
+                                    <li><a class="dropdown-item b_email_item" data-value="@gmail.com">@gmail.com</a>
+                                    </li>
+                                    <li><a class="dropdown-item b_email_item" data-value="@naver.com">@naver.com</a>
+                                    </li>
+                                    <li><a class="dropdown-item b_email_item" data-value="@daum.net">@daum.net</a></li>
+                                    <li><a class="dropdown-item b_email_item" data-value="@yahoo.com">@yahoo.com</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <input type="hidden" name="user_email" id="b_user_email_full">
+                        </div>
+                        <script>
+                            const emailInput = document.getElementById('b_email');
+                            const emailDropdownItems = document.querySelectorAll('.b_email_item');
+                            const userEmailFull = document.getElementById('b_user_email_full');
+
+                            emailDropdownItems.forEach(item => {
+                                item.addEventListener('click', function () {
+                                    const domain = item.getAttribute('data-value');
+                                    userEmailFull.value = emailInput.value + domain; // 숨겨진 필드에 도메인 추가
+                                });
+                            });
+                        </script>
+                        <div class="col-md-3 form-group form-floating mb-3">
+                            <label for="24"></label><input type="text" class="form-control" min="2" max="5" id="24"
+                                                           name="user_name" placeholder>
+                            <label for="floatingInput">이름</label>
+                        </div>
+                        <div class="col-md-6 form-group form-floating mb-3">
+                            <label for="23"></label><input type="text" class="form-control" min="6" max="6" id="23"
+                                                           name="user_birth" placeholder>
+                            <label for="floatingInput">생년월일</label>
+                        </div>
+                        <div class="col-md-3 form-group form-floating mb-3" style="display: flex; align-items: center;">
+                            <div class="btn-group">
+                                <button type="button" id="b_dropdownButton_gender"
+                                        class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                    성별
+                                </button>
+                                <ul class="dropdown-menu b_gender">
+                                    <li><a class="dropdown-item b_gender_item" data-value="성별">성별</a></li>
+                                    <li><a class="dropdown-item b_gender_item" data-value="남자">남자</a></li>
+                                    <li><a class="dropdown-item b_gender_item" data-value="여자">여자</a></li>
+                                </ul>
+                            </div>
+                            <input type="hidden" name="user_gender" id="b_user_gender"> <!-- 숨겨진 입력 필드 -->
+                        </div>
+
+                        <script>
+                            const genderDropdownItems = document.querySelectorAll('.b_gender_item');
+                            const genderInput = document.getElementById('b_user_gender'); // 숨겨진 입력 필드 가져오기
+
+                            genderDropdownItems.forEach(item => {
+                                item.addEventListener('click', function () {
+                                    const gender = item.getAttribute('data-value');
+                                    document.getElementById('b_dropdownButton_gender').textContent = gender; // 버튼 텍스트 업데이트
+                                    genderInput.value = gender; // Hidden input에 성별 추가
+                                });
+                            });
+                        </script>
+                        <div class="col-md-5 form-group form-floating mb-3">
+                            <label for="12"></label><input type="text" class="form-control" id="12" name="nickname"
+                                                           placeholder/>
+                            <label for="floatingInput">닉네임</label>
+                        </div>
+                        <div class="col-md-7 form-group form-floating mb-3">
+                            <label for="13"></label><input type="text" class="form-control" id="13" name="user_phone"
+                                                           placeholder/>
+                            <label for="floatingInput">전화번호</label>
+                        </div>
+                        <div class="col-md-9 form-group form-floating mb-3"
+                             style=" display: flex; align-items: center;">
+                            <label for="14"></label><input type="text" class="form-control" id="14"
+                                                           name="business_number" placeholder/>
+                            <label for="floatingInput">사업자 번호</label>
+                            <div class="col-md-3 form-group form-floating mb-3">
+                                <p id="15" style=" color: red;">*필수</p>
+                            </div>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <div class="create_account" style="display: inline-flex; align-items: center;">
+                                <input type="checkbox" id="f-option2" name="selector" style="margin-right: 10px;">
+                                <label for="f-option2">정보 동의 (개인 정보)</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 form-group">
+                            <button type="submit" value="submit" class="primary-btn">회원가입</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-          </form>
         </div>
-      </div>
-      <!-- 사업자 회원가입 폼 -->
-      <div class="col-lg-6" id="businessMember_form" style=" display: none;background-color: #fdd9a2;">
-        <div class="login_form_inner"  >
-
-          <form class="row login_form" action="/businessJoin" method="post" id="business_contactForm" novalidate="novalidate" style=" margin-top: -80px;">
-            <h1>&nbsp;</h1>
-            <div class="col-md-11 form-group form-floating mb-3" style=" display: flex; align-items: center;">
-              <label for="b_user_loginId"></label><input type="text" class="form-control" min="6" max="15" id="b_user_loginId" name="user_loginId" placeholder style=" padding-right: 150px;" autocomplete="off">
-              <label for="floatingInput">아이디를 입력하세요.</label>
-              <button type="button" id="btn_b_user_loginId"  style=" border: none; border-radius: 10px; background-color: #FFC107; margin-left: 10px; width: 170px;">중복 확인</button>
-            </div>
-            <div class="col-md-6 form-group form-floating mb-3">
-              <label for="35"></label><input type="password" class="form-control" min="6" max="12" id="35" name="password" placeholder autocomplete="off">
-              <label for="floatingInput" id="">비밀번호</label>
-            </div>
-            <div class="col-md-6 form-group form-floating mb-3">
-              <label for="34"></label><input type="password" class="form-control" min="6" max="12" id="34" name="host_" placeholder autocomplete="off">
-              <label for="floatingInput" id="1234">비밀번호 확인</label>
-            </div>
-            <div class="col-md-12 form-group form-floating mb-3" style="display: flex; align-items: center;">
-              <label for="b_email"></label><input type="text" class="form-control" id="b_email" name="user_email" placeholder>
-              <label for="floatingInput" id="731">이메일</label>
-              <div class="btn-group">
-                <button type="button" id="b_dropdownButton_email" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" style=" margin-left: 10px;" aria-expanded="false" >
-                  이메일 선택
-                </button>
-                <ul class="dropdown-menu b_email">
-                  <li><a class="dropdown-item b_email_item"  data-value="이메일 선택">이메일 선택</a></li>
-                  <li><a class="dropdown-item b_email_item"   data-value="@gmail.com">@gmail.com</a></li>
-                  <li><a class="dropdown-item b_email_item"   data-value="@naver.com">@naver.com</a></li>
-                  <li><a class="dropdown-item b_email_item"   data-value="@daum.net">@daum.net</a></li>
-                  <li><a class="dropdown-item b_email_item"   data-value="@yahoo.com">@yahoo.com</a></li>
-                </ul>
-              </div>
-              <input type="hidden" name="user_email" id="b_user_email_full">
-            </div>
-            <script>
-              const emailInput = document.getElementById('b_email');
-              const emailDropdownItems = document.querySelectorAll('.b_email_item');
-              const userEmailFull = document.getElementById('b_user_email_full');
-
-              emailDropdownItems.forEach(item => {
-                item.addEventListener('click', function() {
-                  const domain = item.getAttribute('data-value');
-                  userEmailFull.value = emailInput.value + domain; // 숨겨진 필드에 도메인 추가
-                });
-              });
-            </script>
-            <div class="col-md-3 form-group form-floating mb-3">
-              <label for="24"></label><input type="text" class="form-control" min="2" max="5" id="24" name="user_name" placeholder>
-              <label for="floatingInput">이름</label>
-            </div>
-            <div class="col-md-6 form-group form-floating mb-3">
-              <label for="23"></label><input type="text" class="form-control" min="6" max="6" id="23" name="user_birth" placeholder>
-              <label for="floatingInput">생년월일</label>
-            </div>
-            <div class="col-md-3 form-group form-floating mb-3" style="display: flex; align-items: center;">
-              <div class="btn-group">
-                <button type="button" id="b_dropdownButton_gender" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" >
-                  성별
-                </button>
-                <ul class="dropdown-menu b_gender">
-                  <li><a class="dropdown-item b_gender_item" data-value="성별" >성별</a></li>
-                  <li><a class="dropdown-item b_gender_item"  data-value="남자">남자</a></li>
-                  <li><a class="dropdown-item b_gender_item" data-value="여자">여자</a></li>
-                </ul>
-              </div>
-              <input type="hidden" name="user_gender" id="b_user_gender"> <!-- 숨겨진 입력 필드 -->
-            </div>
-
-            <script>
-              const genderDropdownItems = document.querySelectorAll('.b_gender_item');
-              const genderInput = document.getElementById('b_user_gender'); // 숨겨진 입력 필드 가져오기
-
-              genderDropdownItems.forEach(item => {
-                item.addEventListener('click', function() {
-                  const gender = item.getAttribute('data-value');
-                  document.getElementById('b_dropdownButton_gender').textContent = gender; // 버튼 텍스트 업데이트
-                  genderInput.value = gender; // Hidden input에 성별 추가
-                });
-              });
-            </script>
-            <div class="col-md-5 form-group form-floating mb-3">
-              <label for="12"></label><input type="text" class="form-control" id="12" name="nickname" placeholder />
-              <label for="floatingInput">닉네임</label>
-            </div>
-            <div class="col-md-7 form-group form-floating mb-3">
-              <label for="13"></label><input type="text" class="form-control" id="13" name="user_phone" placeholder />
-              <label for="floatingInput">전화번호</label>
-            </div>
-            <div class="col-md-9 form-group form-floating mb-3" style=" display: flex; align-items: center;">
-              <label for="14"></label><input type="text" class="form-control" id="14" name="business_number" placeholder />
-              <label for="floatingInput">사업자 번호</label>
-              <div class="col-md-3 form-group form-floating mb-3">
-                <p id="15"  style=" color: red;">*필수</p>
-              </div>
-            </div>
-            <div class="col-md-12 form-group">
-              <div class="create_account" style="display: inline-flex; align-items: center;">
-                <input type="checkbox" id="f-option2" name="selector" style="margin-right: 10px;">
-                <label for="f-option2">정보 동의 (개인 정보)</label>
-              </div>
-            </div>
-
-            <div class="col-md-12 form-group">
-              <button type="submit" value="submit" class="primary-btn">회원가입</button>
-            </div>
-          </form>
-        </div>
-      </div>
     </div>
-  </div>
 </section>
 <!--================End Login Box Area =================-->
 
 <!-- 모달창 시작 -->
+<!-- 아이디/비밀번호 찾기 모달 -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel">회원 정보 조회 / 수정</h4>
-        <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
-
-      </div>
-
-      <div class="modal-body">
-
-
-        <!-- 여기서부터 filled pills 구역 -->
-        <div class="container-xxl flex-grow-1 container-p-y">
-          <div class="row">
-            <div class="col-xl-6">
-              <h6 class="text-muted">회원 조회</h6>
-              <div class="nav-align-top mb-4">
-                <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
-                  <li class="nav-item">
-                    <button
-                            type="button"
-                            class="nav-link active"
-                            role="tab"
-                            data-bs-toggle="tab"
-                            data-bs-target="#navs-pills-justified-home"
-                            aria-controls="navs-pills-justified-home"
-                            aria-selected="true"
-                    >
-                      <i class="tf-icons bx bx-home"></i> 아이디 찾기
-                      <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">id</span>
-                    </button>
-                  </li>
-                  <li class="nav-item">
-                    <button
-                            type="button"
-                            class="nav-link"
-                            role="tab"
-                            data-bs-toggle="tab"
-                            data-bs-target="#navs-pills-justified-profile"
-                            aria-controls="navs-pills-justified-profile"
-                            aria-selected="false"
-                    >
-                      <i class="tf-icons bx bx-user"></i> 비밀번호 찾기
-                      <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">pw</span>
-                    </button>
-                  </li>
-                </ul>
-                <div class="tab-content">
-
-
-                  <div class="tab-pane fade show active" id="navs-pills-justified-home" role="tabpanel">
-                    <form>
-                      <p>
-                        <input id="find_name" type="text" style="border-radius: 10px; border-color: #bc915e; box-shadow: none;" placeholder="이름"/>
-                      </p>
-                      <p>
-                        <input id="find_email" type="text" style="border-radius: 10px; border-color: #bc915e; box-shadow: none;" placeholder="이메일"/>
-                      </p>
-                      <p >
-                        <input id="find_birth" type="text" style="border-radius: 10px; border-color: #bc915e; box-shadow: none;" placeholder="생년월일" max="6"/>
-                      </p>
-                      <p class="mb-0">
-                        <button onclick="findId();return false;" type="submit" style="border-radius: 10px; border-color: #bc915e; box-shadow: none;">확인</button>
-                      </p>
-
-                    </form>
-                  </div>
-                  <div class="tab-pane fade" id="navs-pills-justified-profile" role="tabpanel">
-                    <form>
-                      <p>
-                        <input id="pw_find_id" type="text" style="border-radius: 10px; border-color: #bc915e; box-shadow: none;" placeholder="아이디">
-                      </p>
-                      <p>
-                        <input id="pw_find_email" type="text" style="border-radius: 10px; border-color: #bc915e; box-shadow: none;" placeholder="이메일">
-                      </p>
-                      <p>
-                        <input id="pw_find_birth" type="text" style="border-radius: 10px; border-color: #bc915e; box-shadow: none;" placeholder="생년월일" max="6">
-                      </p>
-                      <p class="mb-0">
-                        <button onclick="findPw();return false;" type="submit" style="border-radius: 10px; border-color: #bc915e; box-shadow: none;">확인</button>
-                      </p>
-                    </form>
-                  </div>
-                </div>
-              </div>
+    <div class="modal-dialog" style="max-width: 600px; margin-top: 50px; border-radius: 15px;">
+        <div class="modal-content" style="border-radius: 15px; overflow: hidden;">
+            <div class="modal-header" style="background-color: #f8f9fa; border-bottom: 2px solid #bc915e;">
+                <h4 class="modal-title" id="myModalLabel" style="color: #5a5a5a; font-weight: bold;">회원 조회 / 수정</h4>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true"
+                        style="background-color: transparent; border: none; font-size: 20px; color: #bc915e;">&times;</button>
             </div>
-          </div>
+
+            <div class="modal-body" style="padding: 30px; background-color: #fffaf0;">
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <div class="row">
+                        <div class="col-xl-6" style="margin: auto;">
+                            <h6 class="text-muted" style="text-align: center; font-weight: bold;">회원 조회</h6>
+                            <div class="nav-align-top mb-4">
+                                <ul class="nav nav-pills mb-3 nav-fill" role="tablist" style="margin-bottom: 20px;">
+                                    <li class="nav-item" style="margin: 0 5px;">
+                                        <button type="button"
+                                                class="nav-link active"
+                                                role="tab"
+                                                data-bs-toggle="tab"
+                                                data-bs-target="#navs-pills-justified-home"
+                                                aria-controls="navs-pills-justified-home"
+                                                aria-selected="true"
+                                                style="background-color: #bc915e; color: white; border-radius: 8px;">
+                                            <i class="tf-icons bx bx-home"></i> 아이디 찾기
+                                            <span class="badge rounded-pill badge-center h-px-20 w-px-20"
+                                                  style="background-color: white; color: #bc915e;">id</span>
+                                        </button>
+                                    </li>
+                                    <li class="nav-item" style="margin: 0 5px;">
+                                        <button type="button"
+                                                class="nav-link"
+                                                role="tab"
+                                                data-bs-toggle="tab"
+                                                data-bs-target="#navs-pills-justified-profile"
+                                                aria-controls="navs-pills-justified-profile"
+                                                aria-selected="false"
+                                                style="background-color: #f8f9fa; color: #bc915e; border: 1px solid #bc915e; border-radius: 8px;">
+                                            <i class="tf-icons bx bx-user"></i> 비밀번호 찾기
+                                            <span class="badge rounded-pill badge-center h-px-20 w-px-20"
+                                                  style="background-color: #bc915e; color: white;">pw</span>
+                                        </button>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane fade show active" id="navs-pills-justified-home" role="tabpanel">
+                                        <form style="text-align: center;">
+                                            <p>아이디 찾기 인증</p>
+                                            <p>
+                                                <input id="find_name" type="text"
+                                                       style="width: 90%; padding: 10px; border-radius: 10px; border: 1px solid #bc915e; box-shadow: none;"
+                                                       placeholder="이름"/>
+                                            </p>
+                                            <p>
+                                                <input id="find_email" type="text"
+                                                       style="width: 90%; padding: 10px; border-radius: 10px; border: 1px solid #bc915e; box-shadow: none;"
+                                                       placeholder="이메일"/>
+                                            </p>
+                                            <p>
+                                                <input id="find_birth" type="text"
+                                                       style="width: 90%; padding: 10px; border-radius: 10px; border: 1px solid #bc915e; box-shadow: none;"
+                                                       placeholder="생년월일 6자리" maxlength="6"/>
+                                            </p>
+                                            <p class="mb-0">
+                                                <button onclick="findId();return false;" type="submit"
+                                                        style="width: 90%; padding: 10px; border-radius: 10px; background-color: #bc915e; color: white; border: none;">
+                                                    확인
+                                                </button>
+                                            </p>
+                                            <p>
+                                                <button type="button" id="smsButton1" data-bs-toggle="modal" data-bs-target="#smsModal"
+                                                        style="width: 90%; padding: 10px; border-radius: 10px; background-color: #d1b88a; color: white; border: none; visibility: hidden">
+                                                    SMS 인증
+                                                </button>
+                                            </p>
+                                        </form>
+                                    </div>
+                                    <div class="tab-pane fade" id="navs-pills-justified-profile" role="tabpanel">
+                                        <form style="text-align: center;">
+                                            <p>비밀번호 찾기 인증</p>
+                                            <p>
+                                                <input id="pw_find_id" type="text"
+                                                       style="width: 90%; padding: 10px; border-radius: 10px; border: 1px solid #bc915e; box-shadow: none;"
+                                                       placeholder="아이디">
+                                            </p>
+                                            <p>
+                                                <input id="pw_find_email" type="text"
+                                                       style="width: 90%; padding: 10px; border-radius: 10px; border: 1px solid #bc915e; box-shadow: none;"
+                                                       placeholder="이메일">
+                                            </p>
+                                            <p>
+                                                <input id="pw_find_birth" type="text"
+                                                       style="width: 90%; padding: 10px; border-radius: 10px; border: 1px solid #bc915e; box-shadow: none;"
+                                                       placeholder="생년월일 6자리" maxlength="6">
+                                            </p>
+                                            <p class="mb-0">
+                                                <button onclick="findPw();return false;" type="submit"
+                                                        style="width: 90%; padding: 10px; border-radius: 10px; background-color: #bc915e; color: white; border: none;">
+                                                    확인
+                                                </button>
+                                            </p>
+                                            <p>
+                                                <button type="button" id="smsButton2" data-bs-toggle="modal" data-bs-target="#smsModal"
+                                                        style="width: 90%; padding: 10px; border-radius: 10px; background-color: #d1b88a; color: white; border: none; visibility: hidden">
+                                                    SMS 인증
+                                                </button>
+                                            </p>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="background-color: #f8f9fa; border-top: 2px solid #bc915e;">
+                <button type="button" class="btn" data-bs-dismiss="modal"
+                        style="background-color: #bc915e; color: white; border-radius: 10px;">돌아가기</button>
+            </div>
         </div>
-        <!-- 여기까지 filled pills 구역 -->
-
-
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn bg-text_mungYellow hover_mung" data-bs-dismiss="modal">돌아가기</button>
-      </div>
     </div>
-    <!-- modal-content -->
-  </div>
-  <!-- modal-dialog -->
 </div>
+
+<!-- SMS 인증 모달 -->
+<div class="modal fade" id="smsModal" tabindex="-1" aria-labelledby="smsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="border-radius: 10px; background-color: #fefefe; box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);">
+        <div class="modal-content" style="border-radius: 10px; background: linear-gradient(135deg, #f5f5f5, #e8e8e8);">
+            <div class="modal-header" style="border-bottom: 2px solid #d1c4b3; background-color: #fff; border-radius: 10px 10px 0 0;">
+                <h5 class="modal-title" id="smsModalLabel" style="font-size: 18px; color: #5d534a; font-weight: bold;">SMS 인증</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="color: #8c8579;"></button>
+            </div>
+            <div class="modal-body" style="padding: 20px; background-color: #fcfcfa; color: #5d534a;">
+                <!-- 전화번호 입력 -->
+                <div class="mb-3">
+                    <label for="phone" class="form-label" style="font-size: 14px; color: #6e6258;">전화번호:</label>
+                    <input type="text" id="phone" class="form-control" placeholder="전화번호 입력 (예: 01012345678)" style="border: 1px solid #d1c4b3; border-radius: 5px; padding: 10px; color: #5d534a;">
+                </div>
+                <button id="sendSmsButton" class="btn mb-3" style="background-color: #b89f8b; color: #fff; border: 1px solid #b89f8b; border-radius: 5px; padding: 5px 15px;">인증번호 발송</button>
+
+                <!-- 인증번호 입력 -->
+                <div class="mb-3">
+                    <label for="certificationNumber" class="form-label" style="font-size: 14px; color: #6e6258;">인증번호:</label>
+                    <input type="text" id="certificationNumber" class="form-control" placeholder="인증번호 입력" style="border: 1px solid #d1c4b3; border-radius: 5px; padding: 10px; color: #5d534a;">
+                </div>
+                <button id="verifyButton" class="btn" style="background-color: #b89f8b; color: #fff; border: 1px solid #b89f8b; border-radius: 5px; padding: 5px 15px;">인증번호 확인</button>
+
+                <!-- 메시지 및 타이머 -->
+                <p id="message" class="mt-3" style="color: #d9534f; font-size: 14px;"></p>
+                <p id="timer" class="mt-2" style="color: #5bc0de; font-size: 14px; display: none;">03:00</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!-- 모달창 끝 -->
+
 
 <!-- 비밀번호 수정 모달 -->
 <div class="modal fade" id="passwordResetModal" tabindex="-1" aria-labelledby="passwordResetLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="passwordResetLabel">비밀번호 수정</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="mb-3">
-          <label for="newPassword" class="form-label">새 비밀번호</label>
-          <input type="password" class="form-control" id="newPassword" required autocomplete="off">
+    <div class="modal-dialog" style="border-radius: 10px; background-color: #fefefe; box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);">
+        <div class="modal-content" style="border-radius: 10px; background: linear-gradient(135deg, #f5f5f5, #e8e8e8);">
+            <div class="modal-header" style="border-bottom: 2px solid #d1c4b3; background-color: #fff; border-radius: 10px 10px 0 0;">
+                <h5 class="modal-title" id="passwordResetLabel" style="font-size: 18px; color: #5d534a; font-weight: bold;">비밀번호 수정</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="color: #8c8579;"></button>
+            </div>
+            <div class="modal-body" style="padding: 20px; background-color: #fcfcfa; color: #5d534a;">
+                <div class="mb-3">
+                    <label for="newPassword" class="form-label" style="font-size: 14px; color: #6e6258;">새 비밀번호</label>
+                    <input type="password" class="form-control" id="newPassword" required autocomplete="off" style="border: 1px solid #d1c4b3; border-radius: 5px; box-shadow: none; padding: 10px; color: #5d534a;">
+                </div>
+                <div class="mb-3">
+                    <label for="confirmPassword" class="form-label" style="font-size: 14px; color: #6e6258;">비밀번호 확인</label>
+                    <input type="password" class="form-control" id="confirmPassword" required autocomplete="off" style="border: 1px solid #d1c4b3; border-radius: 5px; box-shadow: none; padding: 10px; color: #5d534a;">
+                </div>
+            </div>
+            <div class="modal-footer" style="border-top: 2px solid #d1c4b3; background-color: #fff; border-radius: 0 0 10px 10px;">
+                <button type="button" class="btn" data-bs-dismiss="modal" style="background-color: #e8e8e8; color: #6e6258; border: 1px solid #d1c4b3; border-radius: 5px; padding: 5px 15px;">취소</button>
+                <button type="button" class="btn" onclick="updatePassword()" style="background-color: #b89f8b; color: #fff; border: 1px solid #b89f8b; border-radius: 5px; padding: 5px 15px;">비밀번호 수정</button>
+            </div>
         </div>
-        <div class="mb-3">
-          <label for="confirmPassword" class="form-label">비밀번호 확인</label>
-          <input type="password" class="form-control" id="confirmPassword" required autocomplete="off">
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-        <button type="button" class="btn btn-primary" onclick="updatePassword()">비밀번호 수정</button>
-      </div>
     </div>
-  </div>
 </div>
-<!--비밀번호 수정 모달 끝-->
-
+<!-- 비밀번호 수정 모달 끝 -->
 
 
 <script th:inline="javascript">
-  var idList = /*[[${idList}]]*/ [];
-  var idInputG = document.getElementById('g_user_loginId');
-  var idInputB = document.getElementById('b_user_loginId');
+    var idList = /*[[${idList}]]*/ [];
+    var idInputG = document.getElementById('g_user_loginId');
+    var idInputB = document.getElementById('b_user_loginId');
 
-  console.log("idList: ", idList); // 추가
-  console.log("idInputG.value: ", idInputG.value); // 추가
-  console.log("idInputB.value: ", idInputB.value); // 추가
+    console.log("idList: ", idList); // 추가
+    console.log("idInputG.value: ", idInputG.value); // 추가
+    console.log("idInputB.value: ", idInputB.value); // 추가
 
-  document.getElementById('btn_g_user_loginId').addEventListener('click', function (e) {
-    e.preventDefault();
-    console.log("idInput.value on click: ", idInputG.value); // 추가
-    var trimmedValue = idInputG.value.trim(); // 공백 제거
-    if (idList.includes(trimmedValue)) {
-      alert("사용 중인 아이디입니다.");
-    } else {
-      alert("사용 가능한 아이디입니다.");
-    }
-  });
-
-  document.getElementById('btn_b_user_loginId').addEventListener('click', function (e) {
-    e.preventDefault();
-    console.log("idInput.value on click: ", idInputB.value); // 추가
-    var trimmedValue = idInputB.value.trim(); // 공백 제거
-    if (idList.includes(trimmedValue)) {
-      alert("사용 중인 아이디입니다.");
-    } else {
-      alert("사용 가능한 아이디입니다.");
-    }
-  });
-</script>
-
-
-<script>
-
-  function getId(id){
-    return document.getElementById(id);
-  }
-
-  var newCreate = getId('newCreate');
-  var generalMember = getId('generalMember');
-  var businessMember = getId('businessMember');
-  var login_form =getId('login_form');
-  var generalMember_form =getId('generalMember_form');
-  var businessMember_form =getId('businessMember_form');
-  var h1_text =getId('h1_text');
-  var p_text =getId('p_text');
-  var go_login = getId('go_login');
-
-  console.log("스크립트 시작",1);
-  // 새 계정 클릭 시 회원가입 분류 표현
-  newCreate.addEventListener('click', function(e){
-    e.preventDefault();
-    console.log("새계정 클릭",2);
-    if(newCreate.innerHTML === '새 계정 생성'){
-      console.log("회원가입 버튼 생성",3);
-      newCreate.style.display='none'
-      generalMember.style.display='inline-block';
-      businessMember.style.display='inline-block';
-      h1_text.innerHTML='회원가입 분류';
-      p_text.innerHTML='일반 회원  /  사업자 회원';
-      go_login.style.display='block';
-    }
-  });
-  // 일반회원 클릭 시 일반 회원가입 폼 표현
-  generalMember.addEventListener('click',function(e){
-    e.preventDefault();
-    console.log("일반 회원 클릭",4);
-    if(generalMember.innerHTML==='일반 회원'){
-      alert("일반 회원가입 폼입니다.");
-      login_form.style.display='none';
-      businessMember_form.style.display='none';
-      generalMember_form.style.display='inline-block';
-      h1_text.innerHTML='일반 회원가입';
-      p_text.innerHTML='&nbsp;';
-    }
-  });
-  // 사업자 회원 클릭 시 사업자 회원가입 폼 표현
-  businessMember.addEventListener('click',function(e){
-    e.preventDefault();
-    console.log("일반 회원 클릭",4);
-    if(businessMember.innerHTML==='사업자 회원'){
-      alert("사업자 회원가입 폼입니다.\n사업자 번호를 입력하세요.");
-      login_form.style.display='none';
-      generalMember_form.style.display='none';
-      businessMember_form.style.display='inline-block';
-      h1_text.innerHTML='사업자 회원가입';
-
-    }
-  });
-
-  // 드롭다운 아이템 클릭 시 버튼 텍스트 변경
-  document.querySelectorAll('.g_email_item').forEach(item => {
-    item.addEventListener('click', function() {
-      console.log("클릭한 항목:", this.getAttribute('data-value')); // 클릭한 항목 확인
-      // 선택한 값으로 버튼 텍스트 변경
-      document.getElementById('g_dropdownButton_email').innerText = this.getAttribute('data-value');
-    });
-  });
-    document.querySelectorAll('.g_gender_item').forEach(item => {
-      item.addEventListener('click', function() {
-        console.log("클릭한 항목:", this.getAttribute('data-value')); // 클릭한 항목 확인
-        document.getElementById('g_dropdownButton_gender').innerText = this.getAttribute('data-value');
-      });
-    });
-
-
-  document.querySelectorAll('.b_email_item').forEach(item => {
-    item.addEventListener('click', function() {
-      console.log("클릭한 항목:", this.getAttribute('data-value')); // 클릭한 항목 확인
-      // 선택한 값으로 버튼 텍스트 변경
-      document.getElementById('b_dropdownButton_email').innerText = this.getAttribute('data-value');
-    });
-  });
-  document.querySelectorAll('.b_gender_item').forEach(item => {
-    item.addEventListener('click', function() {
-      console.log("클릭한 항목:", this.getAttribute('data-value')); // 클릭한 항목 확인
-      // 선택한 값으로 버튼 텍스트 변경
-      document.getElementById('b_dropdownButton_gender').innerText = this.getAttribute('data-value');
-    });
-  });
-
-
-</script>
-
-<script>
-
-
-  function findId() {
-
-    var name = document.getElementById('find_name').value;
-    var email = document.getElementById('find_email').value;
-    var birth = document.getElementById('find_birth').value;
-
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", "/findId", true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-
-    let data = JSON.stringify({
-      name: name,
-      email: email,
-      birth: birth
-    });
-    xhr.onload = function () {
-      if (xhr.status === 200) {
-        var userId = xhr.responseText; // 서버에서 반환된 아이디
-        alert("User ID :" + userId);
-        console.log("User ID:", userId);
-        window.location.href = "/login";
-        // 여기에 ID를 화면에 표시하거나 다른 작업을 할 수 있음
-      } else {
-        console.error("Request failed:", xhr.statusText);
-      }
-    };
-
-    xhr.send(data);
-  }
-
-  function findPw() {
-    var pw_id = document.getElementById('pw_find_id').value;
-    var pw_email = document.getElementById('pw_find_email').value;
-    var pw_birth = document.getElementById('pw_find_birth').value;
-
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", "/idCheckForModifyPassword", true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-
-    let data = JSON.stringify({
-      id: pw_id,
-      email: pw_email,
-      birth: pw_birth
-    });
-
-    console.log(data, 1);
-
-    xhr.onload = function () {
-      if (xhr.status === 200) {
-        alert(xhr.responseText);
-        $('#myModal').modal('hide');
-        $('#passwordResetModal').modal('show');
-        $('#newPassword').val(''); // 비밀번호 입력 필드 비우기
-        $('#confirmPassword').val(''); // 비밀번호 확인 필드 비우기
-      } else {
-        console.error("Request failed:", xhr.statusText);
-      }
-    };
-
-    xhr.send(data);
-  }
-
-  function updatePassword() {
-    var newPassword = document.getElementById('newPassword').value;
-    var confirmPassword = document.getElementById('confirmPassword').value;
-
-    if (newPassword === confirmPassword) {
-      let xhr = new XMLHttpRequest();
-      xhr.open("POST", "/updatePassword", true);
-      xhr.setRequestHeader("Content-Type", "application/json");
-
-      let data = JSON.stringify({
-        id: document.getElementById('pw_find_id').value,
-        newPassword: newPassword
-      });
-
-      xhr.onload = function () {
-        if (xhr.status === 200) {
-          alert("비밀번호가 성공적으로 변경되었습니다.");
-          $('#passwordResetModal').modal('hide'); // 모달 닫기
-          window.location.href = "/login"; // 로그인 페이지로 리다이렉션
+    document.getElementById('btn_g_user_loginId').addEventListener('click', function (e) {
+        e.preventDefault();
+        console.log("idInput.value on click: ", idInputG.value); // 추가
+        var trimmedValue = idInputG.value.trim(); // 공백 제거
+        if (idList.includes(trimmedValue)) {
+            alert("사용 중인 아이디입니다.");
         } else {
-          console.error("Request failed:", xhr.statusText);
+            alert("사용 가능한 아이디입니다.");
         }
-      };
+    });
 
-      xhr.send(data);
-    } else {
-      alert("비밀번호가 일치하지 않습니다.");
+    document.getElementById('btn_b_user_loginId').addEventListener('click', function (e) {
+        e.preventDefault();
+        console.log("idInput.value on click: ", idInputB.value); // 추가
+        var trimmedValue = idInputB.value.trim(); // 공백 제거
+        if (idList.includes(trimmedValue)) {
+            alert("사용 중인 아이디입니다.");
+        } else {
+            alert("사용 가능한 아이디입니다.");
+        }
+    });
+</script>
+
+
+<script>
+
+    function getId(id) {
+        return document.getElementById(id);
     }
-  }
+
+    var newCreate = getId('newCreate');
+    var generalMember = getId('generalMember');
+    var businessMember = getId('businessMember');
+    var login_form = getId('login_form');
+    var generalMember_form = getId('generalMember_form');
+    var businessMember_form = getId('businessMember_form');
+    var h1_text = getId('h1_text');
+    var p_text = getId('p_text');
+    var go_login = getId('go_login');
+
+    console.log("스크립트 시작", 1);
+    // 새 계정 클릭 시 회원가입 분류 표현
+    newCreate.addEventListener('click', function (e) {
+        e.preventDefault();
+        console.log("새계정 클릭", 2);
+        if (newCreate.innerHTML === '새 계정 생성') {
+            console.log("회원가입 버튼 생성", 3);
+            newCreate.style.display = 'none'
+            generalMember.style.display = 'inline-block';
+            businessMember.style.display = 'inline-block';
+            h1_text.innerHTML = '회원가입 분류';
+            p_text.innerHTML = '일반 회원  /  사업자 회원';
+            go_login.style.display = 'block';
+        }
+    });
+    // 일반회원 클릭 시 일반 회원가입 폼 표현
+    generalMember.addEventListener('click', function (e) {
+        e.preventDefault();
+        console.log("일반 회원 클릭", 4);
+        if (generalMember.innerHTML === '일반 회원') {
+            alert("일반 회원가입 폼입니다.");
+            login_form.style.display = 'none';
+            businessMember_form.style.display = 'none';
+            generalMember_form.style.display = 'inline-block';
+            h1_text.innerHTML = '일반 회원가입';
+            p_text.innerHTML = '&nbsp;';
+        }
+    });
+    // 사업자 회원 클릭 시 사업자 회원가입 폼 표현
+    businessMember.addEventListener('click', function (e) {
+        e.preventDefault();
+        console.log("일반 회원 클릭", 4);
+        if (businessMember.innerHTML === '사업자 회원') {
+            alert("사업자 회원가입 폼입니다.\n사업자 번호를 입력하세요.");
+            login_form.style.display = 'none';
+            generalMember_form.style.display = 'none';
+            businessMember_form.style.display = 'inline-block';
+            h1_text.innerHTML = '사업자 회원가입';
+
+        }
+    });
+
+    // 드롭다운 아이템 클릭 시 버튼 텍스트 변경
+    document.querySelectorAll('.g_email_item').forEach(item => {
+        item.addEventListener('click', function () {
+            console.log("클릭한 항목:", this.getAttribute('data-value')); // 클릭한 항목 확인
+            // 선택한 값으로 버튼 텍스트 변경
+            document.getElementById('g_dropdownButton_email').innerText = this.getAttribute('data-value');
+        });
+    });
+    document.querySelectorAll('.g_gender_item').forEach(item => {
+        item.addEventListener('click', function () {
+            console.log("클릭한 항목:", this.getAttribute('data-value')); // 클릭한 항목 확인
+            document.getElementById('g_dropdownButton_gender').innerText = this.getAttribute('data-value');
+        });
+    });
+
+
+    document.querySelectorAll('.b_email_item').forEach(item => {
+        item.addEventListener('click', function () {
+            console.log("클릭한 항목:", this.getAttribute('data-value')); // 클릭한 항목 확인
+            // 선택한 값으로 버튼 텍스트 변경
+            document.getElementById('b_dropdownButton_email').innerText = this.getAttribute('data-value');
+        });
+    });
+    document.querySelectorAll('.b_gender_item').forEach(item => {
+        item.addEventListener('click', function () {
+            console.log("클릭한 항목:", this.getAttribute('data-value')); // 클릭한 항목 확인
+            // 선택한 값으로 버튼 텍스트 변경
+            document.getElementById('b_dropdownButton_gender').innerText = this.getAttribute('data-value');
+        });
+    });
+
+
+</script>
+
+<script>
+    //전화번호로 아이디 찾기 메서드 정의해놓음
+    function findIdByPhone() {
+        var phone = document.getElementById('phone').value;
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "/findIdByPhone", true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        console.log(phone);
+        let data = JSON.stringify({
+            phone: phone
+        });
+        console.log(data);
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                var userId = xhr.responseText; // 서버에서 반환된 아이디
+                alert("인증이 완료 되었습니다.")
+                alert("User ID :" + userId);
+                console.log("User ID ->  ", userId);
+                window.location.href = "/login";
+                // 여기에 ID를 화면에 표시하거나 다른 작업을 할 수 있음
+            } else {
+                console.error("Request failed:", xhr.statusText);
+            }
+        };
+        xhr.send(data);
+    }
+
+    function findId() {
+
+        var name = document.getElementById('find_name').value;
+        var email = document.getElementById('find_email').value;
+        var birth = document.getElementById('find_birth').value;
+
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "/findId", true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        let data = JSON.stringify({
+            name: name,
+            email: email,
+            birth: birth
+        });
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                alert("SMS 문자 인증을 하십시오.");
+                document.getElementById('smsButton1').style.visibility = 'visible';
+                // 여기에 ID를 화면에 표시하거나 다른 작업을 할 수 있음
+            } else {
+                console.error("Request failed:", xhr.statusText);
+            }
+        };
+
+        xhr.send(data);
+    }
+
+    function findPw() {
+        var pw_id = document.getElementById('pw_find_id').value;
+        var pw_email = document.getElementById('pw_find_email').value;
+        var pw_birth = document.getElementById('pw_find_birth').value;
+
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "/idCheckForModifyPassword", true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        let data = JSON.stringify({
+            id: pw_id,
+            email: pw_email,
+            birth: pw_birth
+        });
+
+        console.log(data, 1);
+
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                alert("SMS 문자 인증을 하십시오.");
+                document.getElementById('smsButton2').style.visibility = 'visible';
+            } else {
+                console.error("Request failed:", xhr.statusText);
+            }
+        };
+
+        xhr.send(data);
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // SMS 발송 버튼
+    document.getElementById('sendSmsButton').addEventListener('click', () => {
+        const phone = document.getElementById('phone').value.trim();
+        if (!phone || !/^\d{10,11}$/.test(phone)) {
+            alert('유효한 전화번호를 입력해주세요.');
+            return;
+        }
+        fetch('/sms/send', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({phone}),
+        })
+            .then((response) => {
+                if (!response.ok) throw new Error('문자 전송 실패');
+                return response.json();
+            })
+            .then((data) => {
+                document.getElementById('message').innerText = data.message || '문자 전송 완료!';
+                startTimer(180);
+            })
+            .catch((error) => {
+                document.getElementById('message').innerText = '문자 전송에 실패했습니다.';
+                console.error(error);
+            });
+    });
+
+    // 타이머
+    let timerInterval;
+
+    function startTimer(seconds) {
+        clearInterval(timerInterval);
+        const timerElement = document.getElementById('timer');
+        timerElement.style.display = 'block';
+        let timeLeft = seconds;
+
+        timerInterval = setInterval(() => {
+            const minutes = String(Math.floor(timeLeft / 60)).padStart(2, '0');
+            const secs = String(timeLeft % 60).padStart(2, '0');
+            timerElement.innerText = `${minutes}:${secs}`;
+            timeLeft--;
+
+            if (timeLeft < 0) {
+                clearInterval(timerInterval);
+                timerElement.innerText = '시간 초과';
+            }
+        }, 1000);
+    }
+
+    // 인증번호 확인 버튼
+    document.getElementById('verifyButton').addEventListener('click', () => {
+        const phone = document.getElementById('phone').value.trim();
+        const certificationNumber = document.getElementById('certificationNumber').value.trim();
+
+        if (!phone || !certificationNumber) {
+            alert('전화번호와 인증번호를 입력해주세요.');
+            return;
+        }
+
+        fetch('/sms/verify', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({phone, certificationNumber}),
+        })
+            .then((response) => response.text())
+            .then((data) => {
+                document.getElementById('message').innerText = data;
+                clearInterval(timerInterval);
+                document.getElementById('timer').style.display = 'none';
+                if($('#pw_find_id').val()!==""){
+                    $('#myModal').modal('hide'); //아이디 찾기 없애기
+                    $('#passwordResetModal').modal('show');
+                    $('#newPassword').val(''); // 비밀번호 입력 필드 비우기
+                    $('#confirmPassword').val('');   // 비밀번호 확인 필드 비우기
+                }else {
+                    $('#myModal').modal('hide'); //아이디 찾기 없애기
+                    findIdByPhone();
+                }
+
+            })
+            .catch((error) => {
+                document.getElementById('message').innerText = '인증 확인에 실패했습니다.';
+                console.error(error);
+            });
+    });
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    function updatePassword() {
+        var newPassword = document.getElementById('newPassword').value;
+        var confirmPassword = document.getElementById('confirmPassword').value;
+
+        if (newPassword === confirmPassword) {
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", "/updatePassword", true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            let data = JSON.stringify({
+                id: document.getElementById('pw_find_id').value,
+                phone:$('#phone').val(),
+                newPassword: newPassword
+            });
+
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    alert("비밀번호가 성공적으로 변경되었습니다.");
+                    $('#passwordResetModal').modal('hide'); // 모달 닫기
+                    window.location.href = "/login"; // 로그인 페이지로 리다이렉션
+                } else {
+                    console.error("Request failed:", xhr.statusText);
+                }
+            };
+
+            xhr.send(data);
+        } else {
+            alert("비밀번호가 일치하지 않습니다.");
+        }
+    }
+
+    //로그인
+    document.querySelector('#contactForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        // 폼 데이터를 출력해 확인
+        let id = document.getElementById('floatingInput').value;
+        let pw = document.getElementById('floatingPassword').value;
+        console.log("id:", id, "pw:", pw);  // 서버로 보내는 데이터 확인
+
+        const data = {
+            user_login_id: id,
+            password: pw
+        };
+
+        console.log("Sending data:", data);  // 보낼 데이터 확인
+
+        fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    // 응답이 실패하면 에러를 던짐
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json(); // 응답이 성공적일 경우 JSON 처리
+            })
+            .then(data => {
+                // 서버에서 반환한 JWT 토큰을 localStorage에 저장
+                console.log("Received JWT:", data.jwt);  // 받은 JWT 확인
+                localStorage.setItem('jwtToken', data.jwt);
+                window.location.href = '/mainPage';
+            })
+            .catch(error => {
+                // 에러가 발생하면 콘솔과 사용자에게 알림
+                console.error('Error:', error); // 상세한 에러 정보 출력
+                alert('Login failed: ' + error.message); // 에러 메시지 사용자에게 알림
+            });
+    });
+
+
+
+    document.querySelector('#user_contactForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // 폼 제출 기본 동작 막기
+
+        const formData = new FormData(this); // FormData 객체 생성
+        console.log("회원가입 진입", 1);
+
+        const data = {};
+        formData.forEach((value, key) => {
+            data[key] = value;
+        });
+        console.log(data, 1);
+
+        // AJAX 요청
+        fetch('/generalJoin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' // JSON 형식으로 보내기
+            },
+            body: JSON.stringify(data) // 수정된 부분: FormData 대신 data 객체 전송
+        })
+            .then(response => response.text()) // 서버에서 응답 받기
+            .then(data => {
+                if (data === 'User registered successfully') {
+                    alert('회원가입 성공');
+                    window.location.href = '/login'; // 회원가입 후 로그인 페이지로 리디렉션
+                } else {
+                    alert('회원가입 실패');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('회원가입 중 오류가 발생했습니다');
+            });
+        console.log("끝", 3);
+    });
+
+
 
 
 

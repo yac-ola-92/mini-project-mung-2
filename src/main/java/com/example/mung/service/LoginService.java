@@ -26,7 +26,10 @@ public interface LoginService {
 
     String idCheckForModifyPassword(String id, String email, LocalDateTime birth);
 
-    int updatePassword(String id, String newPassword);
+    int updatePassword(LoginDTO dto);
+
+    //번호로 아이디 찾기
+    String findIdByUserPhone (String user_phone);
     //회원 아이디로 조회
 //    UserVO findUserLoginId(String id);
 //

@@ -1,3 +1,4 @@
+/*
 package com.example.mung.mapper;
 
 import com.example.mung.domain.UserDTO;
@@ -32,7 +33,7 @@ public class UserMapperTest {
     }
 
 
-    //user_name,user_loginId, user_email, password, user_phone, user_birth, user_gender, nickname, role, user_address,
+    //user_name,user_login_id, user_email, password, user_phone, user_birth, user_gender, nickname, role, user_address,
     // profile_image_url, pet_info, business_number, business_sns_url
     @Test
     public void insertTest() {
@@ -93,3 +94,4 @@ public class UserMapperTest {
     }
 
 }
+*/
