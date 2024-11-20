@@ -32,7 +32,7 @@ public interface AccommodationRepository extends JpaRepository<Accommodation, In
             "WHERE a.user.user_id = :user_id AND a.accom_name = :accom_name")
     public List<AccomDTO> findByUserIdAndAccomName(@Param("user_id") int user_id , @Param("accom_name") String accom_name);
 
-
+//수정 됐나요?
                 //상세페이지 용 2
     @Query("SELECT new com.example.mung.domain.AccomDTO(a.user.user_id, a.accom_id, a.accom_name ,a.accom_location, a.accom_phone, a.accom_caution, a.accom_description ,"  +
             "  a.accom_images_url, a.accom_amenities, u.business_number, u.business_sns_url, u.nickname) " +

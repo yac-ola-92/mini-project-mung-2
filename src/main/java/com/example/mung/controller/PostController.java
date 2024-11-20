@@ -76,6 +76,7 @@ public class PostController {
         Map<Integer, Integer> commentCounts = new HashMap<>();
         for (Post post : posts) {
             commentCounts.put(post.getPost_id(), commentServiceImpl.getCommentCountByPostId(post.getPost_id()));
+
         }
         model.addAttribute("posts", posts); // Page<Post>를 그대로 전달
         model.addAttribute("userInfo", userInfo); // 로그인된 사용자 정보 추가
@@ -241,6 +242,7 @@ public class PostController {
             @RequestParam(value = "file", required = false) MultipartFile file,
             HttpSession session,
             Model model) {
+
         UserEntity userInfo = getLoginUser(session);
         if (userInfo == null) {
             return "redirect:/login";

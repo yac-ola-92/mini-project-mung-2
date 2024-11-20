@@ -31,6 +31,7 @@ public class Comment_likeController {
             return convertToUserEntity((UserVO) userInfo);
         } else {
             return null; // 세션에 유효한 사용자 정보가 없을 경우
+
         }
     }
 
