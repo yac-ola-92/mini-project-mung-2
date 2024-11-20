@@ -13,6 +13,8 @@ import com.example.mung.service.RoomService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
@@ -169,8 +171,7 @@ public String accom_list(Model model, HttpServletRequest req) {
         System.out.println(accom_id+"진입 성공~");
         AccomDTO dtoU = service.readByUser(accom_id);
         List<AccomDTO> dtoR = service.readByReview(accom_id);
-        List<Room> rmDto = rService.readByAccom_id(accom_id);
-        RoomDTO rmDtoUrl = rService.readUrl(accom_id);
+        List<RoomDTO> rmDto = rService.readByAccom_id(accom_id);
 
         for(AccomDTO dto : dtoR){
             if(dto.getRating()==0){
@@ -178,21 +179,23 @@ public String accom_list(Model model, HttpServletRequest req) {
             }
         }
 
+        List<String> amen = dtoU.getAccomAmenities(dtoU.getAccom_amenities());
+        List<String> url = dtoU.getAccomImagesUrl(dtoU.getAccom_images_url());
+
         System.out.println("User와 쪼인 C:"+ dtoU);
         System.out.println("Review와 쪼인 C :"+ dtoR);
         System.out.println("room 정보 C: "+rmDto);
-        System.out.println("room url정보 C : "+rmDtoUrl);
 
         if(dtoU !=null && dtoR !=null){
-                model.addAttribute("imgUrl", dtoU.getAccomImagesUrl());
-                model.addAttribute("amenity", dtoU.getAccomAmenities());
+                model.addAttribute("imgUrl", url);
+                model.addAttribute("amenity", amen);
                 model.addAttribute("accR", dtoR);
                 model.addAttribute("accU", dtoU);
                 model.addAttribute("roomInfo",rmDto);
-                model.addAttribute("roomUrl",rmDtoUrl.getRoomImagesUrl());
             }else {
                 return "/error/404";
             }
         return "accomDetail"; // 상세 페이지 반환
     }
+
 }

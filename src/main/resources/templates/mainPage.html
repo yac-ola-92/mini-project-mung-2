@@ -133,7 +133,7 @@
         <!-- 네비게이션 메뉴 영역 -->
         <nav>
             <ul class="header">
-                <li class="header-li"><a href="/registerForm" style="color: #bc915e;"
+                <li class="header-li"><a href="/myAccomList.html" style="color: #bc915e;" id="move-myAccom"
                                          th:if="${session.userInfo != null and session.userInfo.roles.contains('HOST')}">나의 숙소</a>
                 </li>
                 <li class="header-li"><a href="/postMain" style="color:#bc915e;">게시판</a></li>
@@ -291,9 +291,11 @@
 
 
 <!-- JS here -->
+
 <script th:inline="javascript">
     function check() {
-        var log ;
+        var log = SessionScope.user_id;
+        console.log(log);
         if( log == null){
             document.getElementById('login').style.display = 'block';
             document.getElementById('logout').style.display = 'none';
@@ -303,17 +305,17 @@
         }
     }
 </script>
+<script>
+    var log = SessionScope.user_id;
+    console.log(log);
+</script>
 
 <script src="/assets/js/vendor/modernizr-3.5.0.min.js"></script>
 
 <script src="/assets/js/vendor/jquery-1.12.4.min.js"></script>
-<script src="/assets/js/popper.min.js"></script>
-<script src="/assets/js/bootstrap.min.js"></script>
 <script src="/assets/js/jquery.slicknav.min.js"></script>
-
 <script src="/assets/js/owl.carousel.min.js"></script>
 <script src="/assets/js/slick.min.js"></script>
-<script src="/assets/js/wow.min.js"></script>
 <script src="/assets/js/animated.headline.js"></script>
 <script src="/assets/js/jquery.magnific-popup.js"></script>
 

@@ -23,6 +23,20 @@ public class RoomDTO {
     private int capacity_standard;
     private int capacity_max;
 
+    public RoomDTO (int room_id, int accom_id,  String room_name, String room_type, int room_price,
+                     String room_images_url, String room_info, int room_amount, int capacity_standard, int capacity_max){
+        this.room_id =room_id;
+        this.accom_id = accom_id;
+        this.room_name = room_name;
+        this.room_type = room_type;
+        this.room_price = room_price;
+        this.room_images_url = room_images_url;
+        this.room_info = room_info;
+        this.room_amount = room_amount;
+        this.capacity_standard = capacity_standard;
+        this.capacity_max = capacity_max;
+    }
+
 
     public List<String> getRoomImagesUrl() {
         return Arrays.asList(getRoom_images_url().split(","));

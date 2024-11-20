@@ -13,8 +13,10 @@ public interface RoomRepository extends JpaRepository<Room, Integer> {
 
 
     // 숙소id로 해당 숙소의 객실 전부 출력
-    @Query("SELECT r FROM Room r WHERE r.accommodation.accom_id = :accom_id")
-    public List<Room>findByAccomId(@Param("accom_id") int accom_id) ;
+    @Query("SELECT new com.example.mung.domain.RoomDTO( r.room_id,  r.accommodation.accom_id, r.room_name, r.room_type," +
+            " r.room_price, r.room_images_url, r.room_info, r.room_amount, r.capacity_standard, r.capacity_max )" +
+            "FROM Room r WHERE r.accommodation.accom_id = :accom_id")
+    public List<RoomDTO> findByAccomId(@Param("accom_id") int accom_id) ;
 
         //객실 상세에 보일 객실 이미지
     @Query("SELECT new com.example.mung.domain.RoomDTO(r.room_id, r.accommodation.accom_id, r.room_images_url)" +

@@ -23,7 +23,7 @@ public class RoomServiceimpl implements RoomService {
     }
 
     @Override // 한 숙소에서 가지고 있는 객실 모두 출력
-    public List<Room>readByAccom_id(int accom_id){
+    public List<RoomDTO>  readByAccom_id(int accom_id){
         System.out.println(accom_id+"번 숙소의 객실 모두 출력!!");
         return repo.findByAccomId(accom_id);
     }

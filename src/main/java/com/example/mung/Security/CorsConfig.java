@@ -13,6 +13,7 @@ public class CorsConfig {
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
+
         config.setAllowCredentials(true); // 쿠키 전달 허용
         config.addAllowedOriginPattern("*"); // 모든 Origin 허용
         config.addAllowedHeader("*"); // 모든 헤더 허용
@@ -20,6 +21,7 @@ public class CorsConfig {
         config.addExposedHeader("Authorization"); // Authorization 헤더 클라이언트 접근 허용
 
         source.registerCorsConfiguration("/api/**", config); // 모든 "/api/**" 경로에 적용
+
         return new CorsFilter(source);
     }
 }
