@@ -19,27 +19,23 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<Comment> findAll() {
-        // 모든 댓글 조회
-        return commentRepository.findAll();
+        return commentRepository.findAll(); // 모든 댓글 조회
     }
 
     @Override
     public List<Comment> readByUserId(int userId) {
-        // 특정 유저의 댓글 조회
-        return commentRepository.getCommentByUserId(userId);
+        return commentRepository.getCommentByUserId(userId); // 특정 유저의 댓글 조회
     }
 
     @Override
     public List<Comment> readByPostId(int postId) {
-        // 특정 게시물의 댓글 조회
-        return commentRepository.getCommentsByPostId(postId);
+        return commentRepository.getCommentsByPostId(postId); // 특정 게시물의 댓글 조회
     }
 
     @Override
     @Transactional
     public boolean register(Comment comment) {
-        // 댓글 등록
-        commentRepository.save(comment);
+        commentRepository.save(comment); // 댓글 등록
         return true;
     }
 
@@ -50,22 +46,26 @@ public class CommentServiceImpl implements CommentService {
                 comment.getCommentId(),
                 comment.getPost().getPost_id()
         );
-        return updatedRows > 0;
+        return updatedRows > 0; // 수정된 행 수가 0보다 클 경우 성공
     }
 
     @Override
-    public boolean remove(int commentId) {
-        int deletedRows = commentRepository.deleteComment(commentId);
-        return deletedRows > 0;
+    @Transactional
+    public boolean remove(int commentId, int user) {
+        return commentRepository.deleteComment(commentId) > 0; // 삭제된 행 수가 0보다 클 경우 성공
     }
 
     @Override
     public Comment findById(int commentId) {
-        // 댓글 ID로 조회
         Optional<Comment> optionalComment = Optional.ofNullable(commentRepository.findById(commentId));
         if (!optionalComment.isPresent()) {
             throw new IllegalStateException("댓글을 찾을 수 없습니다.");
         }
         return optionalComment.get();
+    }
+
+    @Override
+    public int getCommentCountByPostId(int postId) {
+        return commentRepository.countByPostId(postId);
     }
 }

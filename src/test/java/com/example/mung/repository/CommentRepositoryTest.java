@@ -38,6 +38,9 @@ public class CommentRepositoryTest {
     void testInsertComment() {
         Post existingPost = postRepository.findById(1).orElseThrow(() -> new IllegalStateException("Post not found"));
         UserEntity existingUser = userRepository.findById(1);
+        if (existingUser == null) {
+            throw new IllegalArgumentException("User with id 1 not found");
+        }
 
         Comment comment = Comment.builder()
                 .content("This is a test comment.")

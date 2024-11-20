@@ -1,5 +1,8 @@
 package com.example.mung.repository;
 import com.example.mung.entity.Post;
+import org.apache.ibatis.annotations.Delete;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -10,16 +13,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Integer> {
-    @Query(value = "SELECT p.post_id, p.user_id, p.title, p.content, p.category, p.created_at, p.updated_at, p.view_count, u.nickname \" +\n" +
-            "            \"FROM post p \" +\n" +
-            "            \"JOIN user u ON p.user_id = u.user_id", nativeQuery = true)
-    List<Post> findAllPosts();
+    Page<Post> findAll(Pageable pageable);
 
     @Query(value = "SELECT p.post_id, p.user_id, p.title, p.content, p.category, p.created_at, p.updated_at, p.view_count, u.nickname, p.password, p.files " +
             "FROM post p " +
             "JOIN user u ON p.user_id = u.user_id " +
             "WHERE p.category = :category", nativeQuery = true)
-    List<Post> getPostByCategory(@Param("category") String category);
+    Page<Post> findByCategory(@Param("category") String category, Pageable pageable);
 
     // 게시글 등록 (첨부파일 경로 포함)
     @Modifying
@@ -48,24 +48,36 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
             "FROM post p " +
             "JOIN user u ON p.user_id = u.user_id " +
             "WHERE p.title LIKE CONCAT('%', :keyword, '%')", nativeQuery = true)
-    List<Post> findByTitle(@Param("keyword") String keyword);
+    Page<Post> findByTitleContaining(String keyword, Pageable pageable);
 
     // 내용으로 검색
     @Query(value = "SELECT p.post_id, p.user_id, p.title, p.content, p.category, p.created_at, p.updated_at, p.view_count, u.nickname, p.password, p.files " +
                         "FROM post p " +
                        "JOIN user u ON p.user_id = u.user_id " +
                        "WHERE p.content LIKE CONCAT('%', :keyword, '%')", nativeQuery = true)
-    List<Post> findByContent(@Param("keyword") String keyword);
+    Page<Post> findByContentContaining(String keyword, Pageable pageable);
 
     // 작성자로 검색 (nickname으로 검색)
     @Query(value = "SELECT p.post_id, p.user_id, p.title, p.content, p.category, p.created_at, p.updated_at, p.view_count, u.nickname, p.password, p.files " +
             "FROM post p " +
             "JOIN user u ON p.user_id = u.user_id " +
             "WHERE u.nickname = :nickname", nativeQuery = true)
-    List<Post> findByNickname(@Param("nickname") String nickname);
+    Page<Post> findByUser_NicknameContaining(String nickname, Pageable pageable);
 
     // 비밀번호 확인
     @Query(value = "SELECT password FROM post WHERE post_id = :post_id", nativeQuery = true)
-    String findByPostId(@Param("post_id") int post_id);
+    String checkPostPassword(@Param("post_id") int post_id);
 
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM Post p WHERE p.post_id = :post_id", nativeQuery = true)
+    int deleteByPostId(@Param("post_id") int post_id);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Post p SET p.title = :title, p.content = :content, p.updated_at = CURRENT_TIMESTAMP " +
+            "WHERE p.post_id = :post_id")
+    int updatePost(@Param("post_id") int post_id,
+                   @Param("title") String title,
+                   @Param("content") String content);
 }

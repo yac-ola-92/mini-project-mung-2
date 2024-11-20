@@ -8,5 +8,5 @@ public interface Comment_likeService {
     Map<String, Integer> likeOrDislike(Comment_like commentLike);
 
     // 댓글의 좋아요 및 싫어요 카운트 조회
-    Map<String, Integer> getLikeAndDislikeCounts(int comment_id);
+    Map<String, Integer> getLikeAndDislikeCounts(int commentId);
 }
