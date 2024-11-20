@@ -12,15 +12,15 @@ import java.util.List;
 @Getter
 @ToString
 public class ReviewVO {
-    private final int review_id;
-    private final int user_id;
-    private final String nickname;
-    private final int rv_id;
-    private final int rating;
-    private final String comment;
-    private final LocalDateTime created_at;
-    private final String room_name;
-    private final String accom_name;
+    private int review_id;
+    private int user_id;
+    private String nickname;
+    private int rv_id;
+    private int rating;
+    private String comment;
+    private LocalDateTime created_at;
+    private String room_name;
+    private String accom_name;
     private String accom_images_url;
     private List<String> accom_images;
 

@@ -1,12 +1,9 @@
 package com.example.mung.service;
 
 import com.example.mung.domain.AccomDTO;
-import com.example.mung.domain.AccomVO;
 import com.example.mung.entity.Accommodation;
-import com.example.mung.entity.User;
 import com.example.mung.mapper.AccomMapper;
 import com.example.mung.repository.AccommodationRepository;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
