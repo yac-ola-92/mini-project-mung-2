@@ -1,6 +1,7 @@
 package com.example.mung.repository;
 
 
+import com.example.mung.domain.RoomDTO;
 import com.example.mung.entity.Accommodation;
 import com.example.mung.entity.Room;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,7 +39,7 @@ public class RoomRepositoryTest {
     @Transactional
     @Test
     void getAccomRoom(){
-      List<Room> list = roomRp.findByAccomId(1);
+      List<RoomDTO> list = roomRp.findByAccomId(2);
       list.stream().forEach(System.out::println);
     }
 

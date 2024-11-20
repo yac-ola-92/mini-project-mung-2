@@ -357,6 +357,11 @@ public class LoginController {
 
         return "redirect:/login";
     }
+//
+//    @GetMapping("/{path:[^\\.]*}")
+//    public String redirect(){
+//        return "forward:/index.html";
+//    }
 
 
 }

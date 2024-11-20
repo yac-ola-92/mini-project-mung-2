@@ -35,17 +35,16 @@ public class AccomDTO {
     private String nickname;
     private String comment;
 
-    public List<String> getAccomImagesUrl(){
-        List ur = Arrays.asList(getAccom_images_url().split(","));
+    public List<String> getAccomImagesUrl(String accUrl){
+        List ur = Arrays.asList(accUrl.split(","));
         System.out.println("숙소 이미지 출력 : "+ ur);
         return ur;
     }
-    public List<String> getAccomAmenities() {
-        List amen = Arrays.asList(getAccom_amenities().split(","));
+    public List<String> getAccomAmenities(String amenity) {
+        List amen = Arrays.asList(amenity.split(","));
         System.out.println("숙소 편의시설 출력 : " + amen);
         return amen;
     }
-
     public AccomDTO(int accom_id){
         this.accom_id = accom_id;
     }

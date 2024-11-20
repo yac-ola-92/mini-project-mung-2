@@ -16,5 +16,14 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/uploads/**")
                 // 실제 파일이 저장된 경로 지정
                 .addResourceLocations("file:///C:/uploads/");
+        // /static/** 경로에 대해서도 /static 폴더 내의 파일들을 서빙
+        registry.addResourceHandler("/static/**")
+                .addResourceLocations("classpath:/static/");
+
+        registry.addResourceHandler("/assets/**")
+                .addResourceLocations("classpath:/static/assets/");
+
+        registry.addResourceHandler("/index.html")
+                .addResourceLocations("classpath:/static/dist/");
     }
 }

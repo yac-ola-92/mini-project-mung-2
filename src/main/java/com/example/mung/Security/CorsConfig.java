@@ -17,8 +17,10 @@ public class CorsConfig {
         config.addAllowedOrigin("*");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
+        config.addExposedHeader("Authorization");
 
-        source.registerCorsConfiguration("/api/**", config); //Cors 정책을 사용할 곳만 여기에 정의
+
+       source.registerCorsConfiguration("/api/**", config); //Cors 정책을 사용할 곳만 여기에 정의
         return new CorsFilter(source);
     }
 

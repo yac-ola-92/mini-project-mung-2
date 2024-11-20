@@ -9,7 +9,7 @@ import java.util.List;
 public interface RoomService {
 
     List<Room>findAll();
-    List<Room>readByAccom_id(int accom_id);
+    List<RoomDTO> readByAccom_id(int accom_id);
     RoomDTO readOne(int room_id);
     RoomDTO readUrl(int room_id);
     boolean register(Room room);

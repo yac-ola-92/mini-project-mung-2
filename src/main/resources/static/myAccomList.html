@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>host AccomList </title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/css/flaticon.css">
+    <link rel="stylesheet" href="/assets/css/slicknav.css">
+    <link rel="stylesheet" href="/assets/css/animate.min.css">
+    <link rel="stylesheet" href="/assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="/assets/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/assets/css/themify-icons.css">
+    <link rel="stylesheet" href="/assets/css/slick.css">
+    <link rel="stylesheet" href="/assets/css/nice-select.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+
+    <style>
+        /*   헤더     */
+        .header {
+            list-style-type: none;
+            margin: 5px 5px 18px 0;
+            padding: 0;
+            overflow: hidden;
+            display:flex;
+        }
+        .header-li {
+            float: left;
+            margin-left : 10px;
+        }
+        #login , #logout {
+            background-color: #bc915e;
+            border: none;
+            height: 35px;
+            margin-left: 2px;
+        }
+        #login:hover{
+            background-color: #fff9f0;
+            border: solid 3px  #bc915e;
+            color : #bc915e;
+        }
+        #logout:hover{
+            background-color: #fff9f0;
+            border: solid 3px  #bc915e;
+            color : #bc915e;
+        }
+        nav ul li {
+            height: 30px;
+            margin: 10px;
+        }
+        nav ul li :hover {
+            background-color: #fff9f0;
+            border: solid 3px  #bc915e;
+        }
+        #title-box{
+            height: 80px;
+            width: 100%;
+            background-color: #bc915e;
+            border-radius: 3px;
+            padding-top: 20px;
+        }
+
+        .container{
+            background-color: #FAF0E6;
+            height: 100%;
+            width: 1000px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin:  50px auto;
+            padding: 40px 20px;
+
+        }
+        .accom-content{
+            background-color: white;
+            width: 500px;
+            padding: 20px;
+            margin : 10px;
+            flex-direction: row;
+            display: flex;
+        }
+        .line{
+            height: 10px;
+        }
+        .accom-img-box{
+            background-color: #bc915e;
+            height: 150px;
+            width: 150px;
+            margin : auto 10px;
+        }
+        .accom-title{
+            margin: 20px;
+            width : 150px;
+        }
+        .list-btn{
+            width: 45px;
+            height: 40px;
+            margin : 3px;
+            background-color: #bc915e;
+            border: none;
+            border-radius: 5px;
+            color: white;
+        }
+        .list-btn:hover{
+            background-color: #fff9f0;
+            border: solid 2px #bc915e;
+            color: #bc915e;
+            cursor: pointer;
+        }
+        .btn-box{
+            display: flex;
+            padding-top: 140px;
+        }
+        .register-btn-box{
+            display: flex;
+            margin-left: auto;
+            margin-right: 100px;
+        }
+        .acoom-img {
+            width : 150px;
+            height : 150px;
+        }
+    </style>
+</head>
+<body>
+<!-- Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img src="/assets/img/logo/munglogo.png" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+
+<header>
+    <!-- Header Start -->
+    <div class="header-bottom header-sticky"
+         style="background-color:#fff9f0; height:150px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <!-- 로고 영역 -->
+        <div class="logo" style="margin-bottom: 20px;">
+            <a href="/mainPage"><img style="margin-top: 20px; width: 100px;" src="/assets/img/logo/munglogo.png"
+                                     alt="Logo"></a>
+        </div>
+        <!-- 네비게이션 메뉴 영역 -->
+        <nav>
+            <ul class="header">
+                <li class="header-li"><a href="/myAccomList.html" style="color: #bc915e;" id="move-myAccom">나의 숙소</a>
+                </li>
+                <li class="header-li"><a href="/postMain" style="color:#bc915e;">게시판</a></li>
+                <li class="header-li"><a href="/myPage" style="color:#bc915e;">마이페이지</a></li>
+                    <li style="margin: 0 15px;"><a href="/login" id="login" >로그인</a></li>
+
+                    <li style="margin: 0 15px;"><a href="/logout" id="logout" >로그아웃</a></li>
+
+            </ul>
+        </nav>
+    </div>
+    <!-- Header End -->
+</header>
+        <div class="container">
+            <div id="title-box">
+                <h2 style="text-align: center; color:white;">나의 숙소</h2>
+            </div>
+            <div class="register-btn-box">
+                <button class="list-btn" onclick="registerForm()" style="margin: 10px; width: 80px;">숙소 등록</button>
+            </div>
+            <div class="accom-box"></div>
+        </div>
+
+<footer>
+    <!-- Footer Start-->
+    <div class="footer-area footer-padding footer-bg" style="background-color: #fff9f0; padding: 30px">
+        <div>
+            <div class="col-xl-3 col-lg-3 col-md-5 col-sm-6">
+                <div class="single-footer-caption mb-50">
+                    <div class="single-footer-caption mb-30">
+                        <!-- logo -->
+                        <div class="footer-logo">
+                            <a href="/mainPage"><img src="/assets/img/logo/munglogo.png" style="width: 100px;"
+                                                     alt=""></a>
+                        </div>
+                        <div class="footer-tittle">
+                            <ul>
+                                <li><a href="#" style="color:#bc915e; font-weight: bolder; margin :50px;">고객문의</a></li>
+                                <li><a href="#" style="color:#bc915e; font-weight: bolder;">제휴문의</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer bottom -->
+        <div class="row pt-padding" style="padding: 0px;">
+            <div class="col-xl-7 col-lg-7 col-md-7">
+            </div>
+        </div>
+    </div>
+    <!-- Footer End-->
+</footer>
+</body>
+<script>
+    async function getId () {
+        try{
+            const response = await fetch("/getId");
+            if(!response.ok){
+                throw new Error("eeeeeeeerrrrrroooorrrrrrr");
+            }
+            const data = await response.text();
+            console.log('getId 아이디 요청 : '+data);
+
+            putId(data);
+        }catch (error){
+            console.error(error,"error");
+        }
+    }
+    getId();
+
+   async function putId(user_id){
+       console.log('putId함수 시작 : '+user_id);
+       if (user_id === null || user_id === undefined || isNaN(user_id)) {
+           console.error("잘못된 user_id:", user_id);
+           return;  // user_id가 잘못되었으면 함수를 종료
+       }
+        try{
+            console.log('putId함수 응답요청 1 ');
+            const response = await fetch(`/myAccomList/${user_id}`);
+            console.log('putId함수 응답요청 2 ');
+            console.log(response.status);
+            if(!response.ok){
+                throw new Error('error 발생!!!');
+            }
+            console.log('putId함수 응답요청 3 ');
+            const data = await response.json();
+            console.log('putId함수 응답요청 4 ');
+            displayAccom(data);
+        }catch(error){
+            console.log('error 발생 : '+ error);
+        }
+    }
+
+    async function displayAccom(data){
+        console.log('들어온 값: '+ data);
+        const accomBox = document.querySelector('.accom-box');
+
+        if(data==null){
+            accomBox.innerHTML =`<h1>등록된 숙소가 없습니다.</h1>`;
+
+        }else{
+            data.forEach((list) =>{
+                const newDiv = document.createElement('div');
+
+                newDiv.innerHTML =  `
+                <div class="accom-img-box">
+                <img class="acoom-img" src="${list.accom_images_url.split(',')[0]}">
+                </div>
+                <div class="accom-title">
+                <h3 class="accom-name">${list.accom_name}</h3>
+                <input type="hidden" class="accom-id" value="${list.accom_id}">
+                </div>
+                <div class="btn-box">
+                <button class="list-btn" onclick="update(${list.accom_id})">수정</button>
+                <button class="list-btn" onclick="remove(${list.accom_id})">삭제</button>
+                </div>`
+
+                newDiv.style.display='flex';
+                newDiv.classList.add('accom-content');
+                accomBox.appendChild(newDiv);
+            });
+        }
+    }
+
+            function remove(accom_id){
+                console.log('삭제할 숙소 ID: ', accom_id);
+               try {
+                   fetch(`/accom_delete/${accom_id}`,{
+                           method:'DELETE',
+               })
+                   .then(response => response.json())
+                   .then(data => {
+                       console.log('숙소 삭제 성공')
+                       alet('숙소를 삭제하였습니다.')
+                   });
+
+                }catch (error){
+                   console.error('에러 발생----------' , error);
+               }
+            }
+
+            function update(accom_id){
+                console.log('수정할 숙소 ID: ', accom_id);
+                window.location = '/myAccom/edit/'+accom_id;
+            }
+    function registerForm(){
+        console.log('등록 폼으로 이동합니다');
+        window.location = '/registerForm'
+    }
+
+</script>
+
+<script src="/assets/js/vendor/modernizr-3.5.0.min.js"></script>
+
+<script src="/assets/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="/assets/js/popper.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+<script src="/assets/js/jquery.slicknav.min.js"></script>
+
+<script src="/assets/js/owl.carousel.min.js"></script>
+<script src="/assets/js/slick.min.js"></script>
+<script src="/assets/js/wow.min.js"></script>
+<script src="/assets/js/animated.headline.js"></script>
+<script src="/assets/js/jquery.magnific-popup.js"></script>
+
+<script src="/assets/js/jquery.scrollUp.min.js"></script>
+<script src="/assets/js/jquery.nice-select.min.js"></script>
+<script src="/assets/js/jquery.sticky.js"></script>
+
+<script src="/assets/js/contact.js"></script>
+<script src="/assets/js/jquery.form.js"></script>
+<script src="/assets/js/jquery.validate.min.js"></script>
+<script src="/assets/js/mail-script.js"></script>
+<script src="/assets/js/jquery.ajaxchimp.min.js"></script>
+
+<script src="/assets/js/plugins.js"></script>
+<script src="/assets/js/main.js"></script>
+
+
+</html>

@@ -214,7 +214,6 @@
 
 
 /* 10. WOW active */
-    new WOW().init();
 
 /* 11. Datepicker */
     
