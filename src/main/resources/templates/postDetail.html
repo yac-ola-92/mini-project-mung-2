@@ -8,80 +8,221 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="/assets/css/slicknav.css">
-    <link rel="stylesheet" href="/assets/css/animate.min.css">
-    <link rel="stylesheet" href="/assets/css/magnific-popup.css">
-    <link rel="stylesheet" href="/assets/css/fontawesome-all.min.css">
-    <link rel="stylesheet" href="/assets/css/themify-icons.css">
-    <link rel="stylesheet" href="/assets/css/slick.css">
-    <link rel="stylesheet" href="/assets/css/nice-select.css">
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/responsive.css">
+    <link rel="stylesheet" href="/assets/css/post.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/748b44d03f.js" crossorigin="anonymous"></script>
     <style>
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-        header, footer {
-            text-align: center;
-        }
-        .blog_left_sidebar, .blog_details, .comment-area {
-            margin: 0 auto;
-            max-width: 800px;
-            text-align: left;
-        }
-        div.blog_details {
-            background-color: #f2e2cc;
-            padding: 20px;
-            border-radius: 10px;
-        }
-        .like-dislike-buttons {
+        .content-wrapper {
+            width: 100%;
+            margin: 0 auto; /* 중앙 정렬 */
             display: flex;
+            flex-direction: column;
             align-items: center;
-            margin-top: 5px;
+            gap: 40px; /* 섹션 간 간격 조정 */
+            padding: 20px; /* 화면 상하 여백 추가 */
         }
-        .like-dislike-buttons button {
-            margin-left: 5px;
-        }
-        .button-container {
+
+        /* 카테고리 섹션 */
+        .category-section {
+            width: 100%; /* 부모 요소의 전체 너비 */
+            max-width: 800px; /* 게시글 섹션과 같은 너비로 맞춤 */
+            background-color: #fff9f0;
+            border-radius: 10px;
+            padding: 20px;
             text-align: center;
-            margin-top: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px auto; /* 게시글과 간격 조정 */
         }
-        .back-to-main {
+
+        .blog_details {
+            width: 90%; /* 부모 요소의 90% 너비 */
+            max-width: 1200px; /* 최대 너비 제한 */
+            background-color: #f2e2cc;
+            border-radius: 15px;
+            padding: 40px; /* 내부 여백 */
+            text-align: left;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+            font-size: 18px; /* 기본 텍스트 크기 */
+            line-height: 1.8; /* 줄 간격 조정 */
+            margin: 20px auto; /* 중앙 정렬 및 여백 */
+        }
+
+        .post-content {
+            display: block;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            word-wrap: break-word; /* 긴 단어 줄바꿈 */
+            font-size: 18px;
+            color: #333;
+            background: none;
+            padding: 0;
+        }
+
+        .blog_details h2 {
+            font-size: 28px; /* 제목 크기 키움 */
+            font-weight: bold;
+            color: #333; /* 더 어두운 색상 사용 */
+        }
+
+        .blog_details span {
+            font-size: 18px; /* 날짜 및 조회수 글씨 크기 */
+            color: #666; /* 부드러운 보조 색상 */
+        }
+
+        .category-section h4 {
+            display: flex;
+            align-items: center; /* 가운데 정렬 */
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .category-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .category-section li a {
             display: inline-block;
-            padding: 10px 20px;
+            padding: 8px 20px;
+            margin: 0 5px; /* 버튼 간격 */
+            text-decoration: none;
+            color: #000;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .category-section li a:hover {
+            color: #dab896;
+            color: #fff;
+        }
+
+        .category-section li a.active {
+            background-color: #dab896;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .blog-head {
+            font-size: 40px; /* 제목 크기를 더 키움 */
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .blog-info-link span {
+            font-size: 22px; /* 세부 정보의 글자 크기를 작게 */
+            color: #333; /* 조금 더 흐린 색상으로 강조 약화 */
+        }
+
+        .blog-image {
+            display: block; /* 블록 요소로 설정 */
+            max-width: 100%; /* 부모 요소 크기에 맞게 설정 */
+            height: auto; /* 비율에 맞게 높이 설정 */
+            margin: 20px auto; /* 가운데 정렬 및 간격 추가 */
+            border-radius: 10px; /* 둥근 모서리 */
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+        }
+
+        .button-container {
+            margin-top: 15px;
+            margin-left: 15px;
+        }
+
+        .back-to-main {
+            position: absolute; /* 위치를 절대값으로 설정 */
+            display: inline-block;
+            padding: 10px 25px;
             background-color: #f2e2cc;
             color: #333;
             font-weight: bold;
             border-radius: 30px;
             text-decoration: none;
             font-size: 16px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
         }
+
         .back-to-main:hover {
             background-color: #e6d3b8;
+            transform: scale(1.05); /* 호버 시 약간 확대 */
             color: #000;
         }
+
         img {
             width: 300px;
             height: auto;
             object-fit: cover;
         }
+
         /* 댓글 영역 스타일 */
+        .comment-form {
+            width: 100%; /* 부모 폭에 맞춤 */
+            max-width: 1000px; /* 최대 폭 제한 */
+            padding: 20px;
+        }
+
         .comment-area {
-            margin-top: 20px;
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto; /* 댓글 영역 중앙 정렬 */
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .comment-content {
+            font-size: 18px;
+            line-height: 1.6; /* 가독성을 위한 줄 간격 */
+            color: #333;
+        }
+
+        /* 댓글 리스트를 세로로 정렬 */
+        .comment-list {
+            display: flex;
+            flex-direction: column; /* 세로 방향 정렬 */
+            gap: 15px; /* 댓글 간 간격 추가 */
+        }
+
+        /* 댓글 개별 박스 */
+        .single-comment {
+            display: flex;
+            flex-direction: column; /* 댓글 내용이 위-아래로 나열 */
+            padding: 15px; /* 여백을 줄여 크기 조정 */
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        /* 댓글 작성 영역 */
+        .comment-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
         }
 
         /* 댓글 본문 및 버튼 영역 */
         .single-comment .desc {
-            position: relative;
-            padding: 10px;
-            background-color: #f9f9f9;
-            border-radius: 5px;
-            margin-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .single-comment .like-dislike-buttons {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         /* 댓글 수정 입력 필드 */
@@ -95,57 +236,135 @@
         .like-dislike-buttons {
             display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 10px;
             margin-top: 5px;
+        }
+
+        /* 좋아요/싫어요 버튼 스타일 */
+        .like-dislike-buttons button {
+            font-size: 18px; /* 아이콘 크기 증가 */
+            padding: 5px 10px; /* 버튼 크기 증가 */
+            border: none;
+            background: none;
+            cursor: pointer;
+            transition: transform 0.2s ease; /* 클릭 시 애니메이션 */
+            margin-left: 5px;
+        }
+
+        .like-dislike-buttons span {
+            font-size: 16px; /* 카운트 텍스트 크기 */
+            margin-left: 5px; /* 버튼과 숫자 간격 */
+        }
+
+        .like-dislike-buttons button:hover {
+            transform: scale(1.2); /* 버튼 확대 효과 */
         }
 
         /* 댓글 수정 및 삭제 버튼 기본 스타일 */
         .single-comment .btn {
-            padding: 5px 10px;
-            margin-right: 5px; /* 버튼 간격 설정 */
+            padding: 10px 15px; /* 버튼 내 여백 증가 */
+            margin-right: 10px; /* 버튼 간격 설정 */
+            font-size: 16px; /* 텍스트 크기 증가 */
+            border-radius: 6px; /* 버튼 모서리 둥글게 */
+            transition: background-color 0.3s ease, transform 0.2s ease; /* 호버 효과 */
         }
 
         /* 수정 모드에서 보일 저장, 취소 버튼 스타일 */
         .single-comment .btn-primary, /* 저장 버튼 */
-        .single-comment .btn-secondary /* 취소 버튼 */ {
+        .single-comment  .btn-danger/* 취소 버튼 */ {
             display: inline-block;
             margin-top: 10px;
+            background-color: #e6d3b8;
+            color: black;
+        }
+
+        .single-comment .btn-primary:hover {
+            background-color: #e6d3b8; /* 호버 시 색상 변화 */
+            transform: scale(1.05); /* 호버 시 버튼 확대 */
+        }
+
+        .btn-common {
+            padding: 5px 10px; /* 버튼 내 여백 줄이기 */
+            height: 30px; /* 버튼 높이 설정 */
+            width: auto; /* 버튼 너비 자동으로 설정 */
+            border-radius: 4px; /* 모서리 둥글게 */
+            background-color: #fff9f0; /* 버튼 배경색 */
+            margin-right: 5px; /* 버튼 간격 설정 */
+            color: black;
         }
 
         /* 댓글 수정, 삭제 버튼이 일렬로 나란히 배치되도록 설정 */
-        .single-comment .action-buttons {
-            display: inline-flex;
-            gap: 5px; /* 버튼 사이 간격 */
+        .single-comment  {
+            display: flex; /* 버튼이 가로로 나란히 배치 */
+            gap: 10px; /* 버튼 간격 설정 */
             margin-top: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 댓글 박스 그림자 */
         }
 
         /* 댓글 수정 모드 활성화 시 스타일 */
-        .edit-mode .comment-content {
+        .edit-mode {
             display: none; /* 기존 댓글 내용을 숨김 */
         }
 
         .edit-mode .edit-comment-input {
             display: block; /* 수정 입력 필드를 표시 */
         }
+
+        .post-footer {
+            margin-top: 30px;
+            padding: 20px 0;
+            border-top: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .share-section {
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        #shareBtn {
+            padding: 5px 10px; /* 버튼 내 여백 줄이기 */
+            height: 30px; /* 버튼 높이 설정 */
+            width: auto; /* 버튼 너비 자동으로 설정 */
+            border-radius: 4px; /* 모서리 둥글게 */
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #fff9f0;
+            color: black;
+        }
+
+        #shareBtn:hover {
+            transform: scale(1.05);
+            color: #000;
+        }
+
     </style>
     <script th:inline="javascript" defer>
         function handleLikeDislike(event, action, commentId) {
+            console.log("Comment ID:", commentId);
             event.preventDefault();
 
-            // 로그인 여부 확인
-            const isLoggedIn = document.body.getAttribute("data-user-logged-in") === "true";
-            if (!isLoggedIn) {
-                alert("로그인 후 이용 가능합니다.");
-                window.location.href = '/login'; // 로그인 페이지로 이동
+            // 사용자 로그인 ID 확인
+            var userLoginId = /*[[${userInfo != null ? userInfo.user_login_id : 'null'}]]*/ 'null';
+            console.log("User Login ID in handleLikeDislike:", userLoginId);
+
+            if (!userLoginId) {
+                alert("로그인 후 " + (action === 'like' ? '좋아요' : '싫어요') + "를 할 수 있습니다.");
+                window.location.href = '/login';
                 return;
             }
 
-            // 좋아요/싫어요 처리
+            // 서버로 좋아요/싫어요 요청
             fetch(`/like/${action}/${commentId}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' }
             })
-                .then(response => response.json())
+                .then(response => response.text().then(text => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP status: ${response.status}, Body: ${text}`);
+                    }
+                    return JSON.parse(text); // JSON으로 변환
+                }))
                 .then(data => {
                     if (data.likeCount !== undefined && data.dislikeCount !== undefined) {
                         document.getElementById(`like-count-${commentId}`).innerText = data.likeCount;
@@ -154,126 +373,135 @@
                         alert("오류가 발생했습니다. 다시 시도해주세요.");
                     }
                 })
-                .catch(error => console.error('Error:', error));
+                .catch(error => {
+                    console.error("Fetch error:", error.message);
+                    alert(`오류가 발생했습니다: ${error.message}`);
+                });
         }
 
         function enableEditMode(button) {
             const commentId = button.getAttribute("data-comment-id");
             const commentDiv = document.getElementById(`comment-${commentId}`);
 
-            if (!commentId || !commentDiv) {
-                console.error("Invalid commentId or comment element not found:", commentId);
-                alert("잘못된 댓글 ID입니다.");
+            if (!commentDiv) {
+                alert("댓글을 찾을 수 없습니다. 잘못된 ID입니다.");
                 return;
             }
 
-            // 수정 모드 활성화
-            commentDiv.classList.add("edit-mode");
-            commentDiv.querySelector(".comment-content").style.display = 'none';
-            const inputField = commentDiv.querySelector(".edit-comment-input");
-            inputField.style.display = 'block';
-            inputField.value = commentDiv.querySelector(".comment-content").innerText;
-            inputField.focus();
+            const contentDiv = commentDiv.querySelector(".comment-content");
+            const editInput = commentDiv.querySelector(".edit-comment-input");
+
+            if (!contentDiv || !editInput) {
+                alert("댓글 내용 또는 수정 입력란을 찾을 수 없습니다.");
+                return;
+            }
+
+            // 댓글 수정 모드 활성화
+            contentDiv.style.display = "none";
+            editInput.style.display = "block";
+            editInput.value = contentDiv.textContent;
+
+            // 기존 수정 버튼 숨기기
+            button.style.display = "none";
 
             // 저장 및 취소 버튼 추가
-            const actionButtons = document.createElement("div");
-            actionButtons.className = "action-buttons";
-
             const saveButton = document.createElement("button");
             saveButton.className = "btn btn-primary";
-            saveButton.innerText = "저장";
-            saveButton.onclick = () => saveComment(commentId);
+            saveButton.textContent = "저장";
+            saveButton.onclick = () => saveComment(commentId, editInput.value);
 
             const cancelButton = document.createElement("button");
             cancelButton.className = "btn btn-secondary";
-            cancelButton.innerText = "취소";
-            cancelButton.onclick = () => disableEditMode(commentId);
+            cancelButton.textContent = "취소";
+            cancelButton.style.backgroundColor = "#fff9f0";
+            cancelButton.onclick = () => {
+                editInput.style.display = "none";
+                contentDiv.style.display = "block";
+                button.style.display = "inline-block";
+                saveButton.remove();
+                cancelButton.remove();
+            };
 
-            actionButtons.appendChild(saveButton);
-            actionButtons.appendChild(cancelButton);
-            commentDiv.appendChild(actionButtons);
+            commentDiv.appendChild(saveButton);
+            commentDiv.appendChild(cancelButton);
         }
 
-        function disableEditMode(commentId) {
-            const commentDiv = document.getElementById(`comment-${commentId}`);
-            if (!commentDiv) return;
-
-            // edit-mode 클래스 제거 및 UI 초기화
-            commentDiv.classList.remove("edit-mode");
-            commentDiv.querySelector(".comment-content").style.display = 'block';
-            commentDiv.querySelector(".edit-comment-input").style.display = 'none';
-
-            // 저장 및 취소 버튼 삭제
-            const actionButtons = commentDiv.querySelector(".action-buttons");
-            if (actionButtons) actionButtons.remove();
-        }
-
-        function saveComment(commentId) {
-            const content = document.querySelector(`#comment-${commentId} .edit-comment-input`).value;
-
+        function saveComment(commentId, newContent) {
             fetch(`/post/comments/update/${commentId}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ content })
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ content: newContent }) // JSON 데이터 전달
             })
-                .then(response => response.json())
+                .then(response => {
+                    // JSON 응답이 아니면 에러 처리
+                    if (!response.ok) {
+                        return response.text().then(text => {
+                            throw new Error(`서버 에러: ${response.status}. 응답 내용: ${text}`);
+                        });
+                    }
+                    return response.json();
+                })
                 .then(data => {
-                    console.log("Server response:", data);  // 서버 응답 출력
-
                     if (data.success) {
-                        // 수정된 내용을 표시
-                        document.querySelector(`#comment-${commentId} .comment-content`).innerText = content;
-
-                        // 수정 모드를 종료하여 UI를 원래 상태로 복구
-                        disableEditMode(commentId);
-                        alert(data.message || "댓글이 성공적으로 수정되었습니다.");
+                        alert("댓글이 성공적으로 수정되었습니다.");
+                        location.reload(); // 페이지 새로고침
                     } else {
                         alert(data.message || "댓글 수정에 실패했습니다.");
                     }
                 })
                 .catch(error => {
-                    console.error('Error:', error);
-                    alert("댓글 수정 중 예상치 못한 오류가 발생했습니다.");
+                    console.error("Error:", error);
+                    alert("댓글 수정 중 오류가 발생했습니다: " + error.message);
                 });
         }
 
         function deleteComment(button) {
             const commentId = button.getAttribute("data-comment-id");
-
             if (!commentId) {
-                console.error("Invalid commentId:", commentId);
                 alert("잘못된 댓글 ID입니다.");
                 return;
             }
 
-            if (!confirm("댓글을 삭제하시겠습니까?")) return;
-
-            fetch(`/post/comments/delete/${commentId}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' }
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // 삭제 성공 시 해당 댓글 요소를 제거
-                        const commentDiv = document.getElementById(`comment-${commentId}`);
-                        if (commentDiv) {
-                            commentDiv.remove();
-                        }
-                        alert(data.message || "댓글이 성공적으로 삭제되었습니다.");
-                    } else {
-                        alert(data.message || "댓글 삭제에 실패했습니다.");
-                    }
+            if (confirm("댓글을 삭제하시겠습니까?")) {
+                fetch(`/post/comments/delete/${commentId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
                 })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert("댓글 삭제 중 예상치 못한 오류가 발생했습니다.");
-                });
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert("댓글이 삭제되었습니다.");
+                            // 삭제된 댓글을 화면에서 제거
+                            document.getElementById(`comment-${commentId}`).remove();
+                        } else {
+                            alert("댓글 삭제에 실패했습니다.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("댓글 삭제 중 오류 발생:", error);
+                        alert("댓글 삭제 중 오류가 발생했습니다.");
+                    });
+            }
         }
 
+        document.getElementById('shareBtn').addEventListener('click', function () {
+            if (navigator.share) {
+                navigator.share({
+                    title: document.title,
+                    text: '이 게시글을 확인해 보세요!',
+                    url: window.location.href
+                }).then(() => {
+                    alert('공유가 성공적으로 완료되었습니다!');
+                }).catch((error) => {
+                    console.error('공유 중 오류가 발생했습니다:', error);
+                });
+            } else {
+                alert('공유 기능이 이 브라우저에서 지원되지 않습니다.');
+            }
+        });
     </script>
 </head>
-<body th:attr="data-user-logged-in=${userInfo != null}">
+<body th:attr="data-user-login-id=${userInfo != null ? userInfo.user_login_id : ''}">
 <header>
     <div class="header-area" style="background-color: #fff9f0;">
         <div class="main-header">
@@ -307,21 +535,16 @@
                     <div class="row align-items-center">
                         <div class="col-xl-2 col-lg-2 col-md-1">
                             <div class="logo">
-                                <a href="index.html"><img src="/assets/img/logo/logo.png" alt="Logo" style="height: 5em"></a>
+                                <a href="main.html"><img src="/assets/img/logo/logo.png" alt="Logo" style="height: 5em"></a>
                             </div>
                         </div>
                         <div class="col-xl-10 col-lg-10 col-md-10">
                             <div class="main-menu f-right d-none d-lg-block">
                                 <nav>
                                     <ul id="navigation">
-                                        <li><a th:href="@{/index}">숙소 예약</a></li>
-                                        <li><a th:href="@{/postMain}">게시판</a>
-                                            <ul class="submenu">
-                                                <li><a th:href="@{/postMain}">게시판</a></li>
-                                                <li><a th:href="@{/reviews}">후기 게시판</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="about.html">마이페이지</a></li>
+                                        <li><a th:href="@{/register_accom}">숙소 예약</a></li>
+                                        <li><a th:href="@{/postMain}">게시판</a></li>
+                                        <li><a th:href="@{/myPage}">마이페이지</a></li>
                                         <li><a th:if="${userInfo == null}" href="/login" class="btn-log">로그인</a></li>
                                         <li><a th:if="${userInfo != null}" href="/logout" class="btn-log">로그아웃</a></li>
                                     </ul>
@@ -337,71 +560,95 @@
         </div>
     </div>
 </header>
-<div class="button-container">
-    <a class="back-to-main" href="/postMain">메인으로</a>
-</div>
-
+<a class="back-to-main" href="/postMain">
+    <i class="fas fa-arrow-left"></i> 메인으로
+</a>
 <section class="blog_area section-padding">
-    <div class="container">
+    <div class="content-wrapper">
+        <!-- 카테고리 섹션 -->
+        <div class="category-section">
+            <ul class="list cat-list">
+                <li><a th:href="@{'/posts/category/rec'}">숙소 추천</a></li>
+                <li><a th:href="@{'/posts/category/general'}">자유 게시판</a></li>
+                <li><a th:href="@{'/posts/category/travel'}">여행 TIP</a></li>
+            </ul>
+        </div>
         <div class="row">
-            <div class="col-lg-8 mb-5 mb-lg-0">
+            <div class=" mb-5 mb-lg-0">
                 <div class="blog_left_sidebar">
                     <article class="blog_item">
                         <div class="blog_details">
-                        <h1 class="blog-head" th:text="${post.title}">게시글 제목</h1>
+                            <h1 class="blog-head" th:text="${post.title}">게시글 제목</h1>
 
-                        <!-- 수정 완료 메시지 출력 -->
-                        <div th:if="${successMessage}" class="alert alert-success" role="alert">
-                            <p th:text="${successMessage}">수정이 완료되었습니다.</p>
-                        </div>
-
-                        <ul class="blog-info-link">
-                            <li><span th:text="${post.nickname}">작성자</span></li>
-                            <li><span th:text="${#temporals.format(post.created_at, 'yyyy-MM-dd HH:mm')}">작성일</span></li>
-                            <li><span th:text="${post.view_count}">조회수</span></li>
-                        </ul>
+                            <!-- 수정 완료 메시지 출력 -->
+                            <div th:if="${successMessage}" class="alert alert-success" role="alert">
+                                <p th:text="${successMessage}">수정이 완료되었습니다.</p>
+                            </div>
+                            <ul class="blog-info-link">
+                                <li><span th:text="${post.user.nickname}">작성자</span></li>
+                                <li><span th:text="${#temporals.format(post.created_at, 'yyyy-MM-dd HH:mm')}">작성일</span></li>
+                                <li><span th:text="${post.view_count}">조회수</span></li>
+                            </ul>
                             <div th:if="${base64Image != null}">
                                 <!-- 이미지가 존재하면 본문에 삽입 -->
                                 <img th:src="${base64Image}" alt="Uploaded Image" class="blog-image"/>
                             </div>
-                            <div th:utext="${post.content}"></div> <!-- 게시글 내용 -->
-                            <!-- 게시글 수정 및 삭제 버튼 -->
-                            <div th:if="${userInfo != null and userInfo.user_id == post.user_id}">
-                                <a th:href="@{/update/{post_id}(post_id=${post.post_id})}" class="btn btn-primary">수정</a>
-
-                                <!-- 삭제 버튼을 POST 방식으로 변경 -->
-                                <div th:if="${userInfo != null and userInfo.user_id == post.user_id}">
-                                    <a th:href="@{/post/delete/{post_id}(post_id=${post.post_id})}" class="btn btn-danger">삭제</a>
+                            <div th:utext="${post.content}" class="post-content"></div> <!-- 게시글 내용 -->
+                            <div class="post-footer">
+                                <div class="share-section">
+                                    <button id="shareBtn" class="btn btn-primary">
+                                        <i class="fas fa-share-alt"></i> 공유하기
+                                    </button>
                                 </div>
+                            </div>
+                            <!-- 게시글 수정 및 삭제 버튼 -->
+                            <div th:if="${userInfo != null and post.user != null and userInfo.user_id == post.user.user_id}">
+                                <form th:action="@{/update/{post_id}(post_id=${post.post_id})}" method="get">
+                                    <button type="submit" class="btn btn-primary btn-common">수정</button>
+                                </form>
+                                <form th:action="@{/post/delete/{post_id}(post_id=${post.post_id})}" method="get" style="display:inline;">
+                                    <button type="submit" class="btn btn-danger btn-common">삭제</button>
+                                </form>
                             </div>
                         </div>
                     </article>
+                </div>
+                <!-- 댓글 영역 -->
+                <div class="comment-area">
+                    <h4>댓글 <span th:text="${post.comments.size()}"></span>개</h4>
+                    <div class="comment-list">
+                        <div th:each="comment : ${post.comments}" th:id="'comment-' + ${comment.commentId}" class="single-comment">
+                            <div class="user d-flex">
+                                <div class="desc">
+                                    <h5 th:text="${comment.user.nickname}"></h5>
+                                    <span th:text="${#temporals.format(comment.created_at, 'yyyy-MM-dd HH:mm')}"></span>
+                                    <p class="comment-content" th:text="${comment.content}"></p>
+                                    <textarea class="edit-comment-input" style="display: none;"></textarea>
 
-                    <!-- 댓글 영역 -->
-                    <div class="comment-area">
-                        <h4>댓글 <span th:text="${post.comments.size()}"></span>개</h4>
-                        <div class="comment-list">
-                            <div th:each="comment : ${post.comments}" th:id="'comment-' + ${comment.comment_id}" class="single-comment">
-                                <div class="user d-flex">
-                                    <div class="desc">
-                                        <h5 th:text="${comment.nickname}"></h5>
-                                        <span th:text="${#temporals.format(comment.created_at, 'yyyy-MM-dd HH:mm')}"></span>
-                                        <p class="comment-content" th:text="${comment.content}"></p>
-                                        <textarea class="edit-comment-input" style="display: none;"></textarea>
+                                    <!-- 좋아요 및 싫어요 버튼 -->
+                                    <div class="like-dislike-buttons">
+                                        <button
+                                                class="btn-like"
+                                                th:attr="data-comment-id=${comment.commentId}"
+                                                onclick="handleLikeDislike(event, 'like', this.getAttribute('data-comment-id'))">
+                                            👍
+                                        </button>
+                                        <span th:id="'like-count-' + ${comment.commentId}" th:text="${comment.likeCount}">0</span>
+                                        <button
+                                                class="btn-dislike"
+                                                th:attr="data-comment-id=${comment.commentId}"
+                                                onclick="handleLikeDislike(event, 'dislike', this.getAttribute('data-comment-id'))">
+                                            👎
+                                        </button>
+                                        <span th:id="'dislike-count-' + ${comment.commentId}" th:text="${comment.dislikeCount}">0</span>
+                                    </div>
 
-                                        <!-- 좋아요 및 싫어요 버튼 -->
-                                        <div class="like-dislike-buttons">
-                                            <button class="btn-like" th:attr="data-comment-id=${comment.comment_id}" onclick="handleLikeDislike(event, 'like', this.getAttribute('data-comment-id'))">👍</button>
-                                            <span th:id="'like-count-' + ${comment.comment_id}" th:text="${comment.likeCount}">0</span>
-                                            <button class="btn-dislike" th:attr="data-comment-id=${comment.comment_id}" onclick="handleLikeDislike(event, 'dislike', this.getAttribute('data-comment-id'))">👎</button>
-                                            <span th:id="'dislike-count-' + ${comment.comment_id}" th:text="${comment.dislikeCount}">0</span>
-                                        </div>
-
-                                        <!-- 댓글 수정/삭제 버튼 -->
-                                        <div th:if="${userInfo != null and userInfo.user_id == comment.user_id}">
-                                            <button class="btn btn-primary" th:attr="data-comment-id=${comment.comment_id}" onclick="enableEditMode(this)">댓글 수정</button>
-                                            <button class="btn btn-danger" th:attr="data-comment-id=${comment.comment_id}" onclick="deleteComment(this)">댓글 삭제</button>
-                                        </div>
+                                    <!-- 댓글 수정/삭제 버튼 -->
+                                    <div th:if="${userInfo != null and userInfo.user_id == comment.user.user_id}">
+                                        <button class="btn btn-primary" onclick="enableEditMode(this)" th:attr="data-comment-id=${comment.commentId}">수정</button>
+                                        <form th:action="@{/post/comments/delete/{comment_id}(comment_id=${comment.commentId})}" method="post" style="display: inline;">
+                                            <button type="submit" class="btn btn-danger">삭제</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>

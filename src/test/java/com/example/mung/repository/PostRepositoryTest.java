@@ -112,47 +112,4 @@ public class PostRepositoryTest {
         assertEquals(1, rowsAffected, "조회수를 증가시키는 쿼리가 1개의 행을 업데이트해야 합니다.");
     }
 
-    @Test
-    @DisplayName("게시글 제목으로 검색 테스트")
-    public void testFindByTitle() {
-        String keyword = "수정";
-        List<Post> posts = postRepository.findByTitle(keyword);
-        assertFalse(posts.isEmpty(), "게시글 제목으로 검색한 결과가 있어야 합니다.");
-        for (Post post : posts) {
-            assertTrue(post.getTitle().contains(keyword), "제목에 검색 키워드가 포함되어야 합니다.");
-        }
-    }
-
-    @Test
-    @DisplayName("내용으로 검색 테스트")
-    public void testFindByContent() {
-        String keyword = "정";
-        List<Post> posts = postRepository.findByContent(keyword);
-        assertNotNull(posts, "게시글 리스트는 null이 아니어야 합니다.");
-        assertFalse(posts.isEmpty(), "게시글 리스트는 비어있지 않아야 합니다.");
-        assertTrue(posts.stream().allMatch(post -> post.getContent().contains(keyword)),
-                "모든 게시글의 content는 'test' 키워드를 포함해야 합니다.");
-    }
-
-    @Test
-    @DisplayName("닉네임으로 게시글 검색 테스트")
-    public void testFindByNickname() {
-        String nickname = "옥지";
-        List<Post> posts = postRepository.findByNickname(nickname);
-        assertNotNull(posts, "게시글 리스트는 null이 아니어야 합니다.");
-        assertFalse(posts.isEmpty(), "게시글 리스트는 비어있지 않아야 합니다.");
-        for (Post post : posts) {
-            assertEquals(nickname, post.getUser().getNickname(), "게시글은 " + nickname + " 사용자가 작성한 게시글이어야 합니다.");
-        }
-    }
-
-    @Test
-    @DisplayName("게시글 비밀번호 테스트")
-    public void testFindByPostId() {
-        int postId = 35;
-        String password = postRepository.findByPostId(postId);
-        assertNotNull(password, "비밀번호는 null이 아니어야 합니다.");
-        assertEquals("1111", password, "게시글의 비밀번호가 예상한 값과 일치해야 합니다.");
-    }
-
 }

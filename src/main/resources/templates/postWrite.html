@@ -89,23 +89,18 @@
                     <div class="row align-items-center">
                         <div class="col-xl-2 col-lg-2 col-md-1">
                             <div class="logo">
-                                <a href="index.html"><img src="/assets/img/logo/logo.png" alt="Logo" style="height: 5em"></a>
+                                <a href="main.html"><img src="/assets/img/logo/logo.png" alt="Logo" style="height: 5em"></a>
                             </div>
                         </div>
                         <div class="col-xl-10 col-lg-10 col-md-10">
                             <div class="main-menu f-right d-none d-lg-block">
                                 <nav>
                                     <ul id="navigation">
-                                        <li><a th:href="@{/index}">숙소 예약</a></li>
-                                        <li><a th:href="@{/postMain}">게시판</a>
-                                            <ul class="submenu">
-                                                <li><a th:href="@{/postMain}">게시판</a></li>
-                                                <li><a th:href="@{/reviews}">후기 게시판</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="about.html">마이페이지</a></li>
-                                        <li><a th:if="${session.user_id == null}" href="/login" class="btn-log">로그인</a></li>
-                                        <li><a th:if="${session.user_id != null}" href="/logout" class="btn-log">로그아웃</a></li>
+                                        <li><a th:href="@{/register_accom}">숙소 예약</a></li>
+                                        <li><a th:href="@{/postMain}">게시판</a></li>
+                                        <li><a th:href="@{/myPage}">마이페이지</a></li>
+                                        <li><a th:if="${userInfo == null}" href="/login" class="btn-log">로그인</a></li>
+                                        <li><a th:if="${userInfo != null}" href="/logout" class="btn-log">로그아웃</a></li>
                                     </ul>
                                 </nav>
                             </div>

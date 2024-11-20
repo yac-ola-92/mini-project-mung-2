@@ -195,14 +195,9 @@
                             <div class="main-menu f-right d-none d-lg-block">
                                 <nav>
                                     <ul id="navigation">
-                                        <li><a th:href="@{/index}">숙소 예약</a></li>
-                                        <li><a th:href="@{/postMain}">게시판</a>
-                                            <ul class="submenu">
-                                                <li><a th:href="@{/postMain}">게시판</a></li>
-                                                <li><a th:href="@{/reviews}">후기 게시판</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="about.html">마이페이지</a></li>
+                                        <li><a th:href="@{/register_accom}">숙소 예약</a></li>
+                                        <li><a th:href="@{/postMain}">게시판</a></li>
+                                        <li><a th:href="@{/myPage}">마이페이지</a></li>
                                         <li><a th:if="${userInfo == null}" href="/login" class="btn-log">로그인</a></li>
                                         <li><a th:if="${userInfo != null}" href="/logout" class="btn-log">로그아웃</a></li>
                                     </ul>
@@ -245,7 +240,13 @@
 
         <!-- 글 작성 버튼 -->
         <div>
-            <button type="button" class="btn-write" onclick="checkLogin();">글 작성</button>
+            <button class="btn-write" onclick="checkLogin(/*[[${userInfo?.user_login_id}]]*/ null);">글 작성</button>
+        </div>
+        <div th:if="${message}" class="alert alert-success" role="alert">
+            <p th:text="${message}"></p>
+        </div>
+        <div th:if="${error}" class="alert alert-danger" role="alert">
+            <p th:text="${error}"></p>
         </div>
 
         <!-- 게시글 목록 -->
@@ -255,7 +256,8 @@
                     <article class="blog_item">
                         <div class="blog_details" style="background-color: #fff9f0; border: solid 1px #f2e2cc;">
                             <a th:href="@{'/post/' + ${post.post_id}}">
-                                <h2 class="blog-head" th:text="${post.title}" style="color: #2d2d2d;">게시글 제목</h2>
+                                <h2 class="blog-head" th:text="${post.title}" style="color: #2d2d2d; display: inline-block;">게시글 제목</h2>
+                                <p style="display: inline-block; margin-left: 10px;" th:text="'(' + ${commentCounts[post.post_id]} + ')'">댓글 갯수</p>
                             </a>
                             <ul class="blog-info-link">
                                 <li><span th:text="${post.user.nickname}">작성자</span></li>
@@ -269,6 +271,27 @@
             <p th:if="${posts == null || posts.isEmpty()}">게시글이 없습니다.</p>
         </div>
     </div>
+
+    <!-- 페이징 -->
+    <nav class="blog-pagination justify-content-center d-flex">
+        <ul class="pagination">
+            <!-- 이전 페이지 -->
+            <li th:if="${posts != null and posts.hasPrevious()}" class="page-item">
+                <a th:href="@{|/postMain?page=${posts.number - 1}&size=5|}" class="page-link">이전</a>
+            </li>
+
+            <!-- 페이지 번호 -->
+            <li th:each="i : ${#numbers.sequence(1, posts.totalPages)}"
+                th:classappend="${i == posts.number + 1} ? 'active' : ''" class="page-item">
+                <a th:href="@{|/postMain?page=${i - 1}&size=5|}" class="page-link" th:text="${i}">1</a>
+            </li>
+
+            <!-- 다음 페이지 -->
+            <li th:if="${posts != null and posts.hasNext()}" class="page-item">
+                <a th:href="@{|/postMain?page=${posts.number + 1}&size=5|}" class="page-link">다음</a>
+            </li>
+        </ul>
+    </nav>
 
     <!-- 검색 필터 -->
     <div class="search-container">
@@ -284,26 +307,6 @@
             </button>
         </form>
     </div>
-
-    <!-- 페이징 -->
-    <nav class="blog-pagination justify-content-center d-flex" th:if="${page != null}">
-        <ul class="pagination">
-            <li th:if="${page.hasPrevious()}" th:classappend="${page.hasPrevious()} ? '' : 'disabled'">
-                <a th:href="@{'/posts?page=' + ${page.number - 1}}" class="page-link" aria-label="Previous">
-                    <i class="ti-angle-left"></i>
-                </a>
-            </li>
-            <li th:each="i : ${#numbers.sequence(1, page.totalPages)}"
-                th:classappend="${i == page.number + 1} ? 'active' : ''">
-                <a th:href="@{'/posts?page=' + ${i - 1}}" class="page-link" th:text="${i}">1</a>
-            </li>
-            <li th:if="${page.hasNext()}" th:classappend="${page.hasNext()} ? '' : 'disabled'">
-                <a th:href="@{'/posts?page=' + ${page.number + 1}}" class="page-link" aria-label="Next">
-                    <i class="ti-angle-right"></i>
-                </a>
-            </li>
-        </ul>
-    </nav>
 </section>
 
 <!-- Footer -->

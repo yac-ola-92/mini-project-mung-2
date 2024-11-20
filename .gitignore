@@ -18,6 +18,7 @@ bin/
 .springBeans
 .sts4-cache
 
+/dist/
 ### IntelliJ IDEA ###
 .idea
 *.iws

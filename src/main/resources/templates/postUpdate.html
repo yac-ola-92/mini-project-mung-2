@@ -5,87 +5,233 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>게시글 수정</title>
-    <meta name="description" content="게시글 수정 페이지">
+    <title>게시판</title>
+    <meta name="description" content="게시판 페이지">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/responsive.css">
+    <link rel="stylesheet" href="/assets/css/post.css">
+    <script src="https://kit.fontawesome.com/748b44d03f.js" crossorigin="anonymous"></script>
+    <style>
+        .post-update-form {
+            background-color: #fff9f0;
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid #f2e2cc;
+            margin-top: 20px;
+            max-width: 700px;
+            margin: 0 auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 은은한 그림자 */
+        }
+
+        .post-update-form h1 {
+            text-align: center;
+            font-size: 24px;
+            color: #bc915e;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-control {
+            border: 2px solid #bc915e;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 14px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .form-control:focus {
+            border-color: #bc915e;
+            box-shadow: 0 0 5px rgba(188, 145, 94, 0.5);
+            outline: none;
+        }
+
+        .form-control[type="file"] {
+            padding: 10px;
+        }
+
+        .form-group button {
+            background-color: #bc915e;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            display: inline-block;
+            width: 100%;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-group button:hover {
+            background-color: #fff9f0;
+            color: #bc915e;
+            border: 2px solid #bc915e;
+        }
+
+        .footer-area {
+            background-color: #fff9f0;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .footer-logo img {
+            height: 5em;
+        }
+    </style>
 </head>
 <script th:inline="javascript">
-    document.querySelector('form[name="update-form"]').addEventListener('submit', function(event) {
-        event.preventDefault();  // 기본 폼 제출 막기
+    document.addEventListener("DOMContentLoaded", function () {
+        var checkPasswordBtn = document.getElementById("checkPasswordBtn");
+        var submitBtn = document.getElementById("submitBtn");
 
-        var formData = new FormData(this);  // 폼 데이터 가져오기
+        // 비밀번호 확인 버튼 클릭 이벤트
+        checkPasswordBtn.addEventListener("click", function () {
+            var password = document.getElementById("password").value;
+            var post_id = document.querySelector('form[name="update-form"]').querySelector('input[name="post_id"]').value;
 
-        // AJAX 요청으로 서버에 폼 데이터 전송
-        fetch(this.action, {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => {
-                if (response.ok) {
-                    return response.text();
-                }
-                throw new Error('게시글 수정에 실패했습니다.');
+            // 비밀번호 확인을 위한 AJAX 요청
+            fetch('/post/checkPassword', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ password: password, post_id: post_id })
             })
-            .then(data => {
-                alert('게시글이 성공적으로 수정되었습니다.');
-                window.location.href = '/postMain';  // 수정 후 다른 페이지로 이동
+                .then(response => response.json())
+                .then(data => {
+                    if (data.valid) {
+                        // 비밀번호가 맞다면 수정 버튼을 활성화
+                        console.log('비밀번호가 맞습니다. 수정 버튼을 활성화합니다.');
+                        submitBtn.disabled = false;
+                        alert('비밀번호가 확인되었습니다. 게시글을 수정할 수 있습니다.');
+                    } else {
+                        // 비밀번호가 틀리다면 알림창을 띄움
+                        alert('비밀번호가 틀렸습니다. 다시 입력해주세요.');
+                        document.getElementById("password").value = ''; // 비밀번호 필드 초기화
+                        submitBtn.disabled = true; // 수정 버튼 비활성화
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('서버와의 연결에 문제가 발생했습니다. 다시 시도해 주세요.');
+                });
+        });
+
+        // 폼 제출 이벤트
+        document.querySelector('form[name="update-form"]').addEventListener('submit', function(event) {
+            event.preventDefault();  // 기본 폼 제출 막기
+
+            if (submitBtn.disabled) {
+                alert('비밀번호를 먼저 확인해 주세요.');
+                return;
+            }
+
+            var formData = new FormData(this);  // 폼 데이터 가져오기
+
+            // AJAX 요청으로 서버에 폼 데이터 전송
+            fetch(this.action, {
+                method: 'POST',
+                body: formData
             })
-            .catch(error => {
-                alert(error.message);
-            });
+                .then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    }
+                    throw new Error('게시글 수정에 실패했습니다.');
+                })
+                .then(data => {
+                    alert('게시글이 성공적으로 수정되었습니다.');
+                    window.location.href = '/postMain';  // 수정 후 다른 페이지로 이동
+                })
+                .catch(error => {
+                    alert(error.message);
+                });
+        });
     });
 </script>
 <body>
-<!-- Header Start -->
-<div class="header-area" style="background-color: #fff9f0;">
-    <div class="main-header">
-        <div class="header-bottom header-sticky" style="background-color: #fff9f0;">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-xl-2 col-lg-2 col-md-1">
-                        <div class="logo">
-                            <a href="index.html"><img src="assets/img/logo/logo.png" alt="Logo" style="height: 5em"></a>
-                        </div>
-                    </div>
-                    <div class="col-xl-10 col-lg-10 col-md-10">
-                        <div class="main-menu f-right d-none d-lg-block">
-                            <nav>
-                                <ul id="navigation">
-                                    <li><a th:href="@{/index}">숙소 예약</a></li>
-                                    <li><a th:href="@{/postMain}">게시판</a>
-                                        <ul class="submenu">
-                                            <li><a th:href="@{/postMain}">게시판</a></li>
-                                            <li><a th:href="@{/reviews}">후기 게시판</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="about.html">마이페이지</a></li>
-                                    <li><a th:if="${session.user_id == null}" href="/login" class="btn-log">로그인</a></li>
-                                    <li><a th:if="${session.user_id != null}" href="/logout" class="btn-log">로그아웃</a></li>
+<header>
+    <div class="header-area" style="background-color: #fff9f0;">
+        <div class="main-header">
+            <div class="header-top top-bg d-none d-lg-block" style="background-color: #f2e2cc;">
+                <div class="container">
+                    <div class="row justify-content-between align-items-center">
+                        <div class="col-lg-8">
+                            <div class="header-info-left">
+                                <ul>
+                                    <li>needhelp@gotrip.com</li>
+                                    <li>666 569 025077</li>
+                                    <li>Brooklyn Street, New York</li>
                                 </ul>
-                            </nav>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="header-info-right f-right">
+                                <ul class="header-social">
+                                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-pinterest-p"></i></a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-12">
-                        <div class="mobile_menu d-block d-lg-none"></div>
+                </div>
+            </div>
+            <div class="header-bottom header-sticky" style="background-color: #fff9f0;">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-xl-2 col-lg-2 col-md-1">
+                            <div class="logo">
+                                <a href="main.html"><img src="/assets/img/logo/logo.png" alt="Logo" style="height: 5em"></a>
+                            </div>
+                        </div>
+                        <div class="col-xl-10 col-lg-10 col-md-10">
+                            <div class="main-menu f-right d-none d-lg-block">
+                                <nav>
+                                    <ul id="navigation">
+                                        <li><a th:href="@{/register_accom}">숙소 예약</a></li>
+                                        <li><a th:href="@{/postMain}">게시판</a></li>
+                                        <li><a th:href="@{/myPage}">마이페이지</a></li>
+                                        <li><a th:if="${userInfo == null}" href="/login" class="btn-log">로그인</a></li>
+                                        <li><a th:if="${userInfo != null}" href="/logout" class="btn-log">로그아웃</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mobile_menu d-block d-lg-none"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</header>
 <!-- 게시글 수정 폼 -->
 <section class="blog_area section-padding">
     <div class="container">
         <div class="row">
             <div layout:fragment="content">
                 <div>
-                    <!-- 게시글 수정 폼 -->
                     <!-- 수정 버튼을 눌렀을 때 postDTO가 null인 경우를 처리 -->
-                    <form name="update-form" th:action="@{'/update/' + ${post != null ? post.post_id : ''}}" method="post" enctype="multipart/form-data" autocomplete="off">
+                    <form name="update-form" th:action="@{/update/{post_id}(post_id=${post.post_id})}" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="post_id" th:value="${post != null ? post.post_id : ''}">
 
                         <!-- 제목 수정 필드 -->
@@ -93,8 +239,7 @@
                             <label for="title">제목</label>
                             <input type="text" id="title" name="title" class="form-control" th:value="${post != null ? post.title : ''}" required>
                         </div>
-
-                        <!-- 카테고리 선택 -->
+                        <!-- 카테고리 -->
                         <div class="form-group">
                             <label for="category">카테고리</label>
                             <select id="category" name="category" class="form-control" required>
@@ -102,7 +247,6 @@
                                 <option value="자유게시판" th:selected="${post.category == '자유게시판'}">자유 게시판</option>
                                 <option value="여행TIP" th:selected="${post.category == '여행TIP'}">여행 TIP</option>
                             </select>
-
                         </div>
 
                         <!-- 내용 수정 필드 -->
@@ -127,15 +271,15 @@
                             <input type="password" id="password" name="password" maxlength="4" class="form-control" required placeholder="4자리 비밀번호 입력"
                                    th:value="${post != null ? post.password : ''}">
                             <small class="form-text text-muted">비밀번호는 4자리 숫자로 입력해주세요.</small>
+                            <button type="button" id="checkPasswordBtn" class="btn btn-outline-primary" style="background-color: #f2e2cc; color: black;">비밀번호 확인</button>
                         </div>
 
                         <!-- 수정 확인 버튼 -->
                         <div class="form-group">
-                            <input type="submit" class="btn btn-outline-primary" style="background-color: #f2e2cc; color: black;" value="수정">
+                            <input type="submit" id="submitBtn" class="btn btn-outline-primary" style="background-color: #f2e2cc; color: black;" value="수정" disabled>
                             <a th:href="@{'/post/postdetail?post_id=' + ${post != null ? post.post_id : ''}}" class="btn btn-outline-secondary">취소</a>
                         </div>
                     </form>
-
 
                     <!-- 오류 메시지 출력 -->
                     <div th:if="${error}" class="alert alert-danger" role="alert">
@@ -146,15 +290,15 @@
         </div>
     </div>
 </section>
-
+<!-- Footer -->
 <footer>
-    <div class="footer-area footer-padding" style="background-color: #fff9f0;">
+    <div class="footer-area footer-padding footer-bg" style="background-color: #fff9f0;">
         <div class="container">
             <div class="row d-flex justify-content-between">
                 <div class="col-xl-3 col-lg-3 col-md-5 col-sm-6">
                     <div class="single-footer-caption mb-50">
                         <div class="footer-logo">
-                            <a href="index.html"><img src="assets/img/logo/logo.png" alt="" style="height: 5em;"></a>
+                            <a href="index.html"><img src="/assets/img/logo/logo.png" alt="Logo" style="height: 5em;"></a>
                         </div>
                     </div>
                 </div>
@@ -174,8 +318,8 @@
     </div>
 </footer>
 
-<!-- JS Files -->
-<script src="./assets/js/vendor/jquery-1.12.4.min.js"></script>
-<script src="./assets/js/bootstrap.min.js"></script>
+<script src="/assets/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="/assets/js/popper.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
 </body>
 </html>

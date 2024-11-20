@@ -23,10 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -120,7 +117,7 @@ public class LoginController {
         }
     }
 
-    @PostMapping("/findIdByPhone")
+    @PostMapping("/api/findIdByPhone")
     @ResponseBody
     public ResponseEntity<String> findIdByPhone(@RequestBody Map<String, String> requestData) {
         String phone = requestData.get("phone");
@@ -286,7 +283,7 @@ public class LoginController {
 
             // UserVO 객체에 값 설정
             UserVO vo = new UserVO();
-            Role roles = new Role(new String[]{"USER"});
+            Role roles = new Role(new String[]{"USER","HOST"});
 
             vo.setUser_name(dto.get("user_name"));
             vo.setUser_email(dto.get("user_email"));
@@ -363,6 +360,11 @@ public class LoginController {
 //        return "forward:/index.html";
 //    }
 
+    // .html, .css, .js 파일을 제외한 모든 요청을 index.html로 포워딩
+//    @GetMapping("/{path:[^\\.]*}") // 정규식으로 확장자가 포함되지 않은 경로를 선택
+//    public String redirect() {
+//        return "forward:/index.html"; // index.html로 리디렉션
+//    }
 
 }
 

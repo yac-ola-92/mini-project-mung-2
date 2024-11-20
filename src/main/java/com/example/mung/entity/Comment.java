@@ -36,4 +36,20 @@ public class Comment {
 
     @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment_like> likes; // 좋아요/싫어요 목록
+
+    @Transient
+    public long getLikeCount() {
+        // 좋아요 타입만 필터링하여 카운트
+        return likes.stream()
+                .filter(like -> like.getType() == Comment_like.Type.LIKE)
+                .count();
+    }
+
+    @Transient
+    public long getDislikeCount() {
+        // 싫어요 타입만 필터링하여 카운트
+        return likes.stream()
+                .filter(like -> like.getType() == Comment_like.Type.DISLIKE)
+                .count();
+    }
 }
