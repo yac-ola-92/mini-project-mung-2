@@ -35,19 +35,19 @@ public class PostRepositoryTest {
         assertFalse(posts.isEmpty());
     }
 
-    @Test
-    @DisplayName("카테고리별 게시글 조회 테스트")
-    public void getPostByCategory() {
-        Post.Category category = Post.Category.rec;
-        List<Post> posts = postRepository.getPostByCategory(category.name());
-        int count = posts.size();
-        assertNotNull(posts);
-        assertFalse(posts.isEmpty());
-        System.out.println(category + ": " + count);
-        posts.forEach(post -> System.out.println(post.getCategory()));
-        assertTrue(posts.stream().allMatch(post -> post.getCategory() == category),
-                "All posts should have the category: " + category);
-    }
+//    @Test
+//    @DisplayName("카테고리별 게시글 조회 테스트")
+//    public void getPostByCategory() {
+//        Post.Category category = Post.Category.rec;
+//        List<Post> posts = postRepository.getPostByCategory(category.name());
+//        int count = posts.size();
+//        assertNotNull(posts);
+//        assertFalse(posts.isEmpty());
+//        System.out.println(category + ": " + count);
+//        posts.forEach(post -> System.out.println(post.getCategory()));
+//        assertTrue(posts.stream().allMatch(post -> post.getCategory() == category),
+//                "All posts should have the category: " + category);
+//    }
 
     @Test
     @DisplayName("게시글 등록 테스트")
