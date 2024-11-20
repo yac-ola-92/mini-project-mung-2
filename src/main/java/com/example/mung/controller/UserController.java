@@ -3,6 +3,7 @@ package com.example.mung.controller;
 import com.example.mung.domain.UserDTO;
 import com.example.mung.domain.UserVO;
 import com.example.mung.domain.transfer.PetInfo;
+import com.example.mung.entity.UserEntity;
 import com.example.mung.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
