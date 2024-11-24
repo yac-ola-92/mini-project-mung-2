@@ -1,0 +1,1 @@
+import{_ as t,o as s,c as a,a as o}from"./index-DcboH8Zh.js";const n={name:"About"};function r(l,e,p,u,c,i){return s(),a("div",null,e[0]||(e[0]=[o("h1",null,"About Page",-1),o("p",null,"This is a simple About page.",-1)]))}const d=t(n,[["render",r]]);export{d as default};
