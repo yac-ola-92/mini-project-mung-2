@@ -93,6 +93,7 @@ public class ReviewController {
         return "redirect:/mypage/reviews";
     }
 
+
     @DeleteMapping("/{review_id}")
     @ResponseBody
     public ResponseEntity<String> deleteReview(@PathVariable int review_id, HttpSession session) {

@@ -103,9 +103,9 @@
                     if (confirm("정말로 삭제하시겠습니까?")) {
                         fetch(`/${review_id}`, {
                             method: "DELETE",
-                            headers: {
-                                "Content-Type": "application/json"
-                            }
+                            // headers: {
+                            //     "Content-Type": "application/json"
+                            // }
                         })
                             .then(response => {
                                 if (response.ok) {

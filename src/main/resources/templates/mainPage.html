@@ -133,7 +133,7 @@
         <!-- 네비게이션 메뉴 영역 -->
         <nav>
             <ul class="header">
-                <li class="header-li"><a href="/myAccomList.html" style="color: #bc915e;" id="move-myAccom"
+                <li class="header-li"><a href="http://localhost:5173/myAccomList" style="color: #bc915e;" id="move-myAccom"
                                          th:if="${session.userInfo != null and session.userInfo.roles.contains('HOST')}">나의 숙소</a>
                 </li>
                 <li class="header-li"><a href="/postMain" style="color:#bc915e;">게시판</a></li>
@@ -305,10 +305,7 @@
         }
     }
 </script>
-<script>
-    var log = SessionScope.user_id;
-    console.log(log);
-</script>
+
 
 <script src="/assets/js/vendor/modernizr-3.5.0.min.js"></script>
 

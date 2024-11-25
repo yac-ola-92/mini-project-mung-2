@@ -285,18 +285,7 @@
                                             <p>리뷰가 없습니다.</p>
                                         </div>
                                         <div th:unless="${#lists.isEmpty(accR)}">
-                                        <!--<div th:if="${accR != null}">
-                                            <div th:if=" room : ${accR}">
-                                              <p class="comment" th:text="${room.comment}">
-                                                  주절주절
-                                              </p>
-                                            </div>
-                                        </div>-->
-                                        <!-- <div class="d-flex justify-content-between">
-                                             <div class="d-flex align-items-center">
-                                                 <h5 th:text="${accU.nickname}"></h5>
-                                             </div>
-                                         </div>-->
+
                                         </div>
                                     </div>
                                 </div>
@@ -337,7 +326,7 @@
                         <div class="footer-tittle">
                             <ul>
                                 <link rel="shortcut icon" type="image/x-icon"
-                                      href="https://example.com/static/assets/img/favicon.ico">
+                                      href="">
                                 <li><a href="#" style="color:#bc915e; font-weight: bolder; margin :50px;">고객문의</a></li>
                                 <li><a href="#" style="color:#bc915e; font-weight: bolder;">제휴문의</a></li>
                             </ul>
@@ -483,7 +472,7 @@
        <h3>${data.room_name}</h3><br>
            <label><p>${data.room_price}</p>/1박 요금</label>
            <button style="background:#bc915e; border:none; padding:15px; border-radius:5px; float:right;"
-                onclick="">예약하기</button>
+                onclick="reservation()">예약하기</button>
            <hr>
            <p>${data.room_info}</p>
            <hr>
@@ -526,6 +515,9 @@
                 }  //모달 검은부분 클릭 시 모달창 닫힘
             });
         });
+    }
+    function reservation(){
+        window.location.href='http://localhost:5173/Reservation';
     }
 </script>
 

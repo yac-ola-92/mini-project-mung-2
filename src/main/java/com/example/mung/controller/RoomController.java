@@ -22,6 +22,7 @@ public class RoomController {
     @Autowired
     private RoomService service;
 
+
     @PostMapping("/room_register")
     public String room_registration( Room room ){
         service.register(room);
@@ -34,8 +35,6 @@ public class RoomController {
     public RoomDTO roomList(@PathVariable("room_id")int room_id){
         RoomDTO dto =  service.readOne(room_id);
 
-      /*  dto = service.readUrl(room_id);
-        List<String> img =dto.getRoomImagesUrl();*/
         return dto ;
     }
 
