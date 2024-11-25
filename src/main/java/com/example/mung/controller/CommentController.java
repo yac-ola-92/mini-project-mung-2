@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Controller
 public class CommentController {
@@ -87,64 +88,50 @@ public class CommentController {
     @ResponseBody
     public Map<String, Object> deleteComment(@PathVariable int commentId, HttpSession session) {
         Map<String, Object> response = new HashMap<>();
-        UserEntity userInfo = (UserEntity) session.getAttribute("userInfo");
-        if (userInfo == null) {
-            response.put("success", false);
-            response.put("message", "로그인이 필요합니다.");
-            return response;
-        }
+
         try {
-            boolean isDeleted = commentService.remove(commentId, userInfo.getUser_id()); // user_id 전달
-            response.put("success", isDeleted);
-            // 성공 여부에 따라 메시지 설정
+            // 세션에서 사용자 정보 확인
+            UserEntity userInfo = (UserEntity) session.getAttribute("userInfo");
+            if (userInfo == null) {
+                response.put("success", false);
+                response.put("message", "로그인이 필요합니다.");
+                return response;
+            }
+
+            logger.info("댓글 삭제 요청. commentId: {}, userId: {}", commentId, userInfo.getUser_id());
+
+            // 댓글 정보 조회
+            Comment comment = commentService.findById(commentId);
+            if (comment == null) {
+                response.put("success", false);
+                response.put("message", "댓글이 존재하지 않습니다.");
+                return response;
+            }
+
+            // 댓글 작성자 확인
+            if (!Objects.equals(comment.getUser().getUser_id(), userInfo.getUser_id())) {
+                response.put("success", false);
+                response.put("message", "댓글 삭제 권한이 없습니다.");
+                return response;
+            }
+
+
+            // 댓글 삭제 처리
+            boolean isDeleted = commentService.remove(commentId, userInfo.getUser_id());
             if (isDeleted) {
+                response.put("success", true);
                 response.put("message", "댓글이 성공적으로 삭제되었습니다.");
             } else {
+                response.put("success", false);
                 response.put("message", "댓글 삭제에 실패했습니다.");
             }
         } catch (Exception e) {
+            logger.error("댓글 삭제 중 오류 발생. commentId: {}", commentId, e);
             response.put("success", false);
-            response.put("message", "삭제 중 오류가 발생했습니다.");
+            response.put("message", "삭제 중 예상치 못한 오류가 발생했습니다.");
         }
+
         return response;
     }
 
-    @PostMapping("/post/comments/update/{commentId}")
-    @ResponseBody
-    public Map<String, Object> updateComment(@PathVariable int commentId, @RequestBody Comment comment, HttpSession session) {
-        Map<String, Object> response = new HashMap<>();
-        UserEntity userInfo = (UserEntity) session.getAttribute("userInfo");
-        if (userInfo == null) {
-            response.put("success", false);
-            response.put("message", "로그인이 필요합니다.");
-            return response;
-        }
-        try {
-            // 본인의 댓글만 수정 가능하도록 추가 확인
-            Comment existingComment = commentService.findById(commentId);
-            if (existingComment == null || existingComment.getUser().getUser_id() != userInfo.getUser_id()) {
-                response.put("success", false);
-                response.put("message", "자신의 댓글만 수정할 수 있습니다.");
-                return response;
-            }
-            // 댓글 ID와 user_id 설정
-            comment.setCommentId(commentId);
-            comment.setUser(userInfo); // user_id 추가 설정
-            // 수정 요청 실행
-            boolean isUpdated = commentService.modify(comment);
-            // 로그 추가
-            logger.info("Comment ID: " + commentId + " 수정 요청 결과: " + isUpdated);
-            response.put("success", isUpdated);
-            if (isUpdated) {
-                response.put("message", "댓글이 성공적으로 수정되었습니다.");
-            } else {
-                response.put("message", "댓글 수정에 실패했습니다.");
-            }
-        } catch (Exception e) {
-            logger.error("댓글 수정 중 오류 발생", e);
-            response.put("success", false);
-            response.put("message", "댓글 수정 중 오류가 발생했습니다.");
-        }
-        return response;
-    }
 }

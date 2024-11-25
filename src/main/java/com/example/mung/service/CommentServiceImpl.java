@@ -39,21 +39,22 @@ public class CommentServiceImpl implements CommentService {
         return true;
     }
 
-    @Override
-    public boolean modify(Comment comment) {
-        int updatedRows = commentRepository.updateComment(
-                comment.getContent(),
-                comment.getCommentId(),
-                comment.getPost().getPost_id()
-        );
-        return updatedRows > 0; // 수정된 행 수가 0보다 클 경우 성공
+//    @Override
+//    @Transactional
+//    public boolean remove(int commentId, int user) {
+//        return commentRepository.deleteComment(commentId) > 0; // 삭제된 행 수가 0보다 클 경우 성공
+//    }
+@Override
+@Transactional
+public boolean remove(int commentId, int userId) {
+    // 댓글 조회
+    Comment comment = commentRepository.findById(commentId);
+    if (comment == null || comment.getUser().getUser_id() != userId) {
+        return false; // 댓글이 없거나, 삭제 권한이 없는 경우
     }
-
-    @Override
-    @Transactional
-    public boolean remove(int commentId, int user) {
-        return commentRepository.deleteComment(commentId) > 0; // 삭제된 행 수가 0보다 클 경우 성공
-    }
+    // 댓글 삭제
+    return commentRepository.deleteComment(commentId) > 0;
+}
 
     @Override
     public Comment findById(int commentId) {

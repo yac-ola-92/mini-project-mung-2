@@ -39,7 +39,7 @@ public class PostRepositoryTest {
 //    @DisplayName("카테고리별 게시글 조회 테스트")
 //    public void getPostByCategory() {
 //        Post.Category category = Post.Category.rec;
-//        List<Post> posts = postRepository.getPostByCategory(category.name());
+//        List<Post> posts = postRepository.findByCategory(category);
 //        int count = posts.size();
 //        assertNotNull(posts);
 //        assertFalse(posts.isEmpty());

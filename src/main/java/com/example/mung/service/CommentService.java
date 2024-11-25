@@ -16,8 +16,6 @@ public interface CommentService {
 
     boolean register(Comment comment); // 댓글 생성
 
-    boolean modify(Comment comment); // 댓글 수정
-
     boolean remove(int commentId, int user); // 댓글 삭제
 
     int getCommentCountByPostId(int postId); // 댓글 갯수

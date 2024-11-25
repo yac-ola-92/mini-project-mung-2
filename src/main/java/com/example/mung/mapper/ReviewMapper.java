@@ -17,13 +17,10 @@ public interface ReviewMapper {
             "JOIN accommodation a ON res.accom_id = a.accom_id")
     List<ReviewVO> getAllReviews();
 
-    @Select("SELECT r.review_id, r.rv_id, r.rating, r.comment, r.created_at, " +
-            "rm.room_name, a.accom_name " +
-            "FROM review r " +
-            "JOIN reservation res ON r.rv_id = res.rv_id " +
-            "JOIN room rm ON res.room_id = rm.room_id " +
-            "JOIN accommodation a ON res.accom_id = a.accom_id " +
-            "WHERE r.user_id = #{user_id}")
+    @Select("SELECT r.review_id, r.rv_id, r.rating, r.comment, r.created_at, r.user_id\n" +
+            "FROM review r\n" +
+            "JOIN reservation res ON r.rv_id = res.rv_id\n" +
+            "WHERE r.user_id =#{user_id}")
     List<ReviewVO> getReviewsByUserId(@Param("user_id") int user_id);
 
     @Select("SELECT r.review_id, r.user_id, r.rv_id, r.rating, r.comment, r.created_at, " +
