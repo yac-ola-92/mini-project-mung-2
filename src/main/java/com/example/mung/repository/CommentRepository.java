@@ -59,15 +59,6 @@ public interface CommentRepository extends JpaRepository<Comment, Integer> {
             "GROUP BY c.comment_id, c.post_id, c.user_id, c.content, c.created_at, u.nickname", nativeQuery = true)
     Comment findById(@Param("commentId") int commentId);
 
-    // 댓글 수정
-    @Transactional
-    @Modifying
-    @Query(value = "UPDATE comment SET content = :content, created_at = CURRENT_TIMESTAMP WHERE comment_id = :commentId AND post_id = :postId", nativeQuery = true)
-    int updateComment(@Param("content") String content,
-                      @Param("commentId") int commentId,
-                      @Param("postId") int postId);  // comment_id로 수정
-
-
     // 댓글 삭제
     @Transactional
     @Modifying

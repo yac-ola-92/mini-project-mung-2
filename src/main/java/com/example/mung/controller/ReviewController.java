@@ -2,6 +2,8 @@ package com.example.mung.controller;
 
 import com.example.mung.domain.ReviewDTO;
 import com.example.mung.domain.ReviewVO;
+import com.example.mung.domain.UserVO;
+import com.example.mung.service.LoginService;
 import com.example.mung.service.ReviewService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -20,73 +22,89 @@ import java.util.List;
 public class ReviewController {
     private final ReviewService reviewService;
     private static final Logger logger = LoggerFactory.getLogger(ReviewController.class);
+    private final LoginService loginService;
 
-    // 리뷰 조회 페이지 렌더링
     @GetMapping("/mypage/reviews")
     public String getUserReviews(HttpSession session, Model model) {
-        Integer userId = (Integer) session.getAttribute("user_id");
-        if (userId == null) {
+        UserVO userInfo = (UserVO) session.getAttribute("userInfo");
+
+        if (userInfo == null) {
             logger.debug("User not logged in, redirecting to login.");
-            return "redirect:/login"; // 로그인되지 않은 경우 리다이렉트
+            return "redirect:/login";
         }
 
-        logger.debug("Session user_id: {}", userId);
+        int userId = userInfo.getUser_id();
+        logger.debug("Fetching reviews for userId: {}", userId);
 
-        List<ReviewVO> userReviews = reviewService.getReviewsByUserId(userId);
-        if (userReviews == null || userReviews.isEmpty()) {
-            model.addAttribute("message", "작성된 리뷰가 없습니다.");
-        } else {
-            model.addAttribute("reviews", userReviews);
+        try {
+            List<ReviewVO> reviews = reviewService.getReviewsByUserId(userId);
+
+            if (reviews == null || reviews.isEmpty()) {
+                logger.debug("No reviews found for userId: {}", userId);
+                model.addAttribute("noReviews", true); // 추가된 부분
+            } else {
+                logger.debug("Fetched reviews: {}", reviews.size());
+            }
+
+            model.addAttribute("reviews", reviews);
+        } catch (Exception e) {
+            logger.error("Error fetching reviews: {}", e.getMessage());
+            model.addAttribute("error", "리뷰 데이터를 불러오는 중 오류가 발생했습니다.");
         }
         return "postReview";
     }
 
     @GetMapping("/reviews/create")
-    public String createUserReviewPage(HttpSession session, Model model) {
-        Integer userId = (Integer) session.getAttribute("user_id");
-        if (userId == null) {
+    public String getCreateReviewPage(HttpSession session, Model model) {
+        UserVO userInfo = (UserVO) session.getAttribute("userInfo");
+        if (userInfo == null) {
+            return "redirect:/login";
+        }
+        return "createReview";
+    }
+
+    @PostMapping("/reviews/create")
+    public String handleCreateReview(@RequestParam(required = false) Integer rvId,
+                                     @RequestParam(required = false) String reviewContent,
+                                     HttpSession session, Model model) {
+        UserVO userInfo = (UserVO) session.getAttribute("userInfo");
+        int userId = userInfo.getUser_id();
+        if (userId < 0) {
             return "redirect:/login";
         }
 
-        Integer rvId = (Integer) session.getAttribute("rv_id");
         if (rvId == null) {
             model.addAttribute("error", "예약 내역이 없습니다.");
-            return "redirect:/mypage/reviews";
-        }
-        model.addAttribute("rv_id", rvId);
-        return "createReview"; // HTML 렌더링
-    }
-
-    // 리뷰 등록 처리
-    @PostMapping("/reviews/create")
-    @ResponseBody
-    public ResponseEntity<String> createReview(@RequestBody ReviewDTO reviewDTO, HttpSession session) {
-        Integer userId = (Integer) session.getAttribute("user_id");
-        if (userId == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+            return "createReview";
         }
 
-        reviewDTO.setUser_id(userId);
+        if (reviewContent == null || reviewContent.trim().isEmpty()) {
+            model.addAttribute("error", "리뷰 내용을 입력해주세요.");
+            model.addAttribute("rv_id", rvId); // 오류 발생 시 예약 ID 전달
+            return "createReview";
+        }
+
+        ReviewDTO reviewDTO = new ReviewDTO();
+        reviewDTO.setUser_id(userInfo.getUser_id());
+        reviewDTO.setRv_id(rvId);
+        reviewDTO.setComment(reviewContent);
         reviewService.createReview(reviewDTO);
-        return ResponseEntity.ok("리뷰가 등록되었습니다.");
+
+        return "redirect:/mypage/reviews";
     }
 
-    // 리뷰 삭제 처리
     @DeleteMapping("/{review_id}")
     @ResponseBody
     public ResponseEntity<String> deleteReview(@PathVariable int review_id, HttpSession session) {
-        Integer userId = (Integer) session.getAttribute("user_id");
-        if (userId == null) {
+        UserVO userInfo = (UserVO) session.getAttribute("userInfo");
+        int userId = userInfo.getUser_id();
+        if (userId < 0) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
         }
 
-        ReviewVO review = reviewService.getReviewById(review_id); // 리뷰 정보를 가져옴
+        ReviewVO review = reviewService.getReviewById(review_id);
         if (review == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("삭제하려는 리뷰를 찾을 수 없습니다.");
-        }
-
-        if (review.getUser_id() != userId) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("권한이 없습니다.");
         }
 
         try {

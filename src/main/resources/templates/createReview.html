@@ -1,12 +1,29 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>리뷰 작성</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>게시판</title>
+    <meta name="description" content="게시판 페이지">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/responsive.css">
+    <link rel="stylesheet" href="/assets/css/post.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/748b44d03f.js" crossorigin="anonymous"></script>
     <style>
+        .header {
+            list-style-type: none;
+            margin: 5px 5px 18px 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .header-li {
+            float: left;
+            margin-left : 10px;
+        }
         .review-form-container {
             background-color: #fff9f0;
             padding: 30px;
@@ -71,21 +88,64 @@
             color: #bc915e;
             text-decoration: underline;
         }
+        .rating {
+            direction: rtl; /* 별점 순서 반대로 해서 오른쪽부터 클릭 */
+        }
+
+        .rating input {
+            display: none;
+        }
+
+        .rating label {
+            font-size: 2rem; /* 별의 크기 */
+            color: #ccc; /* 기본 회색 */
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .rating input:checked ~ label {
+            color: gold; /* 체크된 별은 금색으로 */
+        }
+
+        .rating label:hover,
+        .rating label:hover ~ label {
+            color: gold; /* 마우스 오버 시 금색으로 */
+        }
+
     </style>
     <script th:inline="javascript">
         document.addEventListener("DOMContentLoaded", function () {
             const reviewForm = document.getElementById("reviewForm");
+            const ratingInputs = document.querySelectorAll('input[name="rating"]');
+
             if (reviewForm) {
                 reviewForm.addEventListener("submit", function (event) {
-                    event.preventDefault(); // 기본 제출 동작 중단
+                    event.preventDefault();  // 기본 폼 제출 방지
 
-                    const formData = Object.fromEntries(new FormData(reviewForm));
+                    // 선택된 별점 값을 찾아서 폼에 추가
+                    let ratingValue = '';
+                    for (let input of ratingInputs) {
+                        if (input.checked) {
+                            ratingValue = input.value;
+                            break;
+                        }
+                    }
+
+                    // 선택된 평점이 없으면 경고
+                    if (!ratingValue) {
+                        alert('평점을 선택해주세요.');
+                        return;
+                    }
+
+                    // 평점을 formData에 추가
+                    const formData = new FormData(reviewForm);
+                    formData.append('rating', ratingValue);  // 별점 값을 추가
+
+                    // 기존 방식으로 폼 제출
+                    const formDataObject = new URLSearchParams(formData).toString();
                     fetch(reviewForm.action, {
                         method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify(formData),
+                        body: formDataObject,
                     })
                         .then(response => {
                             if (response.ok) {
@@ -95,7 +155,7 @@
                         })
                         .then(data => {
                             alert("리뷰가 성공적으로 등록되었습니다.");
-                            window.location.href = "/reviews/${reviewId}"; // 성공 시 목록 페이지로 이동
+                            window.location.href = "/mypage/reviews";  // 성공 시 리뷰 목록 페이지로 이동
                         })
                         .catch(error => {
                             alert(error.message);
@@ -103,68 +163,35 @@
                 });
             }
         });
+
     </script>
+
 </head>
 <body>
 <header>
-    <div class="header-area" style="background-color: #fff9f0;">
-        <div class="main-header">
-            <div class="header-top top-bg d-none d-lg-block" style="background-color: #f2e2cc;">
-                <div class="container">
-                    <div class="row justify-content-between align-items-center">
-                        <div class="col-lg-8">
-                            <div class="header-info-left">
-                                <ul>
-                                    <li>needhelp@gotrip.com</li>
-                                    <li>666 569 025077</li>
-                                    <li>Brooklyn Street, New York</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="header-info-right f-right">
-                                <ul class="header-social">
-                                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                                    <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
-                                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                    <li><a href="#"><i class="fab fa-pinterest-p"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="header-bottom header-sticky" style="background-color: #fff9f0;">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-xl-2 col-lg-2 col-md-1">
-                            <div class="logo">
-                                <a href="main.html"><img src="/assets/img/logo/logo.png" alt="Logo" style="height: 5em"></a>
-                            </div>
-                        </div>
-                        <div class="col-xl-10 col-lg-10 col-md-10">
-                            <div class="main-menu f-right d-none d-lg-block">
-                                <nav>
-                                    <ul id="navigation">
-                                        <li><a th:href="@{/register_accom}">숙소 예약</a></li>
-                                        <li><a th:href="@{/postMain}">게시판</a></li>
-                                        <li><a th:href="@{/myPage}">마이페이지</a></li>
-                                        <li><a th:if="${userInfo == null}" href="/login" class="btn-log">로그인</a></li>
-                                        <li><a th:if="${userInfo != null}" href="/logout" class="btn-log">로그아웃</a></li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="mobile_menu d-block d-lg-none"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- Header Start -->
+    <div class="header-bottom header-sticky"
+         style="background-color:#fff9f0; height:150px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <!-- 로고 영역 -->
+        <div class="logo" style="margin-bottom: 10px; margin-top:10px">
+            <a href="/mainPage"><img style="margin-top: 20px; width: 100px;" src="/assets/img/logo/munglogo.png"
+                                     alt="Logo"></a>
         </div>
+        <!-- 네비게이션 메뉴 영역 -->
+        <nav>
+            <ul class="header">
+                <li class="header-li"><a href="/mainPage" style="color:#bc915e;">메인</a></li>
+                <li class="header-li"><a href="/postMain" style="color:#bc915e;">게시판</a></li>
+                <li class="header-li"><a href="/myPage" style="color:#bc915e;">마이페이지</a></li>
+                <li class="header-li"><a href="/login" id="login" th:if="${session.userInfo == null}">로그인</a></li>
+                <li class="header-li"><a href="/logout" id="logout" th:if="${session.userInfo != null}">로그아웃</a></li>
+            </ul>
+        </nav>
     </div>
-</header>
 
+
+    <!-- Header End -->
+</header>
 <main>
     <div class="review-form-container">
         <h1>리뷰 작성</h1>
@@ -173,34 +200,58 @@
         </div>
         <div th:if="${rv_id == null}" class="alert alert-warning">
             <p>리뷰를 작성할 수 없습니다. 예약 정보가 없습니다.</p>
-            <a class="btn btn-warning" th:href="@{/register_accom}">예약하러 가기</a>
         </div>
-        <form id="reviewForm" th:if="${rv_id != null}" th:action="@{/reviews/create}" method="post">
+        <form id="reviewForm" th:action="@{/reviews/create}" method="post">
             <input type="hidden" name="rv_id" th:value="${rv_id}">
             <input type="hidden" name="user_id" th:value="${user_id}">
             <div class="form-group">
-                <label class="form-label" for="rating">평점</label>
-                <input type="number" id="rating" name="rating" class="form-control" min="1" max="5" required>
-                <small class="form-text text-muted">1에서 5까지의 점수를 입력하세요.</small>
+                <label class="form-label" th:for="rating">평점</label>
+                <small class="form-text text-muted">별점을 클릭하여 선택해주세요.</small>
+                <div class="rating">
+                    <input type="radio" name="rating" id="star5" value="5"><!-- 5점 -->
+                    <label for="star5" class="star">&#9733;</label> <!-- 별 모양 -->
+                    <input type="radio" name="rating" id="star4" value="4"><!-- 4점 -->
+                    <label for="star4" class="star">&#9733;</label>
+                    <input type="radio" name="rating" id="star3" value="3"><!-- 3점 -->
+                    <label for="star3" class="star">&#9733;</label>
+                    <input type="radio" name="rating" id="star2" value="2"><!-- 2점 -->
+                    <label for="star2" class="star">&#9733;</label>
+                    <input type="radio" name="rating" id="star1" value="1"><!-- 1점 -->
+                    <label for="star1" class="star">&#9733;</label>
+                </div>
             </div>
             <div class="form-group">
                 <label class="form-label" for="comment">후기</label>
-                <textarea id="comment" name="comment" class="form-control" rows="4" required></textarea>
                 <small class="form-text text-muted">후기를 입력해 주세요.</small>
+                <textarea id="comment" name="comment" class="form-control" rows="4" required></textarea>
             </div>
             <button type="submit">리뷰 등록</button>
         </form>
         <a class="back-to-reviews" th:href="@{/mypage/reviews}">리뷰 목록으로 돌아가기</a>
+        <a class="back-to-main" href="/postMain">
+            <i class="fas fa-arrow-left"></i> 메인으로
+        </a>
     </div>
 </main>
+<!-- Footer -->
 <footer>
-    <div class="footer-area footer-padding footer-bg" style="background-color: #fff9f0; padding: 30px;">
+    <div class="footer-area footer-padding footer-bg" style="background-color: #fff9f0;">
         <div class="container">
-            <div class="footer-logo">
-                <a href="/mainPage"><img src="/assets/img/logo/munglogo.png" style="width: 150px;" alt=""></a>
+            <div class="row d-flex justify-content-between">
+                <div class="col-xl-3 col-lg-3 col-md-5 col-sm-6">
+                    <div class="single-footer-caption mb-50">
+                        <div class="footer-logo">
+                            <a href="index.html"><img src="/assets/img/logo/logo.png" alt="Logo" style="height: 5em;"></a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </footer>
+
+<script src="/assets/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="/assets/js/popper.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
 </body>
 </html>

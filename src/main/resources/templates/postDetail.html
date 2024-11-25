@@ -14,6 +14,17 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/748b44d03f.js" crossorigin="anonymous"></script>
     <style>
+        .header {
+            list-style-type: none;
+            margin: 5px 5px 18px 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .header-li {
+            float: left;
+            margin-left : 10px;
+        }
+
         .content-wrapper {
             width: 100%;
             margin: 0 auto; /* 중앙 정렬 */
@@ -251,6 +262,11 @@
             margin-left: 5px;
         }
 
+        .btn-save, .btn-cancel {
+            position: relative;
+            z-index: 10;  /* 버튼이 다른 요소 위로 올라오게 설정 */
+        }
+
         .like-dislike-buttons span {
             font-size: 16px; /* 카운트 텍스트 크기 */
             margin-left: 5px; /* 버튼과 숫자 간격 */
@@ -278,6 +294,15 @@
             color: black;
         }
 
+        /* 버튼 컨테이너 스타일 */
+        .btn-container {
+            display: flex; /* Flexbox 사용 */
+            flex-direction: row; /* 가로 정렬 */
+            align-items: center; /* 수직 가운데 정렬 */
+            justify-content: flex-start; /* 왼쪽 정렬 */
+            gap: 10px; /* 버튼 간격 설정 */
+        }
+
         .single-comment .btn-primary:hover {
             background-color: #e6d3b8; /* 호버 시 색상 변화 */
             transform: scale(1.05); /* 호버 시 버튼 확대 */
@@ -293,20 +318,17 @@
             color: black;
         }
 
-        /* 댓글 수정, 삭제 버튼이 일렬로 나란히 배치되도록 설정 */
         .single-comment  {
             display: flex; /* 버튼이 가로로 나란히 배치 */
+            flex-direction: row; /* 가로 방향 정렬 */
+            align-items: center; /* 버튼들을 수직 가운데 정렬 */
+            justify-content: flex-start; /* 버튼을 왼쪽 정렬 */
             gap: 10px; /* 버튼 간격 설정 */
             margin-top: 10px;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 댓글 박스 그림자 */
         }
 
-        /* 댓글 수정 모드 활성화 시 스타일 */
-        .edit-mode {
-            display: none; /* 기존 댓글 내용을 숨김 */
-        }
-
-        .edit-mode .edit-comment-input {
+        .edit-comment-input {
             display: block; /* 수정 입력 필드를 표시 */
         }
 
@@ -379,82 +401,6 @@
                 });
         }
 
-        function enableEditMode(button) {
-            const commentId = button.getAttribute("data-comment-id");
-            const commentDiv = document.getElementById(`comment-${commentId}`);
-
-            if (!commentDiv) {
-                alert("댓글을 찾을 수 없습니다. 잘못된 ID입니다.");
-                return;
-            }
-
-            const contentDiv = commentDiv.querySelector(".comment-content");
-            const editInput = commentDiv.querySelector(".edit-comment-input");
-
-            if (!contentDiv || !editInput) {
-                alert("댓글 내용 또는 수정 입력란을 찾을 수 없습니다.");
-                return;
-            }
-
-            // 댓글 수정 모드 활성화
-            contentDiv.style.display = "none";
-            editInput.style.display = "block";
-            editInput.value = contentDiv.textContent;
-
-            // 기존 수정 버튼 숨기기
-            button.style.display = "none";
-
-            // 저장 및 취소 버튼 추가
-            const saveButton = document.createElement("button");
-            saveButton.className = "btn btn-primary";
-            saveButton.textContent = "저장";
-            saveButton.onclick = () => saveComment(commentId, editInput.value);
-
-            const cancelButton = document.createElement("button");
-            cancelButton.className = "btn btn-secondary";
-            cancelButton.textContent = "취소";
-            cancelButton.style.backgroundColor = "#fff9f0";
-            cancelButton.onclick = () => {
-                editInput.style.display = "none";
-                contentDiv.style.display = "block";
-                button.style.display = "inline-block";
-                saveButton.remove();
-                cancelButton.remove();
-            };
-
-            commentDiv.appendChild(saveButton);
-            commentDiv.appendChild(cancelButton);
-        }
-
-        function saveComment(commentId, newContent) {
-            fetch(`/post/comments/update/${commentId}`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ content: newContent }) // JSON 데이터 전달
-            })
-                .then(response => {
-                    // JSON 응답이 아니면 에러 처리
-                    if (!response.ok) {
-                        return response.text().then(text => {
-                            throw new Error(`서버 에러: ${response.status}. 응답 내용: ${text}`);
-                        });
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    if (data.success) {
-                        alert("댓글이 성공적으로 수정되었습니다.");
-                        location.reload(); // 페이지 새로고침
-                    } else {
-                        alert(data.message || "댓글 수정에 실패했습니다.");
-                    }
-                })
-                .catch(error => {
-                    console.error("Error:", error);
-                    alert("댓글 수정 중 오류가 발생했습니다: " + error.message);
-                });
-        }
-
         function deleteComment(button) {
             const commentId = button.getAttribute("data-comment-id");
             if (!commentId) {
@@ -503,62 +449,28 @@
 </head>
 <body th:attr="data-user-login-id=${userInfo != null ? userInfo.user_login_id : ''}">
 <header>
-    <div class="header-area" style="background-color: #fff9f0;">
-        <div class="main-header">
-            <div class="header-top top-bg d-none d-lg-block" style="background-color: #f2e2cc;">
-                <div class="container">
-                    <div class="row justify-content-between align-items-center">
-                        <div class="col-lg-8">
-                            <div class="header-info-left">
-                                <ul>
-                                    <li>needhelp@gotrip.com</li>
-                                    <li>666 569 025077</li>
-                                    <li>Brooklyn Street, New York</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="header-info-right f-right">
-                                <ul class="header-social">
-                                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                                    <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
-                                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                    <li><a href="#"><i class="fab fa-pinterest-p"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="header-bottom header-sticky" style="background-color: #fff9f0;">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-xl-2 col-lg-2 col-md-1">
-                            <div class="logo">
-                                <a href="main.html"><img src="/assets/img/logo/logo.png" alt="Logo" style="height: 5em"></a>
-                            </div>
-                        </div>
-                        <div class="col-xl-10 col-lg-10 col-md-10">
-                            <div class="main-menu f-right d-none d-lg-block">
-                                <nav>
-                                    <ul id="navigation">
-                                        <li><a th:href="@{/register_accom}">숙소 예약</a></li>
-                                        <li><a th:href="@{/postMain}">게시판</a></li>
-                                        <li><a th:href="@{/myPage}">마이페이지</a></li>
-                                        <li><a th:if="${userInfo == null}" href="/login" class="btn-log">로그인</a></li>
-                                        <li><a th:if="${userInfo != null}" href="/logout" class="btn-log">로그아웃</a></li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="mobile_menu d-block d-lg-none"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- Header Start -->
+    <div class="header-bottom header-sticky"
+         style="background-color:#fff9f0; height:150px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <!-- 로고 영역 -->
+        <div class="logo" style="margin-bottom: 10px; margin-top:10px">
+            <a href="/mainPage"><img style="margin-top: 20px; width: 100px;" src="/assets/img/logo/munglogo.png"
+                                     alt="Logo"></a>
         </div>
+        <!-- 네비게이션 메뉴 영역 -->
+        <nav>
+            <ul class="header">
+                <li class="header-li"><a href="/mainPage" style="color:#bc915e;">메인</a></li>
+                <li class="header-li"><a href="/postMain" style="color:#bc915e;">게시판</a></li>
+                <li class="header-li"><a href="/myPage" style="color:#bc915e;">마이페이지</a></li>
+                <li class="header-li"><a href="/login" id="login" th:if="${session.userInfo == null}">로그인</a></li>
+                <li class="header-li"><a href="/logout" id="logout" th:if="${session.userInfo != null}">로그아웃</a></li>
+            </ul>
+        </nav>
     </div>
+
+
+    <!-- Header End -->
 </header>
 <a class="back-to-main" href="/postMain">
     <i class="fas fa-arrow-left"></i> 메인으로
@@ -602,7 +514,7 @@
                                 </div>
                             </div>
                             <!-- 게시글 수정 및 삭제 버튼 -->
-                            <div th:if="${userInfo != null and post.user != null and userInfo.user_id == post.user.user_id}">
+                            <div class="btn-container" th:if="${userInfo != null and post.user != null and userInfo.user_id == post.user.user_id}">
                                 <form th:action="@{/update/{post_id}(post_id=${post.post_id})}" method="get">
                                     <button type="submit" class="btn btn-primary btn-common">수정</button>
                                 </form>
@@ -623,7 +535,7 @@
                                     <h5 th:text="${comment.user.nickname}"></h5>
                                     <span th:text="${#temporals.format(comment.created_at, 'yyyy-MM-dd HH:mm')}"></span>
                                     <p class="comment-content" th:text="${comment.content}"></p>
-                                    <textarea class="edit-comment-input" style="display: none;"></textarea>
+                                    <textarea class="edit-comment-input" style="display: none;" th:text="${comment.content}"></textarea>
 
                                     <!-- 좋아요 및 싫어요 버튼 -->
                                     <div class="like-dislike-buttons">
@@ -645,7 +557,7 @@
 
                                     <!-- 댓글 수정/삭제 버튼 -->
                                     <div th:if="${userInfo != null and userInfo.user_id == comment.user.user_id}">
-                                        <button class="btn btn-primary" onclick="enableEditMode(this)" th:attr="data-comment-id=${comment.commentId}">수정</button>
+                                        <!-- 삭제 버튼 -->
                                         <form th:action="@{/post/comments/delete/{comment_id}(comment_id=${comment.commentId})}" method="post" style="display: inline;">
                                             <button type="submit" class="btn btn-danger">삭제</button>
                                         </form>
@@ -678,17 +590,6 @@
                         <div class="footer-logo">
                             <a href="index.html"><img src="/assets/img/logo/logo.png" alt="Logo" style="height: 5em;"></a>
                         </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-3 col-md-5 col-sm-7">
-                    <div class="footer-tittle">
-                        <h4>Support</h4>
-                        <ul>
-                            <li><a href="#">Frequently Asked Questions</a></li>
-                            <li><a href="#">Terms & Conditions</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Report a Payment Issue</a></li>
-                        </ul>
                     </div>
                 </div>
             </div>

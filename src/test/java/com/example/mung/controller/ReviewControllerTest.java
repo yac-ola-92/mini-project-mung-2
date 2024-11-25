@@ -1,91 +1,57 @@
 
-/*
-package com.example.mung.controller;
 
-import com.example.mung.domain.ReviewDTO;
+package com.example.mung.controller;
+import com.example.mung.domain.UserVO;
 import com.example.mung.service.ReviewService;
-import org.junit.jupiter.api.BeforeEach;
+import jakarta.servlet.http.HttpSession;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.http.MediaType;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import java.util.List;
-import static org.mockito.Mockito.*;
+import org.springframework.test.web.servlet.MvcResult;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
+@SpringBootTest
+@AutoConfigureMockMvc
 public class ReviewControllerTest {
+
+    @Autowired
     private MockMvc mockMvc;
 
-    @Mock
+    @MockBean
     private ReviewService reviewService;
-
-    @InjectMocks
-    private ReviewController reviewController;
-
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(reviewController).build();
-    }
-
-    @Test
-    public void testGetAllReviews() throws Exception {
-        when(reviewService.findAll()).thenReturn(List.of(new ReviewDTO(), new ReviewDTO()));
-
-        mockMvc.perform(get("/review"))
-                .andExpect(status().isOk())
-                .andExpect(model().attributeExists("review"))
-                .andReturn();
-    }
-
-    @Test
-    public void testGetReviewByRating() throws Exception {
-        when(reviewService.readByRating(5)).thenReturn(List.of(new ReviewDTO(), new ReviewDTO()));
-
-        mockMvc.perform(get("/review/5"))
-                .andExpect(status().isOk())
-                .andExpect(model().attributeExists("review"))
-                .andReturn();
-    }
 
     @Test
     public void testCreateReview() throws Exception {
-        mockMvc.perform(post("/review")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("rating", "3")
-                .param("comment", "쏘쏘~~"))
-                .andExpect(status().is3xxRedirection()) // 응답 상태가 3xx 리디렉션인지 확인
-                .andReturn();
+        // 로그인된 사용자 정보를 세션에 설정
+        UserVO userInfo = new UserVO();
+        userInfo.setUser_id(1);  // 로그인한 사용자 ID 설정
 
-        verify(reviewService, times(1)).register(any(ReviewDTO.class));
+        MvcResult result = mockMvc.perform(post("/reviews/create")
+                        .param("rv_id", "1")
+                        .param("rating", "5")
+                        .param("comment", "Great place!")
+                        .sessionAttr("userInfo", userInfo))  // 세션에 UserVO 객체 설정
+                .andExpect(status().is3xxRedirection())  // 리다이렉션 상태 코드 확인
+                .andExpect(redirectedUrl("/mypage/reviews"))  // 리다이렉션 URL 확인
+                .andReturn();  // 결과 반환
+
+        // 결과 디버깅
+        System.out.println("Response status: " + result.getResponse().getStatus());
+        System.out.println("Response content: " + result.getResponse().getContentAsString());
     }
 
     @Test
-    public void testUpdateReview() throws Exception {
-        mockMvc.perform(put("/review/3")
-                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                        .param("rating", "2")
-                        .param("comment", "여러모로 아쉽네요.."))
-                .andExpect(status().is3xxRedirection())
-                .andReturn();
-
-        // 여기에서 modify 메소드를 검증해야 함
-        verify(reviewService, times(1)).modify(any(ReviewDTO.class));
+    public void testGetUserReviews() throws Exception {
+        mockMvc.perform(get("/mypage/reviews"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("postReview"))
+                .andExpect(model().attributeExists("reviews"));
     }
-
-    @Test
-    public void testDeleteReview() throws Exception {
-        mockMvc.perform(delete("/review/3"))
-                .andExpect(status().is3xxRedirection())
-                .andReturn();
-
-        verify(reviewService, times(1)).remove(3);
-    }
-}*/
-
-
+}
