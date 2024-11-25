@@ -76,94 +76,93 @@ public class AccomController {
         return "/register_accom";
 }
 
+    @PostMapping("/accom_register") //숙소 등록
+    public String accom_registration(Accommodation accom ) {
 
-@PostMapping("/accom_register") //숙소 등록
-public String accom_registration(Accommodation accom ) {
+        service.register(accom);
 
-    service.register(accom);
-
-    return "redirect:/myPage";
-}
-    //등록했으면 다시 숙소 리스트로 돌아감
-
-@GetMapping("/accomByLocation") //검색 시 출력될 숙소리스트
-public String accom_list(Model model, HttpServletRequest req) {
-    // 클라이언트로부터 위치 정보,날짜,인원수를 받아온다
-    List<AccomDTO> listAccom;
-    String location = req.getParameter("accom_location");
-    String rv_s = req.getParameter("rv_start_date");
-    String rv_l = req.getParameter("rv_end_date");
-    LocalDate rv_start;
-    LocalDate rv_end;
-    //날짜 처리
-    if (rv_s == null || rv_l == null || rv_s.isEmpty() || rv_l.isEmpty()) {
-        rv_start = LocalDate.now();
-        rv_end = rv_start.plusDays(1);
-        System.out.println("날짜를 입력하지 않아 오늘을 기준으로 검색합니다");
-        //날짜를 입력하지 않았을 경우 오늘과 내일을 기준으로 숙소가 출력
-    } else {
-        rv_start = LocalDate.parse(rv_s);
-        rv_end = LocalDate.parse(rv_l);
+        return "redirect:/myPage";
     }
-    System.out.println(rv_start + "부터" + rv_end + "까지 날짜 설정");
-    String capa = req.getParameter("capacity");
+        //등록했으면 다시 숙소 리스트로 돌아감
 
-    int capacity = 1; //기본값 지정
-    //인원 체크
-    if (capa != null && !capa.isEmpty()) {
-        try {//인원 null 값  체크
-            capacity = Integer.parseInt(capa);
+    @GetMapping("/accomByLocation") //검색 시 출력될 숙소리스트
+    public String accom_list(Model model, HttpServletRequest req) {
+        // 클라이언트로부터 위치 정보,날짜,인원수를 받아온다
+        List<AccomDTO> listAccom;
+        String location = req.getParameter("accom_location");
+        String rv_s = req.getParameter("rv_start_date");
+        String rv_l = req.getParameter("rv_end_date");
+        LocalDate rv_start;
+        LocalDate rv_end;
+        //날짜 처리
+        if (rv_s == null || rv_l == null || rv_s.isEmpty() || rv_l.isEmpty()) {
+            rv_start = LocalDate.now();
+            rv_end = rv_start.plusDays(1);
+            System.out.println("날짜를 입력하지 않아 오늘을 기준으로 검색합니다");
+            //날짜를 입력하지 않았을 경우 오늘과 내일을 기준으로 숙소가 출력
+        } else {
+            rv_start = LocalDate.parse(rv_s);
+            rv_end = LocalDate.parse(rv_l);
         }
-        catch(NumberFormatException e){
-        System.out.println("인원 수를 입력하지 않음!!!");
-         }
-    }else {
-        System.out.println("기본값 1 을 적용하여 출력합니다");
+        System.out.println(rv_start + "부터" + rv_end + "까지 날짜 설정");
+        String capa = req.getParameter("capacity");
+
+        int capacity = 1; //기본값 지정
+        //인원 체크
+        if (capa != null && !capa.isEmpty()) {
+            try {//인원 null 값  체크
+                capacity = Integer.parseInt(capa);
+            }
+            catch(NumberFormatException e){
+            System.out.println("인원 수를 입력하지 않음!!!");
+             }
+        }else {
+            System.out.println("기본값 1 을 적용하여 출력합니다");
+        }
+            System.out.println("검색할 인원의 수 : " + capacity );
+
+      // 위치 체크
+        if(location == null || location.isEmpty()){
+
+            listAccom = service.readByRating();
+            //위치를 지정하지 않았다면 별점 순 숙소를 출력
+        }else{
+            listAccom = service.readByLocation(location, capacity);
+            // list 에 service의 getListByLocation(위치에 따른 숙소 조회) 한 것을 넣어줌
+        }
+
+        // 인원과 위치를 통합시켜 숙소 출력하기
+        if (!listAccom.isEmpty()) {
+            listAccom = listAccom.stream()
+                    .collect(Collectors.toMap(
+                            AccomDTO::getAccom_id,    // Key: accom_id
+                            accom -> accom,           // Value: 해당 AccomDTO 객체
+                            (existing, replacement) -> existing))  // 중복되는 경우 기존 객체 유지
+                    .values()  // Map에서 값들만 가져오기 (중복 제거된 값들)
+                    .stream()  // 다시 Stream으로 변환
+                    .collect(Collectors.toList());  // List로 변환
+        } else {
+            System.out.println("해당하는 숙소가 없습니다.");
+        }
+
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        model.addAttribute("accom_location",location);
+        model.addAttribute("st_date",rv_start.format(dtf));
+        model.addAttribute("lt_date",rv_end.format(dtf));
+        model.addAttribute("capacity",capacity);
+        model.addAttribute("accomList",listAccom);
+
+
+        // list에 전체 숙소의 값 or 해당 지역의 숙소의 값이 있기때문에
+        // 이걸 model에 담아 뷰에서 사용할 수 있게 함
+        System.out.println(location);
+        System.out.println(rv_start.format(dtf));
+        System.out.println(rv_end.format(dtf));
+        System.out.println(capacity);
+        System.out.println(listAccom);
+        return "accomList";
     }
-        System.out.println("검색할 인원의 수 : " + capacity );
-
-  // 위치 체크
-    if(location == null || location.isEmpty()){
-
-        listAccom = service.readByRating();
-        //위치를 지정하지 않았다면 별점 순 숙소를 출력
-    }else{
-        listAccom = service.readByLocation(location, capacity);
-        // list 에 service의 getListByLocation(위치에 따른 숙소 조회) 한 것을 넣어줌
-    }
-
-    // 인원과 위치를 통합시켜 숙소 출력하기
-    if (!listAccom.isEmpty()) {
-        listAccom = listAccom.stream()
-                .collect(Collectors.toMap(
-                        AccomDTO::getAccom_id,    // Key: accom_id
-                        accom -> accom,           // Value: 해당 AccomDTO 객체
-                        (existing, replacement) -> existing))  // 중복되는 경우 기존 객체 유지
-                .values()  // Map에서 값들만 가져오기 (중복 제거된 값들)
-                .stream()  // 다시 Stream으로 변환
-                .collect(Collectors.toList());  // List로 변환
-    } else {
-        System.out.println("해당하는 숙소가 없습니다.");
-    }
-
-
-    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    model.addAttribute("accom_location",location);
-    model.addAttribute("st_date",rv_start.format(dtf));
-    model.addAttribute("lt_date",rv_end.format(dtf));
-    model.addAttribute("capacity",capacity);
-    model.addAttribute("accomList",listAccom);
-
-
-    // list에 전체 숙소의 값 or 해당 지역의 숙소의 값이 있기때문에
-    // 이걸 model에 담아 뷰에서 사용할 수 있게 함
-    System.out.println(location);
-    System.out.println(rv_start.format(dtf));
-    System.out.println(rv_end.format(dtf));
-    System.out.println(capacity);
-    System.out.println(listAccom);
-    return "accomList";
-}
 
 
     @GetMapping("/accom/{accom_id}")
