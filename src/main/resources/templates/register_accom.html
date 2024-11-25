@@ -168,6 +168,7 @@
 			height: 100%;
 			cursor: pointer; /* 마우스 손가락모양 */
 			background-color: rgba(0, 0, 0, 0.8);
+            z-index : 999;
 		}
 		/* 숙소 이미지 모달창 */
 		#rmContent {
@@ -254,7 +255,7 @@
 <!-- Preloader Start -->
 <header>
     <!-- Header Start -->
-    <div class="header-bottom header-sticky"
+    <div class="header-bottom header"
          style="background-color:#fff9f0; height:150px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
         <!-- 로고 영역 -->
         <div class="logo" style="margin-bottom: 20px;">
@@ -349,7 +350,7 @@
 
                 <div>
                     <h3 class="mb-30">객실</h3>
-                    <button class= rm-btn onclick="roomAdd()">객실 추가</button>
+                    <button class= "rm-btn" onclick="roomAdd()">객실 추가</button>
 
                     <div id="modal">
                         <div id="rmContent"></div>
@@ -413,6 +414,7 @@
                         </form>
                     </div>
 				</div>
+                <div>
                     <hr>
                     <button type="submit" class="submit">제출</button>
                     <button type="reset" class="cancel" onclick="window.location.href='/myPage'"
@@ -645,7 +647,16 @@
 
     function addForm() {
         const result = confirm("객실을 등록하시겠습니까?");
-        if(result)
+//        if(result){
+//            const formData = new FormData(); //이미지 파일 서버 전송
+//
+//            try {
+//                const response = await fetch('/accom_register');
+//                console.log(response.status);
+//            }catch (error){
+//                console.log('숙소 등록 중 오류가 발생 했습니다.');
+//            }
+//        }
         modalEl.style.display = 'none';
 
         const rmPreview = document.querySelector('#roomPreview');

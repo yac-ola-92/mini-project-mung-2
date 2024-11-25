@@ -80,10 +80,10 @@ public class AccomRestController {
     }
 
 
-    @PostMapping("/accom_update") //숙소 수정
+    @PutMapping("/accom_update") //숙소 수정
     public String accom_update(@RequestBody Accommodation accom){
         service.modify(accom);
-        return "update_accom "; // 마이페이지의 숙소리스트로 돌아갈거임
+        return "update_accom ";
     }
 
 
@@ -102,7 +102,7 @@ public class AccomRestController {
     }
 
 
-    @PostMapping("/room_update")
+    @PutMapping("/room_update")
     public String room_update(Room room){
         rService.modify(room);
         return "myAccomList";
@@ -122,9 +122,9 @@ public class AccomRestController {
     }
 
 
-    @PostMapping("/room_delete/{room_id}")
+    @DeleteMapping("/room_delete/{room_id}")
     public String room_delete(@PathVariable int room_id){
-        service.remove(room_id);
+        rService.remove(room_id);
         return "redirect:다시 리스트 페이지로 이동";
     }
 
