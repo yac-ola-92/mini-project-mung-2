@@ -2,6 +2,7 @@ package com.example.mung.controller;
 
 import com.example.mung.domain.ReviewDTO;
 import com.example.mung.domain.ReviewVO;
+import com.example.mung.domain.UserVO;
 import com.example.mung.service.ReviewService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +25,9 @@ public class ReviewController {
     // 리뷰 조회 페이지 렌더링
     @GetMapping("/mypage/reviews")
     public String getUserReviews(HttpSession session, Model model) {
-        Integer userId = (Integer) session.getAttribute("user_id");
-        if (userId == null) {
+        UserVO user = (UserVO) session.getAttribute("userInfo");
+        int userId = user.getUser_id();
+        if (userId<0) {
             logger.debug("User not logged in, redirecting to login.");
             return "redirect:/login"; // 로그인되지 않은 경우 리다이렉트
         }
@@ -72,7 +74,7 @@ public class ReviewController {
     }
 
     // 리뷰 삭제 처리
-    @DeleteMapping("/{review_id}")
+    @DeleteMapping("/reviews/{review_id}")
     @ResponseBody
     public ResponseEntity<String> deleteReview(@PathVariable int review_id, HttpSession session) {
         Integer userId = (Integer) session.getAttribute("user_id");

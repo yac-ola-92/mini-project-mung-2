@@ -117,7 +117,7 @@ public class LoginController {
         }
     }
 
-    @PostMapping("/api/findIdByPhone")
+    @PostMapping("/findIdByPhone")
     @ResponseBody
     public ResponseEntity<String> findIdByPhone(@RequestBody Map<String, String> requestData) {
         String phone = requestData.get("phone");
